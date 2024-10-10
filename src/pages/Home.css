@@ -1,0 +1,101 @@
+/*carousle style*/
+.Carousel.Item{
+    height: 100px ;
+}
+.Carousel.Item img{
+   height: 100%;
+    width: 100%;
+    object-fit: cover;
+}
+
+/*card style*/
+
+.card-link{
+text-decoration: none;
+color: inherit;
+}
+.custom-card{
+    height: 300px; /*you can change this to add more information */
+    margin: 10px;
+    max-width: 300px;
+    border: none;
+}
+.custom-card img{
+    height:  300px; 
+    width: 100%;
+    object-fit: cover;
+    
+}
+.custom-card-group{
+    display: flex;
+    justify-content: space-around; 
+    flex-wrap: wrap; 
+    margin: 0 auto;
+    padding-top: 50px;
+}
+/*commitment style*/
+.commitment-section {
+    text-align: center;
+    margin-bottom: 50px;
+    padding-top: 50px;
+  }
+  .commitment-section h2 {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: blac;
+  }
+  
+  .commitment-section p {
+    font-size: 18px;
+    margin-bottom: 10px;
+  }
+  
+  .commitment-section .highlight {
+    color: #28a745; 
+    font-weight: bold;
+    margin-bottom: 30px;
+  }
+  .order-now-btn {
+    background-color: #2E7D32; 
+    color: white;
+    border: none;
+    padding: 15px 30px;
+    font-size: 18px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  .order-now-btn:hover {
+    background-color: rgb(76, 175, 80);
+  }
+  @media (max-width: 768px) /*for responsive*/
+  {
+    .commitment-section{
+        margin-bottom: 20px;
+        padding-top: 20px;
+    }
+    .commitment-section h2 {
+      font-size: 20px;
+    }
+    .commitment-section p {
+      font-size: 16px;
+    }
+    .order-now-btn {
+      padding: 10px 20px;
+      font-size: 16px;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .commitment-section h2 {
+      font-size: 18px;
+    }
+    .commitment-section p {
+      font-size: 14px;
+    }
+    .order-now-btn {
+      padding: 8px 16px;
+      font-size: 14px;
+    }
+  }

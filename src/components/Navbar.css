@@ -1,0 +1,38 @@
+.navbar{
+    background-color: rgb(76, 175, 80);
+    
+}
+.nav-dropdown-menu{
+    box-sizing: border-box;
+    color: white;
+    background-color: rgb(76, 175, 80);
+}
+
+.navbar .nav-link,
+.navbar .dropdown-toggle {
+  color: white !important; 
+}
+.nav-link:hover,
+.dropdown-toggle:hover {
+  color: rgb(8, 8, 130)!important;
+}
+.navbar-toggler {
+  border: none; 
+  background-color: transparent;
+  outline: none; 
+}
+
+.navbar-toggler:focus {
+  outline: none; 
+  box-shadow: 0 0 0 0.2rem white; 
+}
+
+.navbar-toggler-icon {
+  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3E%3Cpath stroke='rgba(255, 255, 255, 1)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+  background-color: transparent; 
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+}
+
+
