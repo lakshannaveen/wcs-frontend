@@ -35,10 +35,10 @@ function CustomFooter() {
                     </Col >
                     <Col md={3} className="footer-section">
                     <div className="social-media-icons">
-                     <a href="https://www.facebook.com" target="_blank" rel="noopener noreferrer">
+                     <a href="https://www.facebook.com/profile.php?id=61567165493241&mibextid=ZbWKwL" target="_blank" rel="noopener noreferrer">
                         <FaFacebookF size={30} color="#FFFFFF" />
                         </a>
-                        <a href="https://www.youtube.com" target="_blank" rel="noopener noreferrer">
+                        <a href="https://youtube.com/@wcs-x3?si=lRB3Qz9z4pqeObtO" target="_blank" rel="noopener noreferrer">
                     <FaYoutube size={30} color="#FFFFFF" />
                         </a>
                     <a href="https://www.instagram.com" target="_blank" rel="noopener noreferrer">
