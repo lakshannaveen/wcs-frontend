@@ -7,6 +7,14 @@
     color: white;
     background-color: rgb(76, 175, 80);
 }
+.navbar .dropdown-menu {
+  background-color: rgb(76, 175, 80) !important;
+  border: none; 
+}
+.navbar .dropdown-item:hover {
+  background-color: rgb(76, 175, 80) !important;
+  color: rgb(8, 8, 130) !important;
+}
 
 .navbar .nav-link,
 .navbar .dropdown-toggle {
