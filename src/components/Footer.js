@@ -41,10 +41,10 @@ function CustomFooter() {
                         <a href="https://youtube.com/@wcs-x3?si=lRB3Qz9z4pqeObtO" target="_blank" rel="noopener noreferrer">
                     <FaYoutube size={30} color="#FFFFFF" />
                         </a>
-                    <a href="https://www.instagram.com" target="_blank" rel="noopener noreferrer">
+                    <a href="https://www.instagram.com/wcs_08/profilecard/?igsh=MWpmbHh1NTcxb3ZqOA==" target="_blank" rel="noopener noreferrer">
                      <FaInstagram size={30} color="#FFFFFF" />
                     </a>
-                    <a href="https://www.tiktok.com" target="_blank" rel="noopener noreferrer">
+                    <a href="https://tiktok.com/@WCS_08" target="_blank" rel="noopener noreferrer">
                      <FaTiktok size={30} color="#FFFFFF" />
                     </a>
                  </div>
