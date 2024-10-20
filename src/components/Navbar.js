@@ -32,7 +32,7 @@ function CustomNavbar() {
               </NavDropdown.Item>
               </NavDropdown>
               <Nav.Link href="#sign-in" className="ms-2">
-                Sign In
+                Log In
               </Nav.Link>
               <Nav.Link href="#register" className="ms-2">
                 Register
