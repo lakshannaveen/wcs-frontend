@@ -1,9 +1,10 @@
 import React from 'react'
+import CustomContact from '../components/Contact'
 
 function Contactus() {
   return (
     <div>
-      contact
+      <CustomContact />
     </div>
   )
 }
