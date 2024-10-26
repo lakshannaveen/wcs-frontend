@@ -15,16 +15,16 @@ text-decoration: none;
 color: inherit;
 }
 .custom-card{
-    height: 300px; /*you can change this to add more information */
+    height: 400px; /*you can change this to add more information */
     margin: 10px;
-    max-width: 300px;
+    width: 400px;
     border: none;
 }
 .custom-card img{
-    height:  300px; 
+    height:  400px; 
     width: 100%;
-    object-fit: cover;
-    
+    object-fit: contain;
+    display: block;
 }
 .custom-card-group{
     display: flex;

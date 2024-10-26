@@ -58,7 +58,7 @@ function CustomHome() {
         <Col md= {3} className="d-flex justify-content-center">
           <a href='#' className='card-link'>
             <Card className='custom-card'>
-              <Card.Img variant="top" src={card3} alt='example' />
+              <Card.Img variant="top" src={card3} alt='aboutus' />
             </Card>
           </a>
         </Col>
