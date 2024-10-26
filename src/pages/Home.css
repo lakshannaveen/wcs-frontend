@@ -11,28 +11,28 @@
 /*card style*/
 
 .card-link{
-text-decoration: none;
-color: inherit;
-}
-.custom-card{
-    height: 300px; /*you can change this to add more information */
-    margin: 10px;
-    max-width: 300px;
-    border: none;
-}
-.custom-card img{
-    height:  300px; 
-    width: 100%;
-    object-fit: cover;
-    
-}
-.custom-card-group{
-    display: flex;
-    justify-content: space-around; 
-    flex-wrap: wrap; 
-    margin: 0 auto;
-    padding-top: 50px;
-}
+  text-decoration: none;
+  color: inherit;
+  }
+  .custom-card{
+      height: 400px; /*you can change this to add more information */
+      margin: 10px;
+      width: 400px;
+      border: none;
+  }
+  .custom-card img{
+      height:  400px; 
+      width: 100%;
+      object-fit: contain;
+      display: block;
+  }
+  .custom-card-group{
+      display: flex;
+      justify-content: space-around; 
+      flex-wrap: wrap; 
+      margin: 0 auto;
+      padding-top: 50px;
+  }
 /*commitment style*/
 .commitment-section {
     text-align: center;
