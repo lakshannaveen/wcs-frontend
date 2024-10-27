@@ -1,9 +1,10 @@
 import React from 'react'
+import CustomPrivacypolicy from '../components/Privacypolicy'
 
 function Privacy() {
   return (
     <div>
-      privacy and policy
+     <CustomPrivacypolicy />
     </div>
   )
 }
