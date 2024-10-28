@@ -1,13 +1,26 @@
 /*carousle style*/
 .Carousel.Item{
-    height: 100px ;
+  height: 400px ;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .Carousel.Item img{
    height: 100%;
     width: 100%;
     object-fit: cover;
 }
+@media (max-width: 768px) {
+  .carousel-item {
+    height: 300px;
+  }
+}
 
+@media (max-width: 576px) {
+  .carousel-item {
+    height: 200px;
+  }
+}
 /*card style*/
 
 .card-link{
