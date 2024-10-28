@@ -6,7 +6,7 @@ const CustomPrivacypolicy = () => {
    
         <div className="container privacy-policy-container">
       <h1 className="text-center">Privacy Policy</h1>
-      <p className="text-muted text-center">(Last updated: 8th May 2024)</p>
+      <p className="text-muted text-center">(Last updated: 8th October 2024)</p>
 
       <section>
         <h3>Information we collect</h3>
