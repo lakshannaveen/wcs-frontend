@@ -1,9 +1,10 @@
 import React from 'react'
+import CustomTerms from '../components/Terms'
 
 function Teamsandconditions() {
   return (
     <div>
-      tac
+      <CustomTerms />
     </div>
   )
 }
