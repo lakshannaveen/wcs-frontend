@@ -1,0 +1,74 @@
+.feedback-container {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.15), 0px -4px 8px rgba(0, 0, 0, 0.1);
+    background-color: white;
+}
+
+.feedback-title {
+    margin-bottom: 20px;
+    
+}
+
+.feedback-form .form-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 15px;
+}
+
+.feedback-form .form-group label {
+    font-weight: bold;
+    width: 100%;
+}
+
+.feedback-form .form-control {
+    border-radius: 4px;
+    width: 100%;
+}
+
+.star-rating {
+    cursor: pointer;
+    margin-right: 5px;
+}
+
+.feedback-submit-btn {
+    background-color: #28a745;
+    border: none;
+}
+
+.feedback-submit-btn:hover {
+    background-color: rgb(76, 175, 80);
+}
+
+.feedback-note {
+    font-size: 0.9rem;
+    color: gray;
+    text-align: center;
+}
+
+.form-label-wrapper {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-label-wrapper .form-label {
+    margin-bottom: 5px; 
+    text-align: left;  
+}
+
+@media (max-width: 768px) {
+    .feedback-container {
+        max-width: 90%; 
+        padding: 15px;
+        border: 1px solid #ddd;
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1), 0px -3px 6px rgba(0, 0, 0, 0.08);
+        border-radius: 8px;
+    }
+
+    .feedback-title {
+        font-size: 1.25rem;
+    }
+}
