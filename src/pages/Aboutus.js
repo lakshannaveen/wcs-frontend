@@ -1,10 +1,11 @@
 import React from 'react'
+import CustomAbout from '../components/About'
 
 function Aboutus() {
   return (
     <div>
-      <h1>About Us</h1>
-      <p>Information about the waste collection service...</p>
+      <CustomAbout />
+
     </div>
   )
 }
