@@ -10,6 +10,7 @@ import Contactus from './pages/Contactus';
 import Feedback from './pages/Feedback';
 import Teamsandconditions from './pages/Teamsandconditions';
 import Privacy from './pages/Privacy';
+import Scrolltop from './components/Scrolltop';
 
 
 
@@ -21,6 +22,7 @@ import Privacy from './pages/Privacy';
 function App() {
   return (
     <Router>
+      <Scrolltop />
       <div className="App">
         <CustomSNavbar />
         
