@@ -42,5 +42,22 @@
   background-position: center;
   background-size: contain;
 }
+.offcanvas-custom {
+  background-color:rgb(76, 175, 80) ;
+  color: white; 
+}
+
+.offcanvas-custom .logout-link {
+  color: red;
+}
+
+.offcanvas-custom .nav-link {
+  color: white; 
+}
+.offcanvas-custom .btn-close {
+  border: 2px solid black; 
+  padding: 4px;
+}
+
 
 
