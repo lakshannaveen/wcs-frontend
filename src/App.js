@@ -11,6 +11,7 @@ import Feedback from './pages/Feedback';
 import Teamsandconditions from './pages/Teamsandconditions';
 import Privacy from './pages/Privacy';
 import Scrolltop from './components/Scrolltop';
+import Customprofile from './components/Profile';
 
 
 
@@ -34,6 +35,7 @@ function App() {
           <Route path="/contact" element={<Contactus />} />
           <Route path="/teamsandconditions" element={<Teamsandconditions />} />
           <Route path="/privacy" element={<Privacy />} />
+          <Route path="/Customprofile" element={<Customprofile/>} />
           
           
         </Routes>

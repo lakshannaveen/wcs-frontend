@@ -75,7 +75,7 @@ function CustomNavbar() {
             <Nav.Link as={Link} to="/register">
               Register
             </Nav.Link>
-            <Nav.Link as={Link} to="/EditProfile">
+            <Nav.Link as={Link} to="/Customprofile">
               Edit Profile
             </Nav.Link>
             <Nav.Link as={Link} to="/logout" className="logout-link">
