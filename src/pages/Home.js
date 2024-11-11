@@ -12,6 +12,7 @@ import card1 from '../images/card1.jpeg';
 import card2 from '../images/card2.jpeg';
 import card3 from '../images/card3.jpeg';
 import Search from '../components/Search';
+import { Link } from 'react-router-dom';
 
 
 
@@ -42,25 +43,25 @@ function CustomHome() {
       {/* card section*/}
       <Row className='custom-card-group'>
         <Col md= {3} className="d-flex justify-content-center">
-          <a href='#' className='card-link'>
+        <Link to='/subscriptionplans' className='card-link'>
             <Card className='custom-card'>
               <Card.Img variant="top" src={card1} alt='subscription' />
             </Card>
-          </a>
+          </Link>
         </Col>
         <Col md= {3} className="d-flex justify-content-center">
-          <a href='#' className='card-link'>
+        <Link to='/specialoffers' className='card-link'>
             <Card className='custom-card'>
               <Card.Img variant="top" src={card2} alt='offers' />
             </Card>
-          </a>
+          </Link>
         </Col>
-        <Col md= {3} className="d-flex justify-content-center">
-          <a href='#' className='card-link'>
+        <Col md={3} className="d-flex justify-content-center">
+          <Link to='/aboutus' className='card-link'>
             <Card className='custom-card'>
               <Card.Img variant="top" src={card3} alt='example' />
             </Card>
-          </a>
+          </Link>
         </Col>
       </Row>
       {/*commitement section*/}
