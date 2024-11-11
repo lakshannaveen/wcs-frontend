@@ -1,14 +1,14 @@
-import React, { useState } from 'react';
-import './Navbar.css';
-import Container from 'react-bootstrap/Container';
-import Nav from 'react-bootstrap/Nav';
-import Navbar from 'react-bootstrap/Navbar';
-import NavDropdown from 'react-bootstrap/NavDropdown';
-import Offcanvas from 'react-bootstrap/Offcanvas';
-import logo from '../images/logo.JPEG';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUser } from '@fortawesome/free-solid-svg-icons';
-import { Link } from 'react-router-dom';
+import React, { useState } from "react";
+import "./Navbar.css";
+import Container from "react-bootstrap/Container";
+import Nav from "react-bootstrap/Nav";
+import Navbar from "react-bootstrap/Navbar";
+import NavDropdown from "react-bootstrap/NavDropdown";
+import Offcanvas from "react-bootstrap/Offcanvas";
+import logo from "../images/logo.JPEG";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faUser } from "@fortawesome/free-solid-svg-icons";
+import { Link } from "react-router-dom";
 
 function CustomNavbar() {
   const [showSidebar, setShowSidebar] = useState(false);
@@ -19,7 +19,7 @@ function CustomNavbar() {
     <div>
       <Navbar expand="lg" className="navbar">
         <Container>
-          <Navbar.Brand as={Link} to='/'>
+          <Navbar.Brand as={Link} to="/">
             <img
               src={logo}
               alt="WCS Logo"
@@ -31,13 +31,21 @@ function CustomNavbar() {
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="ms-auto">
-              <Nav.Link as={Link} to='/' activeClassName="active-link">Home</Nav.Link>
+              <Nav.Link as={Link} to="/" activeClassName="active-link">
+                Home
+              </Nav.Link>
               <NavDropdown title="Services" id="basic-nav-dropdown">
-                <NavDropdown.Item className="nav-dropdown-menu" href="#action/3.1">
+                <NavDropdown.Item
+                  className="nav-dropdown-menu"
+                  href="#action/3.1"
+                >
                   Subscription Plans
                 </NavDropdown.Item>
                 <div className="dropdown-divider" />
-                <NavDropdown.Item className="nav-dropdown-menu" href="#action/3.2">
+                <NavDropdown.Item
+                  className="nav-dropdown-menu"
+                  href="#action/3.2"
+                >
                   Special Offers
                 </NavDropdown.Item>
               </NavDropdown>
@@ -50,16 +58,29 @@ function CustomNavbar() {
       </Navbar>
 
       {/* Sidebar */}
-      <Offcanvas show={showSidebar} onHide={handleToggleSidebar} placement="end" className="offcanvas-custom">
+      <Offcanvas
+        show={showSidebar}
+        onHide={handleToggleSidebar}
+        placement="end"
+        className="offcanvas-custom"
+      >
         <Offcanvas.Header closeButton>
           <Offcanvas.Title>Profile</Offcanvas.Title>
         </Offcanvas.Header>
         <Offcanvas.Body>
           <Nav className="flex-column">
-          <Nav.Link as={Link} to="/login">Log In</Nav.Link>
-          <Nav.Link as={Link} to="/register">Register</Nav.Link>
-          <Nav.Link as={Link} to="/edit-profile">Edit Profile</Nav.Link>
-          <Nav.Link as={Link} to="/logout" className="logout-link">Logout</Nav.Link>
+            <Nav.Link as={Link} to="/login">
+              Log In
+            </Nav.Link>
+            <Nav.Link as={Link} to="/register">
+              Register
+            </Nav.Link>
+            <Nav.Link as={Link} to="/Customprofile">
+              Edit Profile
+            </Nav.Link>
+            <Nav.Link as={Link} to="/logout" className="logout-link">
+              Logout
+            </Nav.Link>
           </Nav>
         </Offcanvas.Body>
       </Offcanvas>
