@@ -21,7 +21,8 @@ const VoiceNavigation = () => {
     recognition.onresult = (event) => {
       const transcript = event.results[event.results.length - 1][0].transcript.trim().toLowerCase();
       console.log("Heard:", transcript);
-     //navigation part//
+
+      // navigation part
       if (transcript.includes("go to home")) {
         navigate('/');
       } else if (transcript.includes("go to about")) {
@@ -34,8 +35,8 @@ const VoiceNavigation = () => {
         navigate('/teamsandconditions');
       } else if (transcript.includes("go to privacy")) {
         navigate('/privacy');
-      } else if (transcript.includes("go to editprofile")) {
-        navigate('/Customprofile');
+      } else if (transcript.includes("go to profile")) {  // Changed to "go to profile"
+        navigate('/customprofile');
       }
     };
 

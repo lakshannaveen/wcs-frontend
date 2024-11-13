@@ -29,7 +29,7 @@ function App() {
           <Route path="/feedback" element={<Feedback />} />
           <Route path="/teamsandconditions" element={<Teamsandconditions />} />
           <Route path="/privacy" element={<Privacy />} />
-          <Route path="/Customprofile" element={<Customprofile />} />
+          <Route path="/customprofile" element={<Customprofile />} />
         </Routes>
         <CustomFooter />
       </div>
