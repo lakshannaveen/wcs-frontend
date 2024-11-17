@@ -34,16 +34,16 @@ function CustomNavbar() {
               <Nav.Link as={Link} to="/" activeClassName="active-link">
                 Home
               </Nav.Link>
-              <NavDropdown title="Guidance" id="basic-nav-dropdown">
+              <NavDropdown title="Services" id="basic-nav-dropdown">
            <NavDropdown.Item as={Link} to="/customsubscription" className="nav-dropdown-menu">
              Subscription Plans
           </NavDropdown.Item>
             <div className="dropdown-divider" />
-        <NavDropdown.Item as={Link} to="/customguidance" className="nav-dropdown-menu">
-                   Waste Guidance
+        <NavDropdown.Item as={Link} to="/specialoffers" className="nav-dropdown-menu">
+                   Special Offers
           </NavDropdown.Item>
-          </NavDropdown> 
-             <Nav.Link onClick={handleToggleSidebar} className="ms-2">
+          </NavDropdown>
+              <Nav.Link onClick={handleToggleSidebar} className="ms-2">
                 <FontAwesomeIcon icon={faUser} size="lg" />
               </Nav.Link>
             </Nav>

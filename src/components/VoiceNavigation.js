@@ -49,6 +49,9 @@ const VoiceNavigation = () => {
       } else if (transcript.includes("go to profile")) {
         setFeedback("Navigating to Profile...");
         navigate('/customprofile');
+      }  else if (transcript.includes("go to subscription plans")) {
+        setFeedback("Navigating to subscription plans...");
+        navigate('/customsubscription');
       } 
       // Navigate to external links
       else if (transcript.includes("go to facebook")) {
