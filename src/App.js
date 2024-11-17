@@ -12,6 +12,7 @@ import Privacy from './pages/Privacy';
 import Scrolltop from './components/Scrolltop';
 import Customprofile from './components/Profile';
 import VoiceNavigation from './components/VoiceNavigation';
+import CustomSubscription from './components/Subscriptionplans';
 
 
 
@@ -30,6 +31,8 @@ function App() {
           <Route path="/teamsandconditions" element={<Teamsandconditions />} />
           <Route path="/privacy" element={<Privacy />} />
           <Route path="/customprofile" element={<Customprofile />} />
+          <Route path="/customsubscription" element={<CustomSubscription />} />
+          
         </Routes>
         <CustomFooter />
       </div>
