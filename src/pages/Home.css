@@ -22,30 +22,39 @@
   }
 }
 /*card style*/
-
-.card-link{
+.card-link {
   text-decoration: none;
   color: inherit;
-  }
-  .custom-card{
-      height: 400px; /*you can change this to add more information */
-      margin: 10px;
-      width: 400px;
-      border: none;
-  }
-  .custom-card img{
-      height:  400px; 
-      width: 100%;
-      object-fit: contain;
-      display: block;
-  }
-  .custom-card-group{
-      display: flex;
-      justify-content: space-around; 
-      flex-wrap: wrap; 
-      margin: 0 auto;
-      padding-top: 50px;
-  }
+}
+
+.custom-card {
+  height: auto;
+  margin: 5px; 
+  width: 100%;
+  max-width: 300px;
+  border: none;
+  display: flex;
+  flex-direction: column;
+}
+
+.custom-card img {
+  height: auto;
+  width: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.custom-card-group {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  margin: 0 auto;
+  padding-top: 50px;
+  gap: 15px; 
+  padding-left: 15px; 
+  padding-right: 15px; 
+}
+
 /*commitment style*/
 .commitment-section {
     text-align: center;
