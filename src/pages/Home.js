@@ -71,7 +71,7 @@ function CustomHome() {
           <ScrollLink
             to="search-section" 
             smooth={true} 
-            duration={100}//we can increase the smooth
+            duration={100}// increase the smooth
           >
             <button className='order-now-btn'>Order Now</button>
           </ScrollLink>

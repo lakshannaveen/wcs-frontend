@@ -59,7 +59,7 @@ function Search() {
   return (
     <div className="d-flex flex-column align-items-center mt-4">
       <div className="search-box p-4 rounded bg-white shadow-lg">
-        <h4 className="text-center">Enter Your Home Address</h4>
+        <h4 className="text-center">To Start Order Enter Address</h4>
         
         {/* Initial Search Form (Appears first) */}
         {!showDetailedForm && (
