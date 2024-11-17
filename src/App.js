@@ -32,7 +32,7 @@ function App() {
           <Route path="/teamsandconditions" element={<Teamsandconditions />} />
           <Route path="/privacy" element={<Privacy />} />
           <Route path="/customprofile" element={<Customprofile />} />
-          <Route path="/" element={<Search />} /> 
+          <Route path="/search" element={<Search />} /> 
           <Route path="/map" element={<MapPage />} />
         </Routes>
         <CustomFooter />
