@@ -39,7 +39,7 @@ button {
 }
 
 .modal-header {
-  background-color: #f7f7f7;
+  background-color:rgb(76, 175, 80) ;
 }
 
 .modal-footer {
@@ -47,7 +47,7 @@ button {
 }
 
 .modal-title {
-  color: #333;
+  color: white;
 }
 
 .confirm-btn {
