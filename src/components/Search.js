@@ -103,7 +103,7 @@ function Search() {
       </div>
 
       <Modal show={showModal} onHide={handleClose} dialogClassName="responsive-modal">
-        <Modal.Header closeButton>
+        <Modal.Header>
           <Modal.Title>Confirm Your Address</Modal.Title>
         </Modal.Header>
         <Modal.Body>
@@ -111,11 +111,11 @@ function Search() {
           <h5>{confirmedLocation}</h5>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
+          <Button className="btn-secondary" variant="secondary" onClick={handleClose}>
             Cancel
           </Button>
           <Button className="confirm-btn" onClick={handleConfirm}>
-            Confirm Address
+            Confirm
           </Button>
         </Modal.Footer>
       </Modal>
