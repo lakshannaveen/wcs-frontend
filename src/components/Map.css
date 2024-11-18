@@ -1,0 +1,85 @@
+.map-container {
+    margin: 40px auto;
+    padding: 15px; 
+    border: 1px solid #ddd;
+    border-radius: 8px; 
+    max-width: 800px;
+    background-color: white;
+    box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.15), 0px -4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .map-container h3 {
+    font-size: 20px;
+    margin-bottom: 15px;
+    text-align: center;
+  }
+  
+  .map-container .leaflet-container {
+    border-radius: 8px; 
+  }
+   /* infor part */
+  .map-container .info-container {
+    margin-top: 20px;
+    padding: 15px;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .map-container .info-container .important-note {
+    font-size: 14px;
+    color: #333;
+    line-height: 1.5;
+    margin-bottom: 15px;
+    background-color: #fff8dc;
+    padding: 10px;
+    border-left: 4px solid #ffcc00;
+    border-radius: 4px;
+  }
+  
+  .map-container .info-container .form-group {
+    margin-bottom: 15px;
+  }
+  
+  .map-container .info-container .form-group label {
+    font-size: 14px;
+    color: #555;
+    display: block;
+    margin-bottom: 5px;
+  }
+  
+  .map-container .info-container .form-group input {
+    width: 100%;
+    padding: 10px;
+    font-size: 14px;
+    color: #333;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+  }
+  
+  .map-container .info-container .button-group {
+    text-align: center;
+  }
+  
+  .map-container .info-container .checkout-button {
+    background-color:#2E7D32; 
+    color: white;
+    font-size: 16px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .map-container .info-container .checkout-button:hover {
+    background-color: rgb(76, 175, 80) ;
+  }
+.warning-message {
+    color: red;
+    font-size: 14px;
+    margin-bottom: 10px;
+  }
+  
