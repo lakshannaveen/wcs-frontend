@@ -16,38 +16,27 @@ function Search() {
   const [errorMessage, setErrorMessage] = useState(''); // Show error message if necessary
   const navigate = useNavigate();
 
-  // Handle search (initial form submission)
-  const handleSearchClick = () => {
-    // When the "Search" button or placeholder is clicked, show the detailed form.
-    setShowDetailedForm(true);
-  };
+  const handleSearchClick = () => setShowDetailedForm(true);
 
-  // Handle address parts submission
   const handleSubmitAddress = () => {
     const { streetNumber, streetName, city } = addressParts;
-    
-    // Check if all address fields are filled
     if (!streetNumber || !streetName || !city) {
       setErrorMessage('Please complete all address fields!');
     } else {
       const fullAddress = `${streetNumber} ${streetName}, ${city}`;
       setConfirmedLocation(fullAddress);
-      setShowModal(true); // Show the confirmation modal with the full address
-      setErrorMessage(''); // Clear any error message
+      setShowModal(true);
+      setErrorMessage('');
     }
   };
 
-  // Handle the modal confirm action
   const handleConfirm = () => {
-    // Navigate to the map page with the confirmed location
     navigate('/map', { state: { location: confirmedLocation } });
-    setShowModal(false); // Close the modal after confirmation
+    setShowModal(false);
   };
 
-  // Handle the modal close action
-  const handleClose = () => setShowModal(false); // Close the modal without confirmation
+  const handleClose = () => setShowModal(false);
 
-  // Handle address input change
   const handleAddressChange = (e) => {
     const { name, value } = e.target;
     setAddressParts({
@@ -60,8 +49,7 @@ function Search() {
     <div className="d-flex flex-column align-items-center mt-4">
       <div className="search-box p-4 rounded bg-white shadow-lg">
         <h4 className="text-center">To Start Order Enter Address</h4>
-        
-        {/* Initial Search Form (Appears first) */}
+
         {!showDetailedForm && (
           <div className="input-container d-flex">
             <Form.Control
@@ -69,8 +57,8 @@ function Search() {
               placeholder="Enter Your Home Address"
               className="search-input"
               value={location}
-              onChange={(e) => setLocation(e.target.value)} // Handle input change
-              onFocus={handleSearchClick} // Show the detailed form when clicked
+              onChange={(e) => setLocation(e.target.value)}
+              onFocus={handleSearchClick}
             />
             <Button className="search-btn" onClick={handleSearchClick}>
               <i className="bi bi-search"></i> Search
@@ -78,7 +66,6 @@ function Search() {
           </div>
         )}
 
-        {/* Detailed Address Form (Appears after search button or input click) */}
         {showDetailedForm && (
           <div className="address-details-form mt-4">
             <Form.Control
@@ -87,7 +74,7 @@ function Search() {
               className="mb-2"
               name="streetNumber"
               value={addressParts.streetNumber}
-              onChange={handleAddressChange} // Handle address input change
+              onChange={handleAddressChange}
             />
             <Form.Control
               type="text"
@@ -106,18 +93,16 @@ function Search() {
               onChange={handleAddressChange}
             />
 
-            <Button className="mt-3" onClick={handleSubmitAddress}>
+            <Button className="submit-btn mt-3" onClick={handleSubmitAddress}>
               Submit Address
             </Button>
           </div>
         )}
 
-        {/* Show error message if the location or address is invalid */}
         {errorMessage && <div className="alert alert-danger mt-3">{errorMessage}</div>}
       </div>
 
-      {/* Modal to confirm the complete address */}
-      <Modal show={showModal} onHide={handleClose}>
+      <Modal show={showModal} onHide={handleClose} dialogClassName="responsive-modal">
         <Modal.Header closeButton>
           <Modal.Title>Confirm Your Address</Modal.Title>
         </Modal.Header>
