@@ -55,6 +55,30 @@
   background-color:rgb(76, 175, 80)  !important; 
   cursor: pointer;
 }
+.modal-header {
+  background-color: #2E7D32; 
+  color: white; 
+  border-bottom: none;
+}
+.modal-footer .btn {
+  width: 100px; 
+  height: 40px;
+}
+
+.modal-footer .btn-secondary {
+  background-color: white; 
+  color: black; 
+}
+
+.modal-footer .btn-secondary:hover {
+  background-color: lightgray; 
+  color: black;
+  border-color: black;
+}
+
+.modal-footer .confirm-btn:hover {
+  background-color:black; 
+}
 
 /* Responsive Design */
 @media (max-width: 768px) {
