@@ -45,6 +45,26 @@ function Search() {
     });
   };
 
+  // New function to handle geolocation (Locate Me button)
+  const handleLocateMe = () => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const { latitude, longitude } = position.coords;
+          const userLocation = `${latitude},${longitude}`;
+          setConfirmedLocation(userLocation); // Set the location based on geolocation
+          navigate('/map', { state: { location: userLocation } }); // Pass coordinates to the map
+        },
+        (error) => {
+          console.error(error);
+          setErrorMessage('Unable to retrieve your location.');
+        }
+      );
+    } else {
+      setErrorMessage('Geolocation is not supported by this browser.');
+    }
+  };
+  
   return (
     <div className="d-flex flex-column align-items-center mt-4">
       <div className="search-box p-4 rounded bg-white shadow-lg">
@@ -95,6 +115,14 @@ function Search() {
 
             <Button className="submit-btn mt-3" onClick={handleSubmitAddress}>
               Submit Address
+            </Button>
+
+            {/* Add "Locate Me" button */}
+            <Button
+              className="mt-3 locate-btn"
+              onClick={handleLocateMe}
+            >
+              Locate Me
             </Button>
           </div>
         )}
