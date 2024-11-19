@@ -11,9 +11,9 @@ function Search() {
     streetNumber: '',
     streetName: '',
     city: '',
-  }); // Store detailed address parts
-  const [showDetailedForm, setShowDetailedForm] = useState(false); // Show detailed form after initial input
-  const [errorMessage, setErrorMessage] = useState(''); // Show error message if necessary
+  }); 
+  const [showDetailedForm, setShowDetailedForm] = useState(false); 
+  const [errorMessage, setErrorMessage] = useState(''); 
   const navigate = useNavigate();
   const googleApiKey = "YOUR_GOOGLE_API_KEY"; // Replace with your Google API key
 
@@ -32,7 +32,8 @@ function Search() {
         setShowModal(true);
         setErrorMessage('');
       } else {
-        setErrorMessage('The address you entered is not valid or not found on the map.');
+        setErrorMessage('The address you entered is not valid or not found on the map. You can use the "Locate Me" option to automatically get your current location.');
+
       }
     }
   };
@@ -46,9 +47,9 @@ function Search() {
       const data = await response.json();
       
       if (data.status === 'OK') {
-        return true; // Address is valid
+        return true; 
       } else {
-        return false; // Address not found or invalid
+        return false; 
       }
     } catch (error) {
       console.error("Error validating address:", error);
@@ -70,8 +71,7 @@ function Search() {
       [name]: value,
     });
   };
-
-  // New function to handle geolocation (Locate Me button)
+//locate me fuction
   const handleLocateMe = () => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
@@ -138,18 +138,14 @@ function Search() {
               value={addressParts.city}
               onChange={handleAddressChange}
             />
-
             <Button className="submit-btn mt-3" onClick={handleSubmitAddress}>
-              Submit Address
+               Submit Address
             </Button>
 
-            {/* Add "Locate Me" button */}
-            <Button
-              className="mt-3 locate-btn"
-              onClick={handleLocateMe}
-            >
+            <Button className="mt-3 locate-btn ms-3" onClick={handleLocateMe}>
               Locate Me
             </Button>
+
           </div>
         )}
 
