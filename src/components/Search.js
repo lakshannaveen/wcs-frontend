@@ -15,18 +15,44 @@ function Search() {
   const [showDetailedForm, setShowDetailedForm] = useState(false); // Show detailed form after initial input
   const [errorMessage, setErrorMessage] = useState(''); // Show error message if necessary
   const navigate = useNavigate();
+  const googleApiKey = "YOUR_GOOGLE_API_KEY"; // Replace with your Google API key
 
   const handleSearchClick = () => setShowDetailedForm(true);
 
-  const handleSubmitAddress = () => {
+  const handleSubmitAddress = async () => {
     const { streetNumber, streetName, city } = addressParts;
     if (!streetNumber || !streetName || !city) {
       setErrorMessage('Please complete all address fields!');
     } else {
       const fullAddress = `${streetNumber} ${streetName}, ${city}`;
-      setConfirmedLocation(fullAddress);
-      setShowModal(true);
-      setErrorMessage('');
+      const isValid = await validateAddress(fullAddress);
+      
+      if (isValid) {
+        setConfirmedLocation(fullAddress);
+        setShowModal(true);
+        setErrorMessage('');
+      } else {
+        setErrorMessage('The address you entered is not valid or not found on the map.');
+      }
+    }
+  };
+
+  // Function to validate the address using Google Geocoding API
+  const validateAddress = async (address) => {
+    const geocodeUrl = `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(address)}&key=${googleApiKey}`;
+    
+    try {
+      const response = await fetch(geocodeUrl);
+      const data = await response.json();
+      
+      if (data.status === 'OK') {
+        return true; // Address is valid
+      } else {
+        return false; // Address not found or invalid
+      }
+    } catch (error) {
+      console.error("Error validating address:", error);
+      return false;
     }
   };
 
@@ -64,7 +90,7 @@ function Search() {
       setErrorMessage('Geolocation is not supported by this browser.');
     }
   };
-  
+
   return (
     <div className="d-flex flex-column align-items-center mt-4">
       <div className="search-box p-4 rounded bg-white shadow-lg">
