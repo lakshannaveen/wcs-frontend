@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { MapContainer, TileLayer, Marker, Popup, useMapEvents } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import './Map.css';
 
 // Custom waste bin icon for map
@@ -19,7 +19,7 @@ const Map = () => {
   const [showWarning, setShowWarning] = useState(false); // Toggle warning for invalid address
   const [isLocationConfirmed, setIsLocationConfirmed] = useState(false); // Flag to confirm location
 
-  // Get the location data passed from Search.js
+  const navigate = useNavigate(); // To navigate to checkout page
   const location = useLocation().state?.location;
 
   useEffect(() => {
@@ -66,6 +66,7 @@ const Map = () => {
     } else {
       setShowWarning(false); // Hide warning message
       setIsLocationConfirmed(true); // Set the flag to indicate successful confirmation
+      navigate('/checkout', { state: { address, houseNo } }); // Navigate to checkout page with address and house number
     }
   };
 
@@ -78,7 +79,7 @@ const Map = () => {
     <div className="map-container">
       <h3>
         {selectedPosition
-          ? `Selected Location: ${address || 'Fetching address...'}`
+          ? `Selected Location: ${address || 'Fetching address...'}` 
           : 'Select a location on the map'}
       </h3>
 
@@ -99,13 +100,7 @@ const Map = () => {
       </MapContainer>
 
       {/* Address and House Number Input */}
-      {isLocationConfirmed ? (
-        <div className="confirmation-message">
-          <p>Your location has been confirmed successfully!</p>
-          <p>Address: {address}</p>
-          <p>House Number: {houseNo}</p>
-        </div>
-      ) : (
+      {!isLocationConfirmed ? (
         <div className="address-details-form mt-3">
           <input
             type="text"
@@ -114,16 +109,16 @@ const Map = () => {
             onChange={handleHouseNoChange}
             className="house-number-input mb-2"
           />
-          {showWarning && (
-            <div className="alert alert-warning">
-              Please provide a valid house number and address.
-            </div>
+        {showWarning && (
+        <div className="alert alert-danger">
+             Please provide a valid house number and address in the map.
+          </div>
           )}
           <button onClick={handleConfirm} className="btn btn-primary">
             Confirm Location
           </button>
         </div>
-      )}
+      ) : null}
     </div>
   );
 };
