@@ -13,10 +13,11 @@ const wasteBinIcon = new L.Icon({
 
 const Map = () => {
   const [coordinates, setCoordinates] = useState([6.0535, 80.221]); // Default location: Galle
-  const [selectedPosition, setSelectedPosition] = useState(null);
+  const [selectedPosition, setSelectedPosition] = useState([6.0535, 80.221]); // Default position is the same
   const [address, setAddress] = useState(''); // Address of the selected position
   const [houseNo, setHouseNo] = useState(''); // Store house number
-  const [showWarning, setShowWarning] = useState(false); // Toggle warning for invalid address
+  const [streetName, setStreetName] = useState(''); // Store street name
+  const [showWarning, setShowWarning] = useState(false); // Toggle warning for invalid inputs
   const [isLocationConfirmed, setIsLocationConfirmed] = useState(false); // Flag to confirm location
 
   const navigate = useNavigate(); // To navigate to checkout page
@@ -26,11 +27,11 @@ const Map = () => {
     if (location) {
       const [lat, lng] = location.split(',').map(Number);
       setCoordinates([lat, lng]);
+      setSelectedPosition([lat, lng]); // Update selected position as well
       fetchAddress(lat, lng); // Fetch address from the coordinates
     }
   }, [location]);
 
-  // Function to fetch the address from the OpenStreetMap Nominatim API
   const fetchAddress = async (lat, lng) => {
     try {
       const response = await fetch(
@@ -44,35 +45,27 @@ const Map = () => {
     }
   };
 
-  // Custom hook to handle user clicks on the map
   const LocationSelector = () => {
     useMapEvents({
       click: (event) => {
         const { lat, lng } = event.latlng;
-        setSelectedPosition([lat, lng]);
+        setSelectedPosition([lat, lng]); // Update selected position with the new coordinates
         fetchAddress(lat, lng); // Fetch address for the new position
       },
     });
     return null;
   };
 
-  // Handle the confirmation of the location
   const handleConfirm = () => {
-    // Show warning if house number is not provided or address is invalid
-    if (!houseNo.trim()) {
-      setShowWarning(true); // Trigger warning message for missing house number
+    if (!houseNo.trim() || !streetName.trim()) {
+      setShowWarning(true); // Trigger warning message for missing inputs
     } else if (!address || address === 'Unable to fetch address') {
       setShowWarning(true); // Trigger warning for invalid address
     } else {
       setShowWarning(false); // Hide warning message
       setIsLocationConfirmed(true); // Set the flag to indicate successful confirmation
-      navigate('/checkout', { state: { address, houseNo } }); // Navigate to checkout page with address and house number
+      navigate('/checkout', { state: { address, houseNo, streetName } }); // Navigate to checkout page with address, house number, and street name
     }
-  };
-
-  // Handle the change in the house number input field
-  const handleHouseNoChange = (e) => {
-    setHouseNo(e.target.value);
   };
 
   return (
@@ -94,28 +87,39 @@ const Map = () => {
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         />
         <LocationSelector />
-        <Marker position={coordinates} icon={wasteBinIcon}>
+        {/* Move marker to the selected position */}
+        <Marker position={selectedPosition} icon={wasteBinIcon}>
           <Popup>{address || 'Loading address...'}</Popup>
         </Marker>
       </MapContainer>
+      <div className="important-note">
+        <strong>Important:</strong> Please note that when changing the location on our map, your address will be automatically adjusted based on the new map location selected, ensuring a smooth and hassle-free experience.
+      </div>
 
-      {/* Address and House Number Input */}
+      {/* Address and Details Form */}
       {!isLocationConfirmed ? (
         <div className="address-details-form mt-3">
           <input
             type="text"
             placeholder="House Number (e.g., No 4)"
             value={houseNo}
-            onChange={handleHouseNoChange}
+            onChange={(e) => setHouseNo(e.target.value)}
             className="house-number-input mb-2"
           />
-        {showWarning && (
-        <div className="alert alert-danger">
-             Please provide a valid house number and address in the map.
-          </div>
+          <input
+            type="text"
+            placeholder="Street Name (e.g., Dewata road)"
+            value={streetName}
+            onChange={(e) => setStreetName(e.target.value)}
+            className="street-name-input mb-2"
+          />
+          {showWarning && (
+            <div className="alert alert-danger">
+              Please provide a valid house number, street name, and address on map.
+            </div>
           )}
           <button onClick={handleConfirm} className="btn btn-primary">
-            Confirm Location
+            Confirm and Checkout
           </button>
         </div>
       ) : null}
