@@ -12,8 +12,8 @@ const wasteBinIcon = new L.Icon({
 });
 
 const Map = () => {
-  const [coordinates, setCoordinates] = useState([6.0535, 80.221]); // Default location: Galle
-  const [selectedPosition, setSelectedPosition] = useState([6.0535, 80.221]); // Default position is the same
+  const [coordinates, setCoordinates] = useState([7.8731, 80.7718]); // Center of Sri Lanka
+  const [selectedPosition, setSelectedPosition] = useState([7.8731, 80.7718]); // Default position is the same
   const [address, setAddress] = useState(''); // Address of the selected position
   const [houseNo, setHouseNo] = useState(''); // Store house number
   const [streetName, setStreetName] = useState(''); // Store street name
@@ -72,14 +72,14 @@ const Map = () => {
     <div className="map-container">
       <h3>
         {selectedPosition
-          ? `Selected Location: ${address || 'Fetching address...'}` 
+          ? `Selected Location: ${address || 'Fetching address...'}`
           : 'Select a location on the map'}
       </h3>
 
       {/* Map */}
       <MapContainer
         center={coordinates}
-        zoom={10}
+        zoom={7} // Adjusted zoom level to show the whole of Sri Lanka
         style={{ height: '500px', width: '100%' }}
       >
         <TileLayer
