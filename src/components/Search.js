@@ -32,7 +32,7 @@ function Search() {
         setShowModal(true);
         setErrorMessage('');
       } else {
-        setErrorMessage('The address you entered is not valid or not found on the map. You can use the "Locate Me" option to automatically get your current location.');
+        setErrorMessage('The address you entered is not valid or not found on the map. You can use the "Locate Me" option to automatically get your current location or you can manually set your address.');
 
       }
     }
