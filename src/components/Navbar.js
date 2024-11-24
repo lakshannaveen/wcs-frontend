@@ -34,7 +34,7 @@ function CustomNavbar() {
               <Nav.Link as={Link} to="/" activeClassName="active-link">
                 Home
               </Nav.Link>
-              <NavDropdown title="Services" id="basic-nav-dropdown">
+              <NavDropdown title="Guidence" id="basic-nav-dropdown">
                 <NavDropdown.Item
                   className="nav-dropdown-menu"
                   href="#action/3.1"
