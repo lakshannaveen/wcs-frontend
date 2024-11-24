@@ -1,7 +1,7 @@
 import React from 'react'
-import Customguidance from '../components/Offers';
+import Customguidance from '../components/Wasteguidance'
 
-function Specialoffers() {
+function WateGuidance() {
   return (
     <div>
       <Customguidance />
@@ -9,4 +9,4 @@ function Specialoffers() {
   )
 }
 
-export default Specialoffers
+export default WateGuidance
