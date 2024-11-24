@@ -46,7 +46,7 @@ function CustomNavbar() {
                   className="nav-dropdown-menu"
                   href="#action/3.2"
                 >
-                  Special Offers
+                  Waste Guidence
                 </NavDropdown.Item>
               </NavDropdown>
               <Nav.Link onClick={handleToggleSidebar} className="ms-2">
