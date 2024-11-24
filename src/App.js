@@ -12,8 +12,7 @@ import Privacy from './pages/Privacy';
 import Scrolltop from './components/Scrolltop';
 import Customprofile from './components/Profile';
 import VoiceNavigation from './components/VoiceNavigation';
-import MapPage from './pages/MapPage';
-import Search from './components/Search';
+import Customguidance from './components/Wasteguidance';
 
 
 
@@ -32,11 +31,9 @@ function App() {
           <Route path="/teamsandconditions" element={<Teamsandconditions />} />
           <Route path="/privacy" element={<Privacy />} />
           <Route path="/customprofile" element={<Customprofile />} />
-          <Route path="/search" element={<Search />} /> 
-          <Route path="/map" element={<MapPage />} />
+          <Route path="/customguidance" element={<Customguidance />} />
         </Routes>
         <CustomFooter />
-        
       </div>
     </Router>
   );
