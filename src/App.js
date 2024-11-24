@@ -12,7 +12,7 @@ import Privacy from './pages/Privacy';
 import Scrolltop from './components/Scrolltop';
 import Customprofile from './components/Profile';
 import VoiceNavigation from './components/VoiceNavigation';
-import Customoffers from './components/Offers';
+import Customguidance from './components/Wasteguidance';
 
 
 
@@ -31,7 +31,7 @@ function App() {
           <Route path="/teamsandconditions" element={<Teamsandconditions />} />
           <Route path="/privacy" element={<Privacy />} />
           <Route path="/customprofile" element={<Customprofile />} />
-          <Route path="/customoffers" element={<Customoffers />} />
+          <Route path="/customguidance" element={<Customguidance />} />
         </Routes>
         <CustomFooter />
       </div>

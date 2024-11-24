@@ -34,13 +34,13 @@ function CustomNavbar() {
               <Nav.Link as={Link} to="/" activeClassName="active-link">
                 Home
               </Nav.Link>
-              <NavDropdown title="Services" id="basic-nav-dropdown">
+              <NavDropdown title="Guidance" id="basic-nav-dropdown">
            <NavDropdown.Item as={Link} to="/customsubscription" className="nav-dropdown-menu">
              Subscription Plans
           </NavDropdown.Item>
             <div className="dropdown-divider" />
-        <NavDropdown.Item as={Link} to="/customoffers" className="nav-dropdown-menu">
-                   Special Offers
+        <NavDropdown.Item as={Link} to="/customguidance" className="nav-dropdown-menu">
+                   Waste Guidance
           </NavDropdown.Item>
           </NavDropdown> 
              <Nav.Link onClick={handleToggleSidebar} className="ms-2">

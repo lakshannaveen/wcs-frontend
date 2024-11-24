@@ -1,10 +1,10 @@
 import React from 'react'
-import Customoffers from '../components/Offers';
+import Customguidance from '../components/Offers';
 
 function Specialoffers() {
   return (
     <div>
-      <Customoffers />
+      <Customguidance />
     </div>
   )
 }
