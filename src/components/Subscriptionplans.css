@@ -16,36 +16,48 @@ body {
 .subscription-title {
   font-size: 32px;
   color: #000000;
-  margin-bottom: 20px;
+  margin-bottom: 30px;
 }
 
 .plans-wrapper {
   display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 30px;
+  justify-content: center; 
+  flex-wrap: nowrap; 
+  gap: 20px; 
   padding: 0 10px;
 }
 
 .plan {
-  background-color: rgb(255, 255, 255);
-  background-blend-mode: darken;
-  border: 1px solid #a8a8a87f;
-  box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.15), 0px -4px 8px rgba(0, 0, 0, 0.1);
+  background-color: #ffffff;
+  border: 1px solid #dcdcdc;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
   border-radius: 10px;
-  padding: 25px;
-  width: 280px;
-  text-align: center;
-  transition: transform 0.4s ease, box-shadow 0.4s ease, background-size 0.4s ease;
+  padding: 20px;
+  width: 380px; 
+  text-align: left;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
   cursor: pointer;
-  background-size: cover;
-  background-position: center;
-  color: #090909;
 }
 
 .plan:hover {
-  transform: scale(1.1);
-  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+  transform: scale(1.05);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+.plan-header {
+  width: 100%;
+  height: 220px; 
+  background-color: #f0f0f0;
+  border-radius: 5px; 
+  margin-bottom: 15px;
+  overflow: hidden; 
+}
+
+.plan-header img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; 
+  display: block;
 }
 
 .plan h2 {
@@ -55,40 +67,37 @@ body {
 }
 
 .plan ul {
-  list-style: none;
-  padding: 0;
+  list-style: disc; 
+  padding-left: 20px; 
   margin: 0;
 }
 
 .plan ul li {
-  margin: 15px 0;
-  font-size: 15px;
-  color: #090909;
+  margin: 10px 0;
+  font-size: 16px;
+  line-height: 1.5;
+  color: #555555;
 }
 
-.plan ul li strong {
-  color: #ffe000;
-  font-weight: bold;
-}
-
-.daily {
-  background-image: url('');
-}
-
-.weekly {
-  background-image: url('');
-}
-
-.monthly {
-  background-image: url('');
-}
 
 .note {
-  font-size: 18px;
-  color: #000000;
-  margin-top: 20px;
-  padding: 10px;
+  font-size: 14px;
+  color: #333333;
+  margin-top: 40px;
+  padding: 15px;
+  background-color: #fff3cd;
+  border: 1px solid #ffeeba;
+  border-radius: 5px;
+  text-align: center;
+  width: 1190px; 
+  margin-left: auto;
+  margin-right: auto; 
 }
+
+.note strong {
+  color: #000000;
+}
+
 
 @media screen and (max-width: 768px) {
   .plans-wrapper {
@@ -96,7 +105,10 @@ body {
     align-items: center;
   }
   .plan {
-    width: 90%;
+    width: 90%; 
+  }
+  .note {
+    width: 90%; 
   }
 }
 
@@ -105,7 +117,7 @@ body {
     font-size: 26px;
   }
   .plan {
-    padding: 20px;
+    padding: 15px;
   }
   .plan h2 {
     font-size: 18px;
@@ -113,4 +125,4 @@ body {
   .plan ul li {
     font-size: 14px;
   }
-} 
+}
