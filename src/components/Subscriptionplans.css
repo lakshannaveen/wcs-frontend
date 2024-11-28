@@ -62,7 +62,6 @@ body {
   border: none; 
 }
 
-
 .plan h2 {
   font-size: 20px;
   margin-bottom: 15px;
@@ -91,7 +90,7 @@ body {
   border: 1px solid #ffeeba;
   border-radius: 5px;
   text-align: center;
-  width: 1190px;
+  width: 80%;
   margin-left: auto;
   margin-right: auto;
 }
@@ -100,9 +99,7 @@ body {
   color: #000000;
 }
 
-
-
-
+/* Responsive Design */
 @media screen and (max-width: 768px) {
   .plans-wrapper {
     flex-direction: column; 
@@ -116,12 +113,16 @@ body {
   .note {
     width: 95%; 
   }
-}
 
+  .subscription-title {
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+}
 
 @media screen and (max-width: 480px) {
   .subscription-title {
-    font-size: 22px; 
+    font-size: 20px; 
     margin-bottom: 20px;
   }
 
@@ -144,7 +145,6 @@ body {
     padding: 10px;
   }
 }
-
 
 @media screen and (min-width: 1200px) {
   .plans-wrapper {
