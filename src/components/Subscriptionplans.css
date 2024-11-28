@@ -1,5 +1,4 @@
 body {
-  font-family: "Arial", sans-serif;
   margin: 0;
   padding: 0;
   background-color: #f4f7f6;
@@ -149,19 +148,5 @@ body {
   .note {
     font-size: 12px; 
     padding: 10px;
-  }
-}
-
-@media screen and (min-width: 1200px) {
-  .plans-wrapper {
-    gap: 30px; 
-  }
-
-  .plan {
-    width: 400px; 
-  }
-
-  .note {
-    width: 80%; 
   }
 }
