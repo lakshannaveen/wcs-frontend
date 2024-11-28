@@ -21,9 +21,9 @@ body {
 
 .plans-wrapper {
   display: flex;
-  justify-content: center; 
-  flex-wrap: nowrap; 
-  gap: 20px; 
+  justify-content: center;
+  flex-wrap: nowrap;
+  gap: 20px;
   padding: 0 10px;
 }
 
@@ -33,7 +33,7 @@ body {
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
   border-radius: 10px;
   padding: 20px;
-  width: 380px; 
+  width: 380px;
   text-align: left;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   cursor: pointer;
@@ -47,17 +47,19 @@ body {
 .plan-header {
   width: 100%;
   height: 220px; 
-  background-color: #f0f0f0;
+  background-color: transparent; 
   border-radius: 5px; 
-  margin-bottom: 15px;
+  margin: 0; 
   overflow: hidden; 
+  padding: 0; 
 }
 
 .plan-header img {
   width: 100%;
-  height: 100%;
+  height: 100%; 
   object-fit: cover; 
   display: block;
+  border: none; 
 }
 
 .plan h2 {
@@ -67,8 +69,8 @@ body {
 }
 
 .plan ul {
-  list-style: disc; 
-  padding-left: 20px; 
+  list-style: disc;
+  padding-left: 20px;
   margin: 0;
 }
 
@@ -79,7 +81,6 @@ body {
   color: #555555;
 }
 
-
 .note {
   font-size: 14px;
   color: #333333;
@@ -89,40 +90,72 @@ body {
   border: 1px solid #ffeeba;
   border-radius: 5px;
   text-align: center;
-  width: 1190px; 
+  width: 80%;
   margin-left: auto;
-  margin-right: auto; 
+  margin-right: auto;
 }
 
 .note strong {
   color: #000000;
 }
 
-
+/* Responsive Design */
 @media screen and (max-width: 768px) {
   .plans-wrapper {
-    flex-direction: column;
-    align-items: center;
+    flex-direction: column; 
+    align-items: center; 
   }
+
   .plan {
-    width: 90%; 
+    width: 95%; 
   }
+
   .note {
-    width: 90%; 
+    width: 95%; 
+  }
+
+  .subscription-title {
+    font-size: 24px;
+    margin-bottom: 20px;
   }
 }
 
 @media screen and (max-width: 480px) {
   .subscription-title {
-    font-size: 26px;
+    font-size: 20px; 
+    margin-bottom: 20px;
   }
+
   .plan {
-    padding: 15px;
+    padding: 10px; 
+    border-radius: 8px; 
   }
+
   .plan h2 {
-    font-size: 18px;
+    font-size: 16px; 
+    margin-bottom: 10px;
   }
+
   .plan ul li {
-    font-size: 14px;
+    font-size: 12px; 
+  }
+
+  .note {
+    font-size: 12px; 
+    padding: 10px;
+  }
+}
+
+@media screen and (min-width: 1200px) {
+  .plans-wrapper {
+    gap: 30px; 
+  }
+
+  .plan {
+    width: 400px; 
+  }
+
+  .note {
+    width: 80%; 
   }
 }
