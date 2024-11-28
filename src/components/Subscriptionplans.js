@@ -10,7 +10,7 @@ function CustomSubscription() {
   return (
     <div className="subscription-container">
      
-      <h1 className="subscription-title">Subscription Plans</h1>
+      <h1 className="subscription-title"><strong>Subscription Plans</strong></h1>
 
       
       <div className="plans-wrapper">
