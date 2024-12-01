@@ -15,32 +15,114 @@ import VoiceNavigation from './components/VoiceNavigation';
 import Customguidance from './components/Wasteguidance';
 import MapPage from './pages/MapPage';
 import Search from './components/Search';
+import Checkout from './pages/Checkout';
 
+  
+function Layout({ children }) {
+  return (
 
+    <>
+      <CustomSNavbar />                {/* Every page content with these component */}
+      <VoiceNavigation />
+      {children}
+      <CustomFooter />
+    </>
+  );
+}
 
 function App() {
   return (
+    <div className="App">
     <Router>
+       {/* pages with navbar  */}
       <Scrolltop />
-      <div className="App">
-        <CustomSNavbar />
-        <VoiceNavigation />
-        <Routes>
-          <Route path="/" element={<CustomHome />} />
-          <Route path="/aboutus" element={<Aboutus />} />
-          <Route path="/contact" element={<Contactus />} />
-          <Route path="/feedback" element={<Feedback />} />
-          <Route path="/teamsandconditions" element={<Teamsandconditions />} />
-          <Route path="/privacy" element={<Privacy />} />
-          <Route path="/customprofile" element={<Customprofile />} />
-          <Route path="/customguidance" element={<Customguidance />} />
-          <Route path="/map" element={<MapPage />} />
-          <Route path="/search" element={<Search />} />
-          
-        </Routes>
-        <CustomFooter />
-      </div>
+      <Routes>
+        <Route
+          path="/"
+          element={
+            <Layout>
+              <CustomHome />
+            </Layout>
+          }
+        />
+        <Route
+          path="/aboutus"
+          element={
+            <Layout>
+              <Aboutus />
+            </Layout>
+          }
+        />
+        <Route
+          path="/contact"
+          element={
+            <Layout>
+              <Contactus />
+            </Layout>
+          }
+        />
+        <Route
+          path="/feedback"
+          element={
+            <Layout>
+              <Feedback />
+            </Layout>
+          }
+        />
+        <Route
+          path="/teamsandconditions"
+          element={
+            <Layout>
+              <Teamsandconditions />
+            </Layout>
+          }
+        />
+        <Route
+          path="/privacy"
+          element={
+            <Layout>
+              <Privacy />
+            </Layout>
+          }
+        />
+        <Route
+          path="/customprofile"
+          element={
+            <Layout>
+              <Customprofile />
+            </Layout>
+          }
+        />
+        <Route
+          path="/customguidance"
+          element={
+            <Layout>
+              <Customguidance />
+            </Layout>
+          }
+        />
+        <Route
+          path="/map"
+          element={
+            <Layout>
+              <MapPage />
+            </Layout>
+          }
+        />
+        <Route
+          path="/search"
+          element={
+            <Layout>
+              <Search />
+            </Layout>
+          }
+        />
+         {/* Pages without Navbar and Footer */}
+       
+        <Route path="/checkout" element={<Checkout />} />
+      </Routes>
     </Router>
+    </div>
   );
 }
 
