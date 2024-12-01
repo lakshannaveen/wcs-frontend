@@ -13,6 +13,8 @@ import Scrolltop from './components/Scrolltop';
 import Customprofile from './components/Profile';
 import VoiceNavigation from './components/VoiceNavigation';
 import Customguidance from './components/Wasteguidance';
+import MapPage from './pages/MapPage';
+import Search from './components/Search';
 
 
 
@@ -32,6 +34,9 @@ function App() {
           <Route path="/privacy" element={<Privacy />} />
           <Route path="/customprofile" element={<Customprofile />} />
           <Route path="/customguidance" element={<Customguidance />} />
+          <Route path="/map" element={<MapPage />} />
+          <Route path="/search" element={<Search />} />
+          
         </Routes>
         <CustomFooter />
       </div>
