@@ -17,6 +17,7 @@ import MapPage from './pages/MapPage';
 import Search from './components/Search';
 import Checkout from './pages/Checkout';
 import CustomLogin from './components/Login';
+import CustomRegister from './components/Register';
 
   
 function Layout({ children }) {
@@ -122,6 +123,7 @@ function App() {
        
         <Route path="/checkout" element={<Checkout />} />
         <Route path="/login" element={<CustomLogin />} />
+        <Route path="/register" element={<CustomRegister/>} />
       </Routes>
     </Router>
     </div>
