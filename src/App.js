@@ -16,6 +16,7 @@ import Customguidance from './components/Wasteguidance';
 import MapPage from './pages/MapPage';
 import Search from './components/Search';
 import Checkout from './pages/Checkout';
+import CustomLogin from './components/Login';
 
   
 function Layout({ children }) {
@@ -120,6 +121,7 @@ function App() {
          {/* Pages without Navbar and Footer */}
        
         <Route path="/checkout" element={<Checkout />} />
+        <Route path="/login" element={<CustomLogin />} />
       </Routes>
     </Router>
     </div>
