@@ -38,7 +38,7 @@ function CustomHome() {
       {/* card section */}
       <Row className='custom-card-group'>
         <Col md={3} className="d-flex justify-content-center">
-          <Link to='/subscriptionplans' className='card-link'>
+          <Link to='/customsubscription' className='card-link'>
             <Card className='custom-card'>
               <Card.Img variant="top" src={card1} alt='subscription' />
             </Card>

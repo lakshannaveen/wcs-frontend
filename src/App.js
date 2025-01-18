@@ -18,6 +18,7 @@ import Search from './components/Search';
 import Checkout from './pages/Checkout';
 import CustomLogin from './components/Login';
 import CustomRegister from './components/Register';
+import CustomSubscription from './components/Subscriptionplans';
 
   
 function Layout({ children }) {
@@ -124,6 +125,7 @@ function App() {
         <Route path="/checkout" element={<Checkout />} />
         <Route path="/login" element={<CustomLogin />} />
         <Route path="/register" element={<CustomRegister/>} />
+        <Route path="/customsubscription" element={<CustomSubscription/>} />
       </Routes>
     </Router>
     </div>
