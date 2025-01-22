@@ -192,6 +192,10 @@ function CustomRegister() {
               Register
             </button>
           </div>
+          <div className="login-link">
+  <p>Already have an account? <a href="/login">Login</a></p>
+</div>
+
         </form>
       </div>
     </div>

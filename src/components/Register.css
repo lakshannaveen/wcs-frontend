@@ -106,6 +106,15 @@
   font-size: 1rem;
   margin-top: 10px;
 }
+.login-link {
+  text-align: center;
+  margin-top: 10px;
+}
+
+.login-link a {
+  color: #007bff;
+  text-decoration: none;
+}
 
 @media (max-width: 768px) {
   .register-page .registerForm {
