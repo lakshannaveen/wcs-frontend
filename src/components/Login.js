@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import './Login.css';
+<<<<<<< HEAD
 
+=======
+>>>>>>> parent of 6a2cba2 (Add login)
 function CustomLogin() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -30,6 +33,7 @@ function CustomLogin() {
   };
 
   return (
+<<<<<<< HEAD
     <div className="logform">
       <form className="loginForm" onSubmit={handleSubmit}>
         <h1>Login</h1>
@@ -79,6 +83,10 @@ function CustomLogin() {
       </form>
     </div>
   );
+=======
+    <div> welecome to Login page</div>
+  )
+>>>>>>> parent of 6a2cba2 (Add login)
 }
 
 export default CustomLogin;
