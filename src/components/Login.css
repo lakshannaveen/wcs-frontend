@@ -1,0 +1,157 @@
+.logform{
+    padding-top: 3%;
+    padding-left: 30%;
+
+}
+
+
+.loginForm{
+    text-align: center;
+    box-shadow: 0 0 10px rgb(0, 0, 0);
+    
+}
+.formBody {
+    text-size-adjust: 5px;
+   
+    
+
+}
+
+  
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+.loginForm{
+    
+    height: 550px;
+    font-family: 'Poppins',sans-serif;
+    width: 500px;
+    
+    border: 2px solid rgb(0, 0, 0);
+    border-radius: 20px;
+    padding: 2+0px 50px;
+}
+.loginForm h1{
+    text-align: center;
+    font-size: 40px;
+    color: #28a745;
+}
+
+.loginForm .Box{/* uname % pw*/
+    position: relative;
+    width: 90%;
+    height: 90%;
+    border-radius: 50px;
+    
+    margin: 30px;
+}
+.Box input{ /*uname & Password*/
+    
+     width: 100%;
+     height: 100%;
+     background: transparent;
+     border: 2px solid rgb(11, 9, 9);
+     border-radius: 50px;
+     font-size: 15px;
+     color: rgb(6, 5, 5);
+     padding: 10px 25px 10px 30px;
+
+}
+.Box input::placeholder { 
+    color: rgb(1, 1, 1);
+    padding: 20px 45px 20px 10px;
+}
+
+.icon {
+    position: absolute;
+    right: 20px;
+    top: 20%;
+    font-size: 25px;
+   
+}
+.rem {/*remember me & forget*/
+    display: flex;
+    justify-content: space-between ;
+    font-size: 15px;
+    margin: -10px 50px 30px;
+
+}
+.rem a:hover {
+    color: #28a745;
+    text-decoration: underline;
+}
+.button{
+   
+    width: 100%;
+    text-align: center;
+    height: 45px;
+    border: 2px solid rgb(11, 9, 9);
+    font-weight: 700;
+    border-radius: 45px;
+    background: #28a745;
+  
+    cursor: pointer;/* curser ekt */
+    font-size: 16px;
+    color: #f5f5f5;
+    font-weight: 700;
+}
+.button{
+    padding: 10px 25px 10px 30px;
+}
+.register{
+    
+    text-align: center;
+    font-size: 16px;
+    margin-top: 20px;
+}
+.register a  {
+    text-decoration:none;
+   
+}
+.register a:hover {
+    color: #28a745;
+    text-decoration: underline;
+  
+}
+.loginicon {/*google login button ek*/
+    font-size: larger;
+    padding: 10px 0 0 10px;
+}
+.loginbutton{ 
+    width: 100%;
+    
+    
+    height: 45px;
+    border: 2px solid rgb(11, 9, 9);
+    border-radius: 45px;
+    background: #ffffff;
+    
+    
+    cursor: pointer;/* curser ek change wenn*/
+    font-size: 16px;
+    color: #000000;
+    font-weight: 700;
+    
+}
+.gicon {
+    text-align: left;
+  font-size:20px;
+    
+}
+.fbbutton {
+    width: 100%;
+    
+    
+    height: 45px;
+    border: 2px solid rgb(11, 9, 9);
+    border-radius: 45px;
+    background: #ffffff;
+    
+    
+    cursor: pointer;/* curser ek change wenn*/
+    font-size: 16px;
+    color: #000000;
+    font-weight: 700;
+}
