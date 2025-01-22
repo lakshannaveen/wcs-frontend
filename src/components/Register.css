@@ -1,87 +1,118 @@
-.regform {
-    padding-top: 3%;
-    padding-left: 30%;
+.register-page .regform {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #f8f9fa;
+  padding: 0 20px;
 }
 
-.registerForm {
-    text-align: center;
-    box-shadow: 0 0 10px rgb(0, 0, 0);
-    font-family: 'Poppins', sans-serif;
-    height: auto;
-    width: 500px;
-    border: 2px solid rgb(0, 0, 0);
-    border-radius: 20px;
-    padding: 20px 50px;
+.register-page .registerForm {
+  background-color: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  width: 100%;
+  max-width: 400px;
+  margin: 40px auto;
 }
 
-.registerForm h1 {
-    text-align: center;
-    font-size: 40px;
-    font-weight: 700 ;
-    color: #28a745;
+.register-page .registerForm h1 {
+  font-size: 1.8rem;
+  margin-bottom: 20px;
+  text-align: center;
 }
 
-.Box {
-    position: relative;
-    width: 100%;
-    height: 45px;
-    margin: 20px 0;
+.register-page .formBody {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
 }
 
-.Box input, .Box select {
-    width: 100%;
-    height: 100%;
-    background: transparent;
-    border: 2px solid rgb(11, 9, 9);
-    border-radius: 50px;
-    font-size: 15px;
-    color: rgb(6, 5, 5);
-    padding: 10px 25px 10px 30px;
+.register-page .Box {
+  display: flex;
+  flex-direction: column;
 }
 
-.Box input::placeholder {
-    color: rgb(1, 1, 1);
+.register-page .Box label {
+  margin-bottom: 5px;
+  font-weight: 500;
+  font-size: 1rem;
+  color: #495057;
+  text-align: left;
 }
 
-.dropdown {
-    appearance: none;
-    background-color: #070707;
-    cursor: pointer;
+.register-page .Box input,
+.register-page .Box select {
+  padding: 10px;
+  border: 1px solid #ced4da;
+  border-radius: 5px;
+  font-size: 1rem;
+  outline: none;
+  transition: border-color 0.2s ease-in-out;
 }
 
-.icon { /*icons*/
-    position: absolute;
-    right: 20px;
-    top: 50%;
-    transform: translateY(-50%);
-    font-size: 25px;
+.register-page .Box input:focus,
+.register-page .Box select:focus {
+  border-color: #28a745;
 }
 
-.button {
-    width: 100%;
-    text-align: center;
-    height: 45px;
-    border: 2px solid rgb(11, 9, 9);
-    font-weight: 700;
-    border-radius: 45px;
-    background: #28a745;
-    color: #f5f5f5;
-    cursor: pointer;
-    font-size: 16px;
-    font-weight: 700;
-    margin-top: 20px;
+.register-page button {
+  background-color: #28a745;
+  color: #ffffff;
+  padding: 10px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  width: 100%;
+  margin-top: 15px;
+  transition: background-color 0.3s ease-in-out;
 }
 
-.loginbutton, .fbbutton {
-    width: 100%;
-    height: 45px;
-    border: 2px solid rgb(11, 9, 9);
-    border-radius: 45px;
-    background: #ffffff;
-    font-size: 16px;
-    font-weight: 700;
-    cursor: pointer;
-    margin-top: 10px;
+.register-page button:hover {
+  background-color: #218838;
 }
 
+.register-page .password-strength {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 5px;
+}
 
+.register-page .password-strength-bar {
+  height: 5px;
+  width: 0;
+  transition: width 0.3s ease-in-out;
+  flex-grow: 1;
+}
+
+.register-page .strength-text {
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.register-page .strength-text.red {
+  color: #dc3545;
+}
+
+.register-page .strength-text.green {
+  color: #28a745;
+}
+
+.register-page .error {
+  color: red;
+  font-size: 1rem;
+  margin-top: 10px;
+}
+
+@media (max-width: 768px) {
+  .register-page .registerForm {
+    padding: 15px;
+  }
+
+  .register-page .registerForm h1 {
+    font-size: 1.6rem;
+  }
+}
