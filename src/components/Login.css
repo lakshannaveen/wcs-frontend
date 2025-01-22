@@ -1,0 +1,109 @@
+/* Scope styles specifically for the login page form */
+.logform {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #f8f9fa;
+  padding: 20px;
+}
+
+.loginForm {
+  background-color: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  padding: 30px;
+  width: 100%;
+  max-width: 400px;
+}
+
+.loginForm h1 {
+  font-size: 2rem;
+  margin-bottom: 20px;
+  color: #333333;
+  text-align: center;
+}
+
+.loginForm .formBody {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.loginForm .Box {
+  display: flex;
+  flex-direction: column;
+}
+
+.loginForm .Box label {
+  margin-bottom: 5px;
+  font-weight: 500; 
+  font-size: 1rem; 
+  color: #495057; 
+  text-align: left; 
+}
+
+.loginForm .Box input {
+  padding: 10px;
+  border: 1px solid #ced4da;
+  border-radius: 5px;
+  font-size: 1rem;
+  outline: none;
+  transition: border-color 0.2s ease-in-out;
+}
+
+.loginForm .Box input:focus {
+  border-color: #28a745;
+}
+
+.loginForm .Box input.error {
+  border-color: red;
+}
+
+.loginForm .error {
+  font-size: 0.85rem;
+  color: red;
+  margin-top: 5px;
+}
+
+.loginForm button {
+  background-color: #28a745;
+  color: #ffffff;
+  padding: 10px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  width: 100%;
+  margin-top: 10px;
+  transition: background-color 0.3s ease-in-out;
+}
+
+.loginForm button:hover {
+  background-color: #218838;
+}
+
+.loginForm .register {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+.loginForm .register label {
+  font-size: 0.9rem;
+}
+
+.loginForm .register a {
+  color: blue;
+  text-decoration: none;
+}
+
+@media (max-width: 768px) {
+  .loginForm {
+    padding: 20px;
+  }
+
+  .loginForm h1 {
+    font-size: 1.8rem;
+  }
+}
