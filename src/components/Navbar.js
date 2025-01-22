@@ -39,8 +39,8 @@ function CustomNavbar() {
              Subscription Plans
           </NavDropdown.Item>
             <div className="dropdown-divider" />
-        <NavDropdown.Item as={Link} to="/specialoffers" className="nav-dropdown-menu">
-                   Special Offers
+        <NavDropdown.Item as={Link} to="/wasteguidence" className="nav-dropdown-menu">
+                   Waste Guidence
           </NavDropdown.Item>
           </NavDropdown>
               <Nav.Link onClick={handleToggleSidebar} className="ms-2">
