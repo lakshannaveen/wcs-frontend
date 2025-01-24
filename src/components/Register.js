@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate
 import './Register.css';
 
 function CustomRegister() {
+  const navigate = useNavigate(); // Initialize useNavigate
   const [formData, setFormData] = useState({
     firstname: '',
     lastname: '',
@@ -12,6 +14,7 @@ function CustomRegister() {
   });
 
   const [error, setError] = useState('');
+  const [successMessage, setSuccessMessage] = useState(''); // Success message state
   const [passwordStrength, setPasswordStrength] = useState(0);
 
   const handleChange = (e) => {
@@ -40,54 +43,86 @@ function CustomRegister() {
     return strength;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-
-    // Validate first name, last name, and username (only letters)
+  
+    // Validate first name (only letters, no spaces)
     const nameRegex = /^[A-Za-z]+$/;
     if (!nameRegex.test(formData.firstname)) {
-      setError('First Name must only contain letters');
+      setError('First Name must only contain letters and no spaces');
       return;
     }
+  
+    // Validate last name (only letters, no spaces)
     if (!nameRegex.test(formData.lastname)) {
-      setError('Last Name must only contain letters');
+      setError('Last Name must only contain letters and no spaces');
       return;
     }
+  
+    // Validate username (only letters, no spaces)
     if (!nameRegex.test(formData.username)) {
-      setError('Username must only contain letters');
+      setError('Username must only contain letters and no spaces');
       return;
     }
-
+  
     // Validate email format
     const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
     if (!emailRegex.test(formData.email)) {
       setError('Please enter a valid email');
       return;
     }
-
+  
     // Validate password length
     if (formData.createpassword.length < 8) {
       setError('Password must be at least 8 characters long');
       return;
     }
-
+  
     // Check if passwords match
     if (formData.createpassword !== formData.confirmpassword) {
       setError('Passwords do not match');
       return;
     }
-
+  
     // If password strength is weak, show an error
     if (passwordStrength < 2) {
       setError('Password is too weak. Please choose a stronger password.');
       return;
     }
-
+  
     // If no errors, submit the form
     setError('');
-    alert('Registration successful!');
-    // Perform registration logic (e.g., API call)
+    try {
+      const response = await fetch('http://localhost:5002/api/users/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          firstname: formData.firstname,
+          lastname: formData.lastname,
+          username: formData.username,
+          email: formData.email,
+          createpassword: formData.createpassword,
+        }),
+      });
+  
+      const data = await response.json();
+  
+      if (response.ok) {
+        setSuccessMessage('Registration successful! Redirecting to home page...');
+        setTimeout(() => {
+          navigate('/'); // Redirect to the home page
+        }, 2000); // Delay for 2 seconds
+      } else {
+        setError(data.error || 'Registration failed. Please try again.');
+      }
+    } catch (error) {
+      console.error(error);
+      setError('Something went wrong. Please try again.');
+    }
   };
+  
 
   // Determine progress bar color based on password strength
   const getPasswordStrengthColor = () => {
@@ -187,15 +222,15 @@ function CustomRegister() {
             </div>
 
             {error && <div className="error">{error}</div>} {/* Display error message in red */}
+            {successMessage && <div className="success">{successMessage}</div>} {/* Display success message in green */}
 
             <button className="button" type="submit">
               Register
             </button>
           </div>
           <div className="login-link">
-  <p>Already have an account? <a href="/login">Login</a></p>
-</div>
-
+            <p>Already have an account? <a href="/login">Login</a></p>
+          </div>
         </form>
       </div>
     </div>
