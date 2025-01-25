@@ -1,14 +1,18 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom'; 
 import './Login.css';
 
 function CustomLogin() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState({ username: '', password: '' });
+  const [loading, setLoading] = useState(false);
+  const [successMessage, setSuccessMessage] = useState('');
+  const navigate = useNavigate(); // Initialize useNavigate hook
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-
+  
     // Validate username and password
     let errors = {};
     if (username.trim() === '') {
@@ -17,16 +21,38 @@ function CustomLogin() {
     if (password.length < 8) {
       errors.password = 'Password must be at least 8 characters long';
     }
-
+  
     if (Object.keys(errors).length > 0) {
       setErrorMessage(errors);
       return;
     }
-
+  
     // If validation passes, clear the error messages
     setErrorMessage({});
-    alert('Login successful!');
-    // Perform login logic (e.g., API call)
+    setLoading(true);
+  
+    try {
+      const response = await fetch('http://localhost:5002/api/users/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username, password }),
+      });
+  
+      const result = await response.json();
+      if (response.ok) {
+        setSuccessMessage('Login successful! Redirecting...');
+        setTimeout(() => {
+          navigate('/'); // go to home page
+        }, 2000); // Delay for 2 seconds
+      } else {
+        // Handle backend error messages for invalid username or password
+        setErrorMessage({ username: result.error || '', password: '' });
+      }
+    } catch (error) {
+      setErrorMessage({ username: 'Something went wrong. Please try again later.' });
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -34,6 +60,13 @@ function CustomLogin() {
       <form className="loginForm" onSubmit={handleSubmit}>
         <h1>Login</h1>
         <div className="formBody">
+          {/* Error messages */}
+          {errorMessage.username && (
+            <div className="error">{errorMessage.username}</div>
+          )}
+          {errorMessage.password && (
+            <div className="error">{errorMessage.password}</div>
+          )}
           <div className="Box">
             <label htmlFor="username">Username</label>
             <input
@@ -41,16 +74,10 @@ function CustomLogin() {
               id="username"
               name="username"
               placeholder="Enter your username"
-              style={{
-                borderColor: errorMessage.username ? 'red' : '#ccc',
-              }}
               value={username}
               onChange={(e) => setUsername(e.target.value)}
               required
             />
-            {errorMessage.username && (
-              <span className="error">{errorMessage.username}</span>
-            )}
           </div>
           <div className="Box">
             <label htmlFor="password">Password</label>
@@ -59,18 +86,15 @@ function CustomLogin() {
               id="password"
               name="password"
               placeholder="Enter your password"
-              style={{
-                borderColor: errorMessage.password ? 'red' : '#ccc',
-              }}
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
             />
-            {errorMessage.password && (
-              <span className="error">{errorMessage.password}</span>
-            )}
           </div>
-          <button className="button" type="submit">Login</button>
+          <button className="button" type="submit" disabled={loading}>
+            {loading ? 'Logging in...' : 'Login'}
+          </button>
+          {successMessage && <div className="success">{successMessage}</div>}
           <div className="register">
             <label>Don't have an account? </label>
             <a href="register">Register</a>
