@@ -19,13 +19,12 @@ import Checkout from './pages/Checkout';
 import CustomLogin from './components/Login';
 import CustomRegister from './components/Register';
 import CustomSubscription from './components/Subscriptionplans';
+import ProtectedRoute from './components/ProtectedRoute'; 
 
-  
 function Layout({ children }) {
   return (
-
     <>
-      <CustomSNavbar />                {/* Every page content with these component */}
+      <CustomSNavbar /> {/* Every page content with these components */}
       <VoiceNavigation />
       {children}
       <CustomFooter />
@@ -34,100 +33,106 @@ function Layout({ children }) {
 }
 
 function App() {
+  const isAuthenticated = true; // Replace with your actual authentication logic
+
   return (
     <div className="App">
-    <Router>
-       {/* pages with navbar  */}
-      <Scrolltop />
-      <Routes>
-        <Route
-          path="/"
-          element={
-            <Layout>
-              <CustomHome />
-            </Layout>
-          }
-        />
-        <Route
-          path="/aboutus"
-          element={
-            <Layout>
-              <Aboutus />
-            </Layout>
-          }
-        />
-        <Route
-          path="/contact"
-          element={
-            <Layout>
-              <Contactus />
-            </Layout>
-          }
-        />
-        <Route
-          path="/feedback"
-          element={
-            <Layout>
-              <Feedback />
-            </Layout>
-          }
-        />
-        <Route
-          path="/teamsandconditions"
-          element={
-            <Layout>
-              <Teamsandconditions />
-            </Layout>
-          }
-        />
-        <Route
-          path="/privacy"
-          element={
-            <Layout>
-              <Privacy />
-            </Layout>
-          }
-        />
-        <Route
-          path="/customprofile"
-          element={
-            <Layout>
-              <Customprofile />
-            </Layout>
-          }
-        />
-        <Route
-          path="/customguidance"
-          element={
-            <Layout>
-              <Customguidance />
-            </Layout>
-          }
-        />
-        <Route
-          path="/map"
-          element={
-            <Layout>
-              <MapPage />
-            </Layout>
-          }
-        />
-        <Route
-          path="/search"
-          element={
-            <Layout>
-              <Search />
-            </Layout>
-          }
-        />
-         {/* Pages without Navbar and Footer */}
-       
-        <Route path="/checkout" element={<Checkout />} />
-        <Route path="/login" element={<CustomLogin />} />
-        <Route path="/register" element={<CustomRegister/>} />
-        <Route path="/customsubscription" element={<CustomSubscription/>} />
-      </Routes>
-    </Router>
+      <Router>
+        <Scrolltop />
+        <Routes>
+          {/* Public Route: Accessible without authentication */}
+          <Route
+            path="/"
+            element={
+              <Layout>
+                <CustomHome />
+              </Layout>
+            }
+          />
+
+          {/* Protected Routes: These will require authentication */}
+          <Route element={<ProtectedRoute isAuthenticated={isAuthenticated} />}>
+            <Route
+              path="/aboutus"
+              element={
+                <Layout>
+                  <Aboutus />
+                </Layout>
+              }
+            />
+            <Route
+              path="/contact"
+              element={
+                <Layout>
+                  <Contactus />
+                </Layout>
+              }
+            />
+            <Route
+              path="/feedback"
+              element={
+                <Layout>
+                  <Feedback />
+                </Layout>
+              }
+            />
+            <Route
+              path="/teamsandconditions"
+              element={
+                <Layout>
+                  <Teamsandconditions />
+                </Layout>
+              }
+            />
+            <Route
+              path="/privacy"
+              element={
+                <Layout>
+                  <Privacy />
+                </Layout>
+              }
+            />
+            <Route
+              path="/customprofile"
+              element={
+                <Layout>
+                  <Customprofile />
+                </Layout>
+              }
+            />
+            <Route
+              path="/customguidance"
+              element={
+                <Layout>
+                  <Customguidance />
+                </Layout>
+              }
+            />
+            <Route
+              path="/map"
+              element={
+                <Layout>
+                  <MapPage />
+                </Layout>
+              }
+            />
+            <Route
+              path="/search"
+              element={
+                <Layout>
+                  <Search />
+                </Layout>
+              }
+            />
+          </Route>
+
+          {/* Pages without Navbar and Footer (accessible without login) */}
+          <Route path="/checkout" element={<Checkout />} />
+          <Route path="/login" element={<CustomLogin />} />
+          <Route path="/register" element={<CustomRegister />} />
+          <Route path="/customsubscription" element={<CustomSubscription />} />
+        </Routes>
+      </Router>
     </div>
   );
 }

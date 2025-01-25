@@ -40,17 +40,24 @@ function CustomLogin() {
       });
 
       const result = await response.json();
+      
       if (response.ok) {
+        // Successful login
         setSuccessMessage('Login successful!');
         setShowModal(true); // Show the success modal
+
+        // Optionally store JWT in local storage or set a global state
+        localStorage.setItem('token', result.token);
+
         setTimeout(() => {
-          navigate('/'); // Go to home page
+          navigate('/'); // Redirect to home page after 2 seconds
         }, 2000); // Delay for 2 seconds
       } else {
         // Handle backend error messages for invalid username or password
         setErrorMessage({ username: result.error || '', password: '' });
       }
     } catch (error) {
+      console.error('Error during login:', error);
       setErrorMessage({ username: 'Something went wrong. Please try again later.' });
     } finally {
       setLoading(false);
@@ -100,7 +107,7 @@ function CustomLogin() {
           </button>
           <div className="register">
             <label>Don't have an account? </label>
-            <a href="register">Register</a>
+            <a href="/register">Register</a>
           </div>
         </div>
       </form>
