@@ -1,4 +1,4 @@
-.register-page .regform {
+.register-page {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -7,7 +7,7 @@
   padding: 0 20px;
 }
 
-.register-page .registerForm {
+.register-page .regform {
   background-color: #ffffff;
   border-radius: 10px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
@@ -55,6 +55,16 @@
 .register-page .Box input:focus,
 .register-page .Box select:focus {
   border-color: #28a745;
+}
+
+.register-page .checkbox-container {
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.register-page .checkbox-container input {
+  margin-right: 10px;
 }
 
 .register-page button {
@@ -106,6 +116,13 @@
   font-size: 1rem;
   margin-top: 10px;
 }
+
+.register-page .success {
+  color: green;
+  font-size: 1rem;
+  margin-top: 10px;
+}
+
 .login-link {
   text-align: center;
   margin-top: 10px;

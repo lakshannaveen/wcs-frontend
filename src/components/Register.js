@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom'; // Import useNavigate
+import { useNavigate } from 'react-router-dom';
 import './Register.css';
 
 function CustomRegister() {
-  const navigate = useNavigate(); // Initialize useNavigate
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     firstname: '',
     lastname: '',
@@ -14,82 +14,85 @@ function CustomRegister() {
   });
 
   const [error, setError] = useState('');
-  const [successMessage, setSuccessMessage] = useState(''); // Success message state
+  const [successMessage, setSuccessMessage] = useState('');
   const [passwordStrength, setPasswordStrength] = useState(0);
+  const [isChecked, setIsChecked] = useState(false); // State for checkbox validation
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
 
-    // Update password strength on password change
     if (name === 'createpassword') {
-      setPasswordStrength(calculatePasswordStrength(value));
+      setPasswordStrength(calculatePasswordStrength(value)); // Update password strength dynamically
     }
   };
 
+  const handleCheckboxChange = (e) => {
+    setIsChecked(e.target.checked); // Update checkbox state
+  };
+
   const calculatePasswordStrength = (password) => {
-    if (password.length < 8) return 0; // Weak if less than 8 characters
+    if (password.length < 8) return 0;
     let strength = 0;
-
-    // Check for mixed case letters
-    if (/[a-z]/.test(password) && /[A-Z]/.test(password)) strength += 1;
-
-    // Check for numbers
-    if (/\d/.test(password)) strength += 1;
-
-    // Check for special characters (optional)
-    if (/[!@#$%^&*(),.?":{}|<>]/.test(password)) strength += 1;
-
+    if (/[a-z]/.test(password) && /[A-Z]/.test(password)) strength += 1; // Check for mixed case
+    if (/\d/.test(password)) strength += 1; // Check for numbers
+    if (/[!@#$%^&*(),.?":{}|<>]/.test(password)) strength += 1; // Check for special characters
     return strength;
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
+
+    // Ensure the user has agreed to the Terms and Conditions
+    if (!isChecked) {
+      setError('You must agree to the Terms and Conditions and Privacy Policy.');
+      return;
+    }
+
     // Validate first name (only letters, no spaces)
     const nameRegex = /^[A-Za-z]+$/;
     if (!nameRegex.test(formData.firstname)) {
       setError('First Name must only contain letters and no spaces');
       return;
     }
-  
+
     // Validate last name (only letters, no spaces)
     if (!nameRegex.test(formData.lastname)) {
       setError('Last Name must only contain letters and no spaces');
       return;
     }
-  
+
     // Validate username (only letters, no spaces)
     if (!nameRegex.test(formData.username)) {
       setError('Username must only contain letters and no spaces');
       return;
     }
-  
+
     // Validate email format
     const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
     if (!emailRegex.test(formData.email)) {
       setError('Please enter a valid email');
       return;
     }
-  
+
     // Validate password length
     if (formData.createpassword.length < 8) {
       setError('Password must be at least 8 characters long');
       return;
     }
-  
+
     // Check if passwords match
     if (formData.createpassword !== formData.confirmpassword) {
       setError('Passwords do not match');
       return;
     }
-  
+
     // If password strength is weak, show an error
     if (passwordStrength < 2) {
       setError('Password is too weak. Please choose a stronger password.');
       return;
     }
-  
+
     // If no errors, submit the form
     setError('');
     try {
@@ -106,9 +109,9 @@ function CustomRegister() {
           createpassword: formData.createpassword,
         }),
       });
-  
+
       const data = await response.json();
-  
+
       if (response.ok) {
         setSuccessMessage('Registration successful! Redirecting to home page...');
         setTimeout(() => {
@@ -122,9 +125,7 @@ function CustomRegister() {
       setError('Something went wrong. Please try again.');
     }
   };
-  
 
-  // Determine progress bar color based on password strength
   const getPasswordStrengthColor = () => {
     if (passwordStrength === 0) return 'red';
     return 'green';
@@ -194,7 +195,6 @@ function CustomRegister() {
                 onChange={handleChange}
                 required
               />
-              {/* Password Strength Progress Bar */}
               <div className="password-strength">
                 <div
                   className="password-strength-bar"
@@ -221,8 +221,22 @@ function CustomRegister() {
               />
             </div>
 
-            {error && <div className="error">{error}</div>} {/* Display error message in red */}
-            {successMessage && <div className="success">{successMessage}</div>} {/* Display success message in green */}
+            {/* Terms and Conditions Checkbox */}
+                      <div className="checkbox-container">
+            <input
+              type="checkbox"
+              name="terms"
+              checked={isChecked}
+              onChange={handleCheckboxChange}
+              id="terms"
+            />
+            <label htmlFor="terms">
+              I agree to the <span>Privacy Policy</span> and <span>TAQ</span>
+            </label>
+          </div>
+
+            {error && <div className="error">{error}</div>}
+            {successMessage && <div className="success">{successMessage}</div>}
 
             <button className="button" type="submit">
               Register
