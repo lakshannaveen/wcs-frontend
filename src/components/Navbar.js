@@ -80,32 +80,27 @@ function CustomNavbar() {
         placement="end"
         className="offcanvas-custom"
       >
-        <Offcanvas.Header closeButton>
-          <Offcanvas.Title>Profile</Offcanvas.Title>
-        </Offcanvas.Header>
-        <Offcanvas.Body>
-          <Nav className="flex-column">
-            {user ? (
-              <>
-                <Nav.Link as={Link} to="/profile">
-                  View Profile
-                </Nav.Link>
-                <Nav.Link as={Link} to="/logout" className="logout-link">
-                  Logout
-                </Nav.Link>
-              </>
-            ) : (
-              <>
-                <Nav.Link as={Link} to="/login">
-                  Log In
-                </Nav.Link>
-                <Nav.Link as={Link} to="/register">
-                  Register
-                </Nav.Link>
-              </>
-            )}
-          </Nav>
-        </Offcanvas.Body>
+            <Offcanvas.Header closeButton>
+            <Offcanvas.Title>Profile</Offcanvas.Title>
+          </Offcanvas.Header>
+          <Offcanvas.Body>
+            <Nav className="flex-column">
+              <Nav.Link as={Link} to="/editprofile">
+                Edit Profile
+              </Nav.Link>
+              <Nav.Link as={Link} to="/logout" className="logout-link">
+                Logout
+              </Nav.Link>
+              {/* These will always show */}
+              <Nav.Link as={Link} to="/login">
+                Log In
+              </Nav.Link>
+              <Nav.Link as={Link} to="/register">
+                Register
+              </Nav.Link>
+            </Nav>
+          </Offcanvas.Body>
+
       </Offcanvas>
     </div>
   );
