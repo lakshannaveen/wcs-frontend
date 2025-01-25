@@ -8,17 +8,26 @@ import Offcanvas from "react-bootstrap/Offcanvas";
 import logo from "../images/logo.JPEG";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom"; // Use useNavigate instead of useHistory
+import Cookies from "js-cookie"; // Library for managing cookies
 
 function CustomNavbar() {
   const [showSidebar, setShowSidebar] = useState(false);
   const [user, setUser] = useState(null); // State to store user data
+  const navigate = useNavigate(); // Use useNavigate for navigation
 
-  // Function to fetch user data (e.g., from localStorage or API)
+  // Function to fetch user data from the JWT token in cookies
   const fetchUserData = () => {
-    // Assuming you fetch the user data from localStorage or API
-    const userData = JSON.parse(localStorage.getItem("user")); // Example from localStorage
-    setUser(userData); // Set user data to state
+    const token = Cookies.get("jwt_token"); // Get JWT token from cookies
+    if (token) {
+      // Decode token and fetch user data (You might need to decode the JWT to get user info)
+      try {
+        const decodedToken = JSON.parse(atob(token.split(".")[1])); // Decoding JWT token
+        setUser(decodedToken); // Set user data to state
+      } catch (error) {
+        console.error("Failed to decode token:", error);
+      }
+    }
   };
 
   useEffect(() => {
@@ -33,6 +42,18 @@ function CustomNavbar() {
     const firstInitial = user.firstname.charAt(0).toUpperCase();
     const lastInitial = user.lastname.charAt(0).toUpperCase();
     return `${firstInitial}${lastInitial}`;
+  };
+
+  // Function to handle logout and clear the JWT token from cookies
+  const handleLogout = () => {
+    // Show confirmation dialog only on logout
+    if (window.confirm("Are you sure you want to log out?")) {
+      // Clear JWT token from cookies
+      Cookies.remove("jwt_token"); // Remove the JWT token from cookies
+
+      // Redirect to login page after logout
+      navigate("/login");
+    }
   };
 
   return (
@@ -62,7 +83,7 @@ function CustomNavbar() {
                 <NavDropdown.Item as={Link} to="/customguidance" className="nav-dropdown-menu">
                   Waste Guidance
                 </NavDropdown.Item>
-              </NavDropdown> 
+              </NavDropdown>
               <Nav.Link onClick={handleToggleSidebar} className="ms-2">
                 <div className="profile-icon">
                   {user ? getProfileInitials() : <FontAwesomeIcon icon={faUser} size="lg" />}
@@ -80,27 +101,28 @@ function CustomNavbar() {
         placement="end"
         className="offcanvas-custom"
       >
-            <Offcanvas.Header closeButton>
-            <Offcanvas.Title>Profile</Offcanvas.Title>
-          </Offcanvas.Header>
-          <Offcanvas.Body>
-            <Nav className="flex-column">
-              <Nav.Link as={Link} to="/editprofile">
-                Edit Profile
-              </Nav.Link>
-              <Nav.Link as={Link} to="/logout" className="logout-link">
-                Logout
-              </Nav.Link>
-              {/* These will always show */}
-              <Nav.Link as={Link} to="/login">
-                Log In
-              </Nav.Link>
-              <Nav.Link as={Link} to="/register">
-                Register
-              </Nav.Link>
-            </Nav>
-          </Offcanvas.Body>
-
+        <Offcanvas.Header closeButton>
+          <Offcanvas.Title>Profile</Offcanvas.Title>
+        </Offcanvas.Header>
+        <Offcanvas.Body>
+          <Nav className="flex-column">
+            {/* Removed Logout link */}
+            <Nav.Link as={Link} to="/editprofile">
+              Edit Profile
+            </Nav.Link>
+            {/* Log In and Register will always show */}
+            <Nav.Link as={Link} to="/login">
+              Log In
+            </Nav.Link>
+            <Nav.Link as={Link} to="/register">
+              Register
+            </Nav.Link>
+            {/* Logout link */}
+            <Nav.Link onClick={handleLogout} className="logout-link">
+              Log Out
+            </Nav.Link>
+          </Nav>
+        </Offcanvas.Body>
       </Offcanvas>
     </div>
   );
