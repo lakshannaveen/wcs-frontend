@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Register.css';
+import Cookies from 'js-cookie'; // To manage cookies
 
 function CustomRegister() {
   const navigate = useNavigate();
@@ -116,6 +117,10 @@ function CustomRegister() {
       if (response.ok) {
         setSuccessMessage('Registration successful!');
         setShowModal(true); // Show success modal
+
+        // Set JWT in cookies after successful registration
+        Cookies.set('token', data.token, { expires: 1 }); // 1 day expiration for the cookie
+
         setTimeout(() => {
           navigate('/'); // Redirect to the home page after 2 seconds
         }, 2000); // Delay for 2 seconds

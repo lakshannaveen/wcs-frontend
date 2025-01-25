@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./Navbar.css";
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
@@ -12,8 +12,28 @@ import { Link } from "react-router-dom";
 
 function CustomNavbar() {
   const [showSidebar, setShowSidebar] = useState(false);
+  const [user, setUser] = useState(null); // State to store user data
+
+  // Function to fetch user data (e.g., from localStorage or API)
+  const fetchUserData = () => {
+    // Assuming you fetch the user data from localStorage or API
+    const userData = JSON.parse(localStorage.getItem("user")); // Example from localStorage
+    setUser(userData); // Set user data to state
+  };
+
+  useEffect(() => {
+    fetchUserData(); // Fetch user data when the component mounts
+  }, []);
 
   const handleToggleSidebar = () => setShowSidebar(!showSidebar);
+
+  // Function to create the profile initials
+  const getProfileInitials = () => {
+    if (!user) return "";
+    const firstInitial = user.firstname.charAt(0).toUpperCase();
+    const lastInitial = user.lastname.charAt(0).toUpperCase();
+    return `${firstInitial}${lastInitial}`;
+  };
 
   return (
     <div>
@@ -35,16 +55,18 @@ function CustomNavbar() {
                 Home
               </Nav.Link>
               <NavDropdown title="Guidance" id="basic-nav-dropdown">
-           <NavDropdown.Item as={Link} to="/customsubscription" className="nav-dropdown-menu">
-             Subscription Plans
-          </NavDropdown.Item>
-            <div className="dropdown-divider" />
-        <NavDropdown.Item as={Link} to="/customguidance" className="nav-dropdown-menu">
-                   Waste Guidance
-          </NavDropdown.Item>
-          </NavDropdown> 
-             <Nav.Link onClick={handleToggleSidebar} className="ms-2">
-                <FontAwesomeIcon icon={faUser} size="lg" />
+                <NavDropdown.Item as={Link} to="/customsubscription" className="nav-dropdown-menu">
+                  Subscription Plans
+                </NavDropdown.Item>
+                <div className="dropdown-divider" />
+                <NavDropdown.Item as={Link} to="/customguidance" className="nav-dropdown-menu">
+                  Waste Guidance
+                </NavDropdown.Item>
+              </NavDropdown> 
+              <Nav.Link onClick={handleToggleSidebar} className="ms-2">
+                <div className="profile-icon">
+                  {user ? getProfileInitials() : <FontAwesomeIcon icon={faUser} size="lg" />}
+                </div>
               </Nav.Link>
             </Nav>
           </Navbar.Collapse>
@@ -63,18 +85,25 @@ function CustomNavbar() {
         </Offcanvas.Header>
         <Offcanvas.Body>
           <Nav className="flex-column">
-            <Nav.Link as={Link} to="/login">
-              Log In
-            </Nav.Link>
-            <Nav.Link as={Link} to="/register">
-              Register
-            </Nav.Link>
-            <Nav.Link as={Link} to="/Customprofile">
-              Edit Profile
-            </Nav.Link>
-            <Nav.Link as={Link} to="/logout" className="logout-link">
-              Logout
-            </Nav.Link>
+            {user ? (
+              <>
+                <Nav.Link as={Link} to="/profile">
+                  View Profile
+                </Nav.Link>
+                <Nav.Link as={Link} to="/logout" className="logout-link">
+                  Logout
+                </Nav.Link>
+              </>
+            ) : (
+              <>
+                <Nav.Link as={Link} to="/login">
+                  Log In
+                </Nav.Link>
+                <Nav.Link as={Link} to="/register">
+                  Register
+                </Nav.Link>
+              </>
+            )}
           </Nav>
         </Offcanvas.Body>
       </Offcanvas>
