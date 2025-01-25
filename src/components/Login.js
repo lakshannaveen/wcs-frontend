@@ -8,11 +8,12 @@ function CustomLogin() {
   const [errorMessage, setErrorMessage] = useState({ username: '', password: '' });
   const [loading, setLoading] = useState(false);
   const [successMessage, setSuccessMessage] = useState('');
+  const [showModal, setShowModal] = useState(false); // State for showing the modal
   const navigate = useNavigate(); // Initialize useNavigate hook
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
+
     // Validate username and password
     let errors = {};
     if (username.trim() === '') {
@@ -21,28 +22,29 @@ function CustomLogin() {
     if (password.length < 8) {
       errors.password = 'Password must be at least 8 characters long';
     }
-  
+
     if (Object.keys(errors).length > 0) {
       setErrorMessage(errors);
       return;
     }
-  
+
     // If validation passes, clear the error messages
     setErrorMessage({});
     setLoading(true);
-  
+
     try {
       const response = await fetch('http://localhost:5002/api/users/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ username, password }),
       });
-  
+
       const result = await response.json();
       if (response.ok) {
-        setSuccessMessage('Login successful! Redirecting...');
+        setSuccessMessage('Login successful!');
+        setShowModal(true); // Show the success modal
         setTimeout(() => {
-          navigate('/'); // go to home page
+          navigate('/'); // Go to home page
         }, 2000); // Delay for 2 seconds
       } else {
         // Handle backend error messages for invalid username or password
@@ -54,6 +56,8 @@ function CustomLogin() {
       setLoading(false);
     }
   };
+
+  const closeModal = () => setShowModal(false); // Close modal handler
 
   return (
     <div className="logform">
@@ -94,13 +98,22 @@ function CustomLogin() {
           <button className="button" type="submit" disabled={loading}>
             {loading ? 'Logging in...' : 'Login'}
           </button>
-          {successMessage && <div className="success">{successMessage}</div>}
           <div className="register">
             <label>Don't have an account? </label>
             <a href="register">Register</a>
           </div>
         </div>
       </form>
+
+      {/* Modal for success message */}
+      {showModal && (
+        <div className="modal-overlay" onClick={closeModal}>
+          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+            <h2>{successMessage}</h2>
+            <button onClick={closeModal}>Close</button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

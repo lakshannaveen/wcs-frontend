@@ -17,6 +17,7 @@ function CustomRegister() {
   const [successMessage, setSuccessMessage] = useState('');
   const [passwordStrength, setPasswordStrength] = useState(0);
   const [isChecked, setIsChecked] = useState(false); // State for checkbox validation
+  const [showModal, setShowModal] = useState(false); // State for showing success modal
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -113,9 +114,10 @@ function CustomRegister() {
       const data = await response.json();
 
       if (response.ok) {
-        setSuccessMessage('Registration successful! Redirecting to home page...');
+        setSuccessMessage('Registration successful!');
+        setShowModal(true); // Show success modal
         setTimeout(() => {
-          navigate('/'); // Redirect to the home page
+          navigate('/'); // Redirect to the home page after 2 seconds
         }, 2000); // Delay for 2 seconds
       } else {
         setError(data.error || 'Registration failed. Please try again.');
@@ -222,18 +224,18 @@ function CustomRegister() {
             </div>
 
             {/* Terms and Conditions Checkbox */}
-                      <div className="checkbox-container">
-            <input
-              type="checkbox"
-              name="terms"
-              checked={isChecked}
-              onChange={handleCheckboxChange}
-              id="terms"
-            />
-            <label htmlFor="terms">
-              I agree to the <span>Privacy Policy</span> and <span>TAQ</span>
-            </label>
-          </div>
+            <div className="checkbox-container">
+              <input
+                type="checkbox"
+                name="terms"
+                checked={isChecked}
+                onChange={handleCheckboxChange}
+                id="terms"
+              />
+              <label htmlFor="terms">
+                I agree to the <span>Privacy Policy</span> and <span>TAQ</span>
+              </label>
+            </div>
 
             {error && <div className="error">{error}</div>}
             {successMessage && <div className="success">{successMessage}</div>}
@@ -247,6 +249,16 @@ function CustomRegister() {
           </div>
         </form>
       </div>
+
+      {/* Success Modal */}
+      {showModal && (
+        <div className="modal-overlay" onClick={() => setShowModal(false)}>
+          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+            <h2>{successMessage}</h2>
+            <button onClick={() => setShowModal(false)}>Close</button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
