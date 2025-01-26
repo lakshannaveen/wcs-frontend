@@ -13,43 +13,61 @@ function Wasteguidance() {
       <div className="row gy-4">
         <div className="col-md-4 col-sm-12">
           <div className="card shadow-sm h-100">
-            <img src={guidance1} alt="Food Waste Guidance" className="card-img-top" />
+            <img
+              src={guidance1}
+              alt="Food Waste Guidance"
+              className="card-img-top"
+            />
             <div className="card-body">
               <h5 className="card-title">Food Waste</h5>
               <p className="card-text">
                 Please dispose of all organic food scraps in this bin. <br />
-                <strong>Examples:</strong> Fruit peels, vegetable trimmings, and leftover food.
+                <strong>Examples:</strong> Fruit peels, vegetable trimmings, and
+                leftover food.
               </p>
             </div>
           </div>
         </div>
         <div className="col-md-4 col-sm-12">
           <div className="card shadow-sm h-100">
-            <img src={guidance2} alt="Degradable Waste Guidance" className="card-img-top" />
+            <img
+              src={guidance2}
+              alt="Degradable Waste Guidance"
+              className="card-img-top"
+            />
             <div className="card-body">
               <h5 className="card-title">Degradable Waste</h5>
               <p className="card-text">
-                Use this bin for biodegradable items that can break down naturally. <br />
-                <strong>Examples:</strong> Paper, cardboard, and garden waste like leaves and branches.
+                Use this bin for biodegradable items that can break down
+                naturally. <br />
+                <strong>Examples:</strong> Paper, cardboard, and garden waste
+                like leaves and branches.
               </p>
             </div>
           </div>
         </div>
         <div className="col-md-4 col-sm-12">
           <div className="card shadow-sm h-100">
-            <img src={guidance3} alt="Non-Degradable Waste Guidance" className="card-img-top" />
+            <img
+              src={guidance3}
+              alt="Non-Degradable Waste Guidance"
+              className="card-img-top"
+            />
             <div className="card-body">
               <h5 className="card-title">Non-Degradable Waste</h5>
               <p className="card-text">
                 Place all non-recyclable items in this bin. <br />
-                <strong>Examples:</strong> Plastic wrappers, broken electronics, and ceramic items.
+                <strong>Examples:</strong> Plastic wrappers, broken
+                electronics, and ceramic items.
               </p>
             </div>
           </div>
         </div>
       </div>
       <div className="alert alert-warning mt-4" role="alert">
-        <strong>Important:</strong> Proper waste segregation is mandatory. Ensuring that you dispose of waste in the correct bin helps maintain an efficient and eco-friendly collection system for everyone.
+        <strong>Important:</strong> Proper waste segregation is mandatory.
+        Ensuring that you dispose of waste in the correct bin helps maintain an
+        efficient and eco-friendly collection system for everyone.
       </div>
     </div>
   );

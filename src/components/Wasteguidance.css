@@ -23,9 +23,24 @@
 .card-img-top {
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
-  height: auto;
   width: 100%;
+  height: auto;
   object-fit: contain;
+}
+
+@media (max-width: 768px) {
+  .card-img-top {
+    object-fit: contain;
+    max-height: none;
+  }
+
+  .card-text {
+    font-size: 0.85rem;
+  }
+
+  .card {
+    margin-bottom: 20px;
+  }
 }
 
 .alert {
@@ -38,19 +53,4 @@
 
 h2 {
   font-weight: bold;
-}
-
-/* Responsive Adjustments */
-@media (max-width: 768px) {
-  .card-img-top {
-    height: 180px;
-  }
-
-  .card-text {
-    font-size: 0.85rem;
-  }
-
-  .card {
-    margin-bottom: 20px;
-  }
 }
