@@ -8,13 +8,13 @@ import Offcanvas from "react-bootstrap/Offcanvas";
 import logo from "../images/logo.JPEG";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
-import { Link, useNavigate } from "react-router-dom"; // Use useNavigate instead of useHistory
-import Cookies from "js-cookie"; // Library for managing cookies
+import { Link, useNavigate } from "react-router-dom"; 
+import Cookies from "js-cookie"; 
 
 function CustomNavbar() {
   const [showSidebar, setShowSidebar] = useState(false);
   const [user, setUser] = useState(null); // State to store user data
-  const navigate = useNavigate(); // Use useNavigate for navigation
+  const navigate = useNavigate(); 
 
   // Function to fetch user data from the JWT token in cookies
   const fetchUserData = () => {
@@ -22,8 +22,8 @@ function CustomNavbar() {
     // Get JWT token from cookies
     if (token) {
       try {
-        const decodedToken = JSON.parse(atob(token.split(".")[1])); // Decode JWT token
-        console.log("Decoded Token:", decodedToken); // Debugging: Check the decoded token
+        const decodedToken = JSON.parse(atob(token.split(".")[1])); 
+        console.log("Decoded Token:", decodedToken); 
         setUser(decodedToken); // Set user data (username and more) to state
       } catch (error) {
         console.error("Failed to decode token:", error);
@@ -33,30 +33,37 @@ function CustomNavbar() {
     }
   };
   
-  
-
   useEffect(() => {
-    fetchUserData(); // Fetch user data when the component mounts
+    fetchUserData(); 
   }, []);
 
   const handleToggleSidebar = () => setShowSidebar(!showSidebar);
 
+  // Function to generate a background color based on the username
+  const generateBackgroundColor = (username) => {
+    if (!username) return 'gray'; // Default color 
+    
+    // Generate a color 
+    const hashCode = username.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
+    const hue = hashCode % 360; 
+    return `hsl(${hue}, 70%, 50%)`; // Return a color from HSL format
+  };
+
   // Function to create the profile initials
   const getProfileInitials = () => {
-    if (!user || !user.username) return ""; // Handle cases where user or username is null
-    return user.username.charAt(0).toUpperCase(); // Get the first letter of the username
+    if (!user || !user.username) return ""; 
+    return user.username.charAt(0).toUpperCase(); 
   };
   
 
   // Function to handle logout and clear the JWT token from cookies
   const handleLogout = () => {
-    // Show confirmation dialog only on logout
     if (window.confirm("Are you sure you want to log out?")) {
       // Clear JWT token from cookies
-      Cookies.remove("token"); // Remove the JWT token from cookies
+      Cookies.remove("token"); 
 
-      // Redirect to login page after logout
-      navigate("/login");
+      
+      navigate("/");
     }
   };
 
@@ -89,15 +96,17 @@ function CustomNavbar() {
                 </NavDropdown.Item>
               </NavDropdown>
               <Nav.Link onClick={handleToggleSidebar} className="ms-2">
-              <div className="profile-icon">
-                {user ? (
-                  getProfileInitials() // Show the first letter of the username
-                ) : (
-                  <FontAwesomeIcon icon={faUser} size="lg" /> // Default icon
-                )}
-              </div>
-            </Nav.Link>
-
+                <div
+                  className="profile-icon"
+                  style={{ backgroundColor: user ? generateBackgroundColor(user.username) : 'gray' }}
+                >
+                  {user ? (
+                    getProfileInitials() // Show the first letter 
+                  ) : (
+                    <FontAwesomeIcon icon={faUser} size="lg" /> 
+                  )}
+                </div>
+              </Nav.Link>
             </Nav>
           </Navbar.Collapse>
         </Container>
