@@ -1,14 +1,13 @@
-import React from 'react'
+import React from 'react';
 import './Privacypolicy.css';
 
 const CustomPrivacypolicy = () => {
   return (
-   
-        <div className="container privacy-policy-container">
+    <div className="terms-container">
       <h1 className="text-center">Privacy Policy</h1>
       <p className="text-muted text-center">(Last updated: 8th October 2024)</p>
 
-      <section>
+      <section className="terms-content">
         <h3>Information we collect</h3>
         <p>
           We collect the following information from you:
@@ -20,7 +19,7 @@ const CustomPrivacypolicy = () => {
         </p>
       </section>
 
-      <section>
+      <section className="terms-content">
         <h3>How We Use Your Information</h3>
         <p>We use the information we collect to:
           <ul>
@@ -33,12 +32,12 @@ const CustomPrivacypolicy = () => {
         </p>
       </section>
 
-      <section>
+      <section className="terms-content">
         <h3>Cookies</h3>
         <p>We use cookies to enhance your experience on our website. Cookies help us track how you interact with the site, but they do not collect personal data. You can manage or disable cookies through your browser settings.</p>
       </section>
 
-      <section>
+      <section className="terms-content">
         <h3>Data Sharing</h3>
         <p>We do not sell or share your personal information with third parties, except:</p>
         <ul>
@@ -47,12 +46,12 @@ const CustomPrivacypolicy = () => {
         </ul>
       </section>
 
-      <section>
+      <section className="terms-content">
         <h3>Data Security</h3>
         <p>We implement reasonable security measures to protect your personal information from unauthorized access, disclosure, or misuse. However, no online system is entirely secure, and we cannot guarantee the absolute security of your data.</p>
       </section>
 
-      <section>
+      <section className="terms-content">
         <h3>Your Rights</h3>
         <p>You have the right to:
           <ul>
@@ -63,15 +62,16 @@ const CustomPrivacypolicy = () => {
         </p>
       </section>
 
-      <section>
+      <section className="terms-content">
         <h3>Changes to This Policy</h3>
         <p>We may update this Privacy Policy from time to time. Any changes will be posted on this page, and we encourage you to review it periodically.</p>
       </section>
+
       <p className="text-center mt-4">
         If you have any questions or concerns about this Privacy Policy or how we handle your data, please contact us via our <a href="/contact">Contact Us</a> page.
       </p>
     </div>
-  )
-}
+  );
+};
 
-export default CustomPrivacypolicy
+export default CustomPrivacypolicy;
