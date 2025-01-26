@@ -101,14 +101,6 @@ function App() {
               }
             />
             <Route
-              path="/customguidance"
-              element={
-                <Layout>
-                  <Customguidance />
-                </Layout>
-              }
-            />
-            <Route
               path="/map"
               element={
                 <Layout>
@@ -131,6 +123,7 @@ function App() {
           <Route path="/login" element={<CustomLogin />} />
           <Route path="/register" element={<CustomRegister />} />
           <Route path="/customsubscription" element={<CustomSubscription />} />
+          <Route path="/customguidance" element={<Customguidance />} />
         </Routes>
       </Router>
     </div>
