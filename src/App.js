@@ -55,17 +55,35 @@ function App() {
               </Layout>
             }
           />
-
+          
+          {/* Public Routes (Accessible without authentication) */}
+          <Route
+            path="/aboutus"
+            element={
+              <Layout>
+                <Aboutus />
+              </Layout>
+            }
+          />
+          <Route
+            path="/teamsandconditions"
+            element={
+              <Layout>
+                <Teamsandconditions />
+              </Layout>
+            }
+          />
+          <Route
+            path="/privacy"
+            element={
+              <Layout>
+                <Privacy />
+              </Layout>
+            }
+          />
+          
           {/* Protected Routes: These will require authentication */}
           <Route element={<ProtectedRoute isAuthenticated={!!user} />}>
-            <Route
-              path="/aboutus"
-              element={
-                <Layout>
-                  <Aboutus />
-                </Layout>
-              }
-            />
             <Route
               path="/contact"
               element={
@@ -79,22 +97,6 @@ function App() {
               element={
                 <Layout>
                   <Feedback />
-                </Layout>
-              }
-            />
-            <Route
-              path="/teamsandconditions"
-              element={
-                <Layout>
-                  <Teamsandconditions />
-                </Layout>
-              }
-            />
-            <Route
-              path="/privacy"
-              element={
-                <Layout>
-                  <Privacy />
                 </Layout>
               }
             />
@@ -122,10 +124,18 @@ function App() {
                 </Layout>
               }
             />
+            {/* Checkout route should be protected */}
+            <Route
+              path="/checkout"
+              element={
+                <Layout>
+                  <Checkout />
+                </Layout>
+              }
+            />
           </Route>
 
           {/* Pages without Navbar and Footer (accessible without login) */}
-          <Route path="/checkout" element={<Checkout />} />
           <Route path="/login" element={<CustomLogin />} />
           <Route path="/register" element={<CustomRegister />} />
           <Route path="/customsubscription" element={<CustomSubscription />} />
@@ -135,5 +145,6 @@ function App() {
     </div>
   );
 }
+
 
 export default App;
