@@ -110,7 +110,9 @@ function CustomRegister() {
           email: formData.email,
           createpassword: formData.createpassword,
         }),
+        credentials: 'include', 
       });
+      
 
       const data = await response.json();
 

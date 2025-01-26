@@ -18,17 +18,22 @@ function CustomNavbar() {
 
   // Function to fetch user data from the JWT token in cookies
   const fetchUserData = () => {
-    const token = Cookies.get("jwt_token"); // Get JWT token from cookies
+    const token = Cookies.get("token");
+    // Get JWT token from cookies
     if (token) {
-      // Decode token and fetch user data (You might need to decode the JWT to get user info)
       try {
-        const decodedToken = JSON.parse(atob(token.split(".")[1])); // Decoding JWT token
-        setUser(decodedToken); // Set user data to state
+        const decodedToken = JSON.parse(atob(token.split(".")[1])); // Decode JWT token
+        console.log("Decoded Token:", decodedToken); // Debugging: Check the decoded token
+        setUser(decodedToken); // Set user data (username and more) to state
       } catch (error) {
         console.error("Failed to decode token:", error);
       }
+    } else {
+      console.warn("JWT token not found in cookies.");
     }
   };
+  
+  
 
   useEffect(() => {
     fetchUserData(); // Fetch user data when the component mounts
@@ -38,18 +43,17 @@ function CustomNavbar() {
 
   // Function to create the profile initials
   const getProfileInitials = () => {
-    if (!user) return "";
-    const firstInitial = user.firstname.charAt(0).toUpperCase();
-    const lastInitial = user.lastname.charAt(0).toUpperCase();
-    return `${firstInitial}${lastInitial}`;
+    if (!user || !user.username) return ""; // Handle cases where user or username is null
+    return user.username.charAt(0).toUpperCase(); // Get the first letter of the username
   };
+  
 
   // Function to handle logout and clear the JWT token from cookies
   const handleLogout = () => {
     // Show confirmation dialog only on logout
     if (window.confirm("Are you sure you want to log out?")) {
       // Clear JWT token from cookies
-      Cookies.remove("jwt_token"); // Remove the JWT token from cookies
+      Cookies.remove("token"); // Remove the JWT token from cookies
 
       // Redirect to login page after logout
       navigate("/login");
@@ -85,10 +89,15 @@ function CustomNavbar() {
                 </NavDropdown.Item>
               </NavDropdown>
               <Nav.Link onClick={handleToggleSidebar} className="ms-2">
-                <div className="profile-icon">
-                  {user ? getProfileInitials() : <FontAwesomeIcon icon={faUser} size="lg" />}
-                </div>
-              </Nav.Link>
+              <div className="profile-icon">
+                {user ? (
+                  getProfileInitials() // Show the first letter of the username
+                ) : (
+                  <FontAwesomeIcon icon={faUser} size="lg" /> // Default icon
+                )}
+              </div>
+            </Nav.Link>
+
             </Nav>
           </Navbar.Collapse>
         </Container>

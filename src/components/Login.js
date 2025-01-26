@@ -36,8 +36,10 @@ function CustomLogin() {
       const response = await fetch('http://localhost:5002/api/users/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
+        credentials: 'include', // This allows cookies to be sent with the request
         body: JSON.stringify({ username, password }),
       });
+      
 
       const result = await response.json();
       
@@ -46,8 +48,7 @@ function CustomLogin() {
         setSuccessMessage('Login successful!');
         setShowModal(true); // Show the success modal
 
-        // Optionally store JWT in local storage or set a global state
-        localStorage.setItem('token', result.token);
+      
 
         setTimeout(() => {
           navigate('/'); // Redirect to home page after 2 seconds
