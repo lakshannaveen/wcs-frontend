@@ -8,7 +8,7 @@ const useAuth = () => {
     const checkSession = async () => {
       try {
         // Send a GET request to your API for session verification
-        const response = await fetch('http://localhost:5002/api/verify', {
+        const response = await fetch('http://localhost:5002/api/users/verify', {
           method: 'GET',
           credentials: 'include', // Ensures cookies (JWT in cookie) are included
         });
