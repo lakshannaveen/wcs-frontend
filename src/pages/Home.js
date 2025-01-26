@@ -13,7 +13,7 @@ import card2 from '../images/card2.jpeg';
 import card3 from '../images/card3.jpeg';
 import Search from '../components/Search';
 import { Link } from 'react-router-dom';
-import { Link as ScrollLink } from 'react-scroll';
+
 function CustomHome() {
   return (
     <div>
@@ -30,7 +30,6 @@ function CustomHome() {
         </Carousel.Item>
       </Carousel>
 
-    
       <div id="search-section">
         <Search /> {/* Search.js page */}
       </div>
@@ -68,13 +67,9 @@ function CustomHome() {
           </h2>
           <p>Eco-Friendly, Reliable, and Tailored Just for You!</p>
           <p className='highlight'>Together, We're Building a Cleaner Tomorrow!</p>
-          <ScrollLink
-            to="search-section" 
-            smooth={true} 
-            duration={100}// increase the smooth
-          >
-            <button className='order-now-btn'>Order Now</button>
-          </ScrollLink>
+          <Link to="/orderhistory">
+            <button className='order-now-btn'>Order History</button>
+          </Link>
         </div>
       </section>
     </div>
