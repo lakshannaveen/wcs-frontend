@@ -10,9 +10,9 @@ function Wasteguidance() {
   return (
     <div className="container my-4">
       <h2 className="text-center mb-4">Waste Separation Guidance</h2>
-      <div className="row">
-        <div className="col-md-4">
-          <div className="card shadow-sm">
+      <div className="row gy-4">
+        <div className="col-md-4 col-sm-12">
+          <div className="card shadow-sm h-100">
             <img src={guidance1} alt="Food Waste Guidance" className="card-img-top" />
             <div className="card-body">
               <h5 className="card-title">Food Waste</h5>
@@ -23,8 +23,8 @@ function Wasteguidance() {
             </div>
           </div>
         </div>
-        <div className="col-md-4">
-          <div className="card shadow-sm">
+        <div className="col-md-4 col-sm-12">
+          <div className="card shadow-sm h-100">
             <img src={guidance2} alt="Degradable Waste Guidance" className="card-img-top" />
             <div className="card-body">
               <h5 className="card-title">Degradable Waste</h5>
@@ -35,8 +35,8 @@ function Wasteguidance() {
             </div>
           </div>
         </div>
-        <div className="col-md-4">
-          <div className="card shadow-sm">
+        <div className="col-md-4 col-sm-12">
+          <div className="card shadow-sm h-100">
             <img src={guidance3} alt="Non-Degradable Waste Guidance" className="card-img-top" />
             <div className="card-body">
               <h5 className="card-title">Non-Degradable Waste</h5>
