@@ -19,12 +19,13 @@ import Checkout from './pages/Checkout';
 import CustomLogin from './components/Login';
 import CustomRegister from './components/Register';
 import CustomSubscription from './components/Subscriptionplans';
-import ProtectedRoute from './components/ProtectedRoute'; 
+import ProtectedRoute from './components/ProtectedRoute';
+import useAuth from './hooks/useAuth';
 
 function Layout({ children }) {
   return (
     <>
-      <CustomSNavbar /> {/* Every page content with these components */}
+      <CustomSNavbar />
       <VoiceNavigation />
       {children}
       <CustomFooter />
@@ -33,7 +34,12 @@ function Layout({ children }) {
 }
 
 function App() {
-  const isAuthenticated = true; // Replace with your actual authentication logic
+  const { user, loading } = useAuth();
+
+  if (loading) {
+    // Show a loading spinner or placeholder while session is being verified
+    return <div>Loading...</div>;
+  }
 
   return (
     <div className="App">
@@ -51,7 +57,7 @@ function App() {
           />
 
           {/* Protected Routes: These will require authentication */}
-          <Route element={<ProtectedRoute isAuthenticated={isAuthenticated} />}>
+          <Route element={<ProtectedRoute isAuthenticated={!!user} />}>
             <Route
               path="/aboutus"
               element={
