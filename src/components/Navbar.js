@@ -19,17 +19,15 @@ function CustomNavbar() {
   // Function to fetch user data from the JWT token in cookies
   const fetchUserData = () => {
     const token = Cookies.get("token");
-    // Get JWT token from cookies
     if (token) {
       try {
         const decodedToken = JSON.parse(atob(token.split(".")[1])); 
-        console.log("Decoded Token:", decodedToken); 
         setUser(decodedToken); // Set user data (username and more) to state
       } catch (error) {
         console.error("Failed to decode token:", error);
       }
     } else {
-      console.warn("JWT token not found in cookies.");
+      setUser(null); // No token, set user to null
     }
   };
   
@@ -43,7 +41,6 @@ function CustomNavbar() {
   const generateBackgroundColor = (username) => {
     if (!username) return 'gray'; // Default color 
     
-    // Generate a color 
     const hashCode = username.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
     const hue = hashCode % 360; 
     return `hsl(${hue}, 70%, 50%)`; // Return a color from HSL format
@@ -54,17 +51,13 @@ function CustomNavbar() {
     if (!user || !user.username) return ""; 
     return user.username.charAt(0).toUpperCase(); 
   };
-  
 
   // Function to handle logout and clear the JWT token from cookies
   const handleLogout = () => {
     if (window.confirm("Are you sure you want to log out?")) {
-      // Clear JWT token from cookies
       Cookies.remove("token");
-  
-      sessionStorage.clear(); // Clear session storage (if you store any data there)
-  
-      
+      sessionStorage.clear(); // Clear session storage 
+      setUser(null); // Set user to null after logout
       navigate("/");
     }
   };
@@ -126,21 +119,27 @@ function CustomNavbar() {
         </Offcanvas.Header>
         <Offcanvas.Body>
           <Nav className="flex-column">
-            {/* Removed Logout link */}
-            <Nav.Link as={Link} to="/editprofile">
-              Edit Profile
-            </Nav.Link>
-            {/* Log In and Register will always show */}
-            <Nav.Link as={Link} to="/login">
-              Log In
-            </Nav.Link>
-            <Nav.Link as={Link} to="/register">
-              Register
-            </Nav.Link>
-            {/* Logout link */}
-            <Nav.Link onClick={handleLogout} className="logout-link">
-              Log Out
-            </Nav.Link>
+            {user ? (
+              <>
+                {/* Display Edit Profile and Log Out links when user is logged in */}
+                <Nav.Link as={Link} to="/editprofile">
+                  Edit Profile
+                </Nav.Link>
+                <Nav.Link onClick={handleLogout} className="logout-link">
+                  Log Out
+                </Nav.Link>
+              </>
+            ) : (
+              <>
+                {/* Show Login and Register links when the user is not logged in */}
+                <Nav.Link as={Link} to="/login">
+                  Log In
+                </Nav.Link>
+                <Nav.Link as={Link} to="/register">
+                  Register
+                </Nav.Link>
+              </>
+            )}
           </Nav>
         </Offcanvas.Body>
       </Offcanvas>
