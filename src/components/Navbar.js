@@ -60,13 +60,15 @@ function CustomNavbar() {
   const handleLogout = () => {
     if (window.confirm("Are you sure you want to log out?")) {
       // Clear JWT token from cookies
-      Cookies.remove("token"); 
-
+      Cookies.remove("token");
+  
+      sessionStorage.clear(); // Clear session storage (if you store any data there)
+  
       
       navigate("/");
     }
   };
-
+  
   return (
     <div>
       <Navbar expand="lg" className="navbar">
