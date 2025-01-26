@@ -1,4 +1,3 @@
-import axios from 'axios';
 import { useEffect, useState } from 'react';
 
 const useAuth = () => {
@@ -8,13 +7,18 @@ const useAuth = () => {
   useEffect(() => {
     const checkSession = async () => {
       try {
-        // Update the URL to match the format '/api/verify'
-        const response = await axios.get('http://localhost:5002/api/verify', {
-          withCredentials: true, // Ensure cookies (session) are included in the request
+        // Send a GET request to your API for session verification
+        const response = await fetch('http://localhost:5002/api/verify', {
+          method: 'GET',
+          credentials: 'include', // Ensures cookies (JWT in cookie) are included
         });
-        
-        // Update the user state with the response data
-        setUser(response.data.user); 
+
+        if (!response.ok) {
+          throw new Error('Session verification failed');
+        }
+
+        const data = await response.json(); // Parse the response data
+        setUser(data.user); // Update the user state with the response
       } catch (error) {
         console.error('Session verification failed:', error);
         setUser(null); // Clear user state if session is invalid
