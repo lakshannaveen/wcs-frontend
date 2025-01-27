@@ -25,8 +25,8 @@ function Checkoutform() {
               <input type="text" placeholder="Last Name" />
             </div>
             <div className="input-group">
-              <label>Code</label>
-              <input type="text" placeholder="Code" />
+              <label>Zip Code*</label>
+              <input type="text" placeholder="Zip Code" />
             </div>
             <div className="input-group">
               <label>Phone Number*</label>
@@ -45,8 +45,20 @@ function Checkoutform() {
               </div>
             </div>
             <div className="input-group">
-              <label>Bags Amount*</label>
-              <input type="number" min="1" />
+            <div className="input-group">
+              <label>Waste Amount*</label>
+              <div className="input-with-kg">
+                <input
+                  type="number"
+                  min="0"
+                  value="0"
+                  step="1"
+                  onChange={(e) => e.target.value} // Optionally handle input changes
+                  placeholder="0"
+                />
+                <span>kg</span>
+              </div>
+            </div>
             </div>
           </form>
         </div>
@@ -72,8 +84,8 @@ function Checkoutform() {
               <input type="text" placeholder="Last Name" />
             </div>
             <div className="input-group">
-              <label>Code</label>
-              <input type="text" placeholder="Code" />
+              <label>Zip Code*</label>
+              <input type="text" placeholder="Zip Code" />
             </div>
             <div className="input-group">
               <label>Phone Number*</label>
