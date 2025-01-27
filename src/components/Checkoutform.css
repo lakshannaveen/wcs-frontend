@@ -66,20 +66,57 @@
     margin: 20px 0;
   }
   
-  .payment-options label {
-    display: inline-block;
+/* Style for the Order/Payment Box */
+.order-payment-box {
+    border: 1px solid #ddd;
+    padding: 20px;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    margin-top: 20px;
+  }
+  
+  .order-payment-box .order-details {
+    margin-bottom: 15px;
+  }
+  
+  .order-payment-box .payment-options label {
     margin-right: 20px;
+    font-size: 0.9rem;
   }
   
-  .terms {
-    text-align: center;
-    margin: 20px 0;
+  .order-payment-box .terms {
+    display: flex;
+    flex-direction: column; 
+    align-items: center; 
+    margin-top: 20px;
   }
   
-  .terms a {
-    color: blue;
-    text-decoration: underline;
+  .order-payment-box .terms label {
+    margin-bottom: 20px; 
   }
+  
+  .order-payment-box .place-order-button {
+    background-color: #28a745;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    font-size: 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+    width: auto; /* Button should be auto-width */
+    margin-top: 10px; /* Add space above the button */
+  }
+  
+  .order-payment-box .place-order-button:hover {
+    background-color: #218838;
+  }
+  
+  /* Ensure the order/payment box fits well with other sections */
+  .checkout-container {
+    margin-top: 20px;
+  }
+  
+
   
   .place-order-button {
     background-color: #28a745;

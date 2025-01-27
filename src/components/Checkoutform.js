@@ -63,51 +63,62 @@ function Checkoutform() {
           </form>
         </div>
         <div className="form-section">
-          <h3>Recipient Details</h3>
-          <form className="recipient-form">
-            <div className="input-group">
-              <label><input type="checkbox" /> Same as Sender</label>
-            </div>
-            <div className="input-group">
-              <label>Title</label>
-              <select>
-                <option>Mr.</option>
-                <option>Ms.</option>
-              </select>
-            </div>
-            <div className="input-group">
-              <label>First Name*</label>
-              <input type="text" placeholder="First Name" />
-            </div>
-            <div className="input-group">
-              <label>Last Name*</label>
-              <input type="text" placeholder="Last Name" />
-            </div>
-            <div className="input-group">
-              <label>Zip Code*</label>
-              <input type="text" placeholder="Zip Code" />
-            </div>
-            <div className="input-group">
-              <label>Phone Number*</label>
-              <input type="tel" placeholder="Phone Number" />
-            </div>
-          </form>
-        </div>
-      </div>
-      <div className="order-details">
-        <h3>Order/Payment Details</h3>
-        <div className="payment-options">
-          <label><input type="radio" name="payment" /> Pay Online</label>
-          <label><input type="radio" name="payment" /> Pay on Pickup</label>
-        </div>
-      </div>
-      <div className="terms">
-        <label>
-          <input type="checkbox" /> I have read and agreed to the Terms and Conditions.
-        </label>
-        <button className="place-order-button">Place your order here</button>
-      </div>
+  <h3>Recipient Details</h3>
+  <form className="recipient-form">
+    <div className="input-group">
+      <label>
+        <input type="checkbox" /> Same as Sender
+      </label>
     </div>
+    {/* Add another checkbox here */}
+    <div className="input-group">
+      <label>
+        <input type="checkbox" /> No Need for Recipient Details
+      </label>
+    </div>
+    <div className="input-group">
+      <label>Title</label>
+      <select>
+        <option>Mr.</option>
+        <option>Ms.</option>
+      </select>
+    </div>
+    <div className="input-group">
+      <label>First Name*</label>
+      <input type="text" placeholder="First Name" />
+    </div>
+    <div className="input-group">
+      <label>Last Name*</label>
+      <input type="text" placeholder="Last Name" />
+    </div>
+    <div className="input-group">
+      <label>Zip Code*</label>
+      <input type="text" placeholder="Zip Code" />
+    </div>
+    <div className="input-group">
+      <label>Phone Number*</label>
+      <input type="tel" placeholder="Phone Number" />
+    </div>
+  </form>
+</div>
+
+      </div>
+      <div className="order-payment-box">
+  <div className="order-details">
+    <h3>Order/Payment Details</h3>
+    <div className="payment-options">
+      <label><input type="radio" name="payment" /> Pay Online</label>
+      <label><input type="radio" name="payment" /> Pay Cash</label>
+    </div>
+  </div>
+  <div className="terms">
+    <label>
+      <input type="checkbox" /> I have read and agreed to the Terms and Conditions.
+    </label>
+    <button className="place-order-button">Place Order</button>
+  </div>
+</div>
+</div>
   );
 }
 
