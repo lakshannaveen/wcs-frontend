@@ -1,0 +1,94 @@
+.checkout-container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 20px auto;
+    font-family: Arial, sans-serif;
+  }
+  
+  .checkout-header {
+    text-align: center;
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+  }
+  
+  .checkout-forms {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+  
+  .form-section {
+    flex: 1;
+    min-width: 280px;
+    border: 1px solid #ddd;
+    padding: 15px;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+  }
+  
+  .input-group {
+    margin-bottom: 15px;
+  }
+  
+  .input-group label {
+    display: block;
+    font-size: 0.9rem;
+    margin-bottom: 5px;
+  }
+  
+  .input-group input,
+  .input-group select {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  .checkbox-group label {
+    margin-right: 10px;
+    font-size: 0.9rem;
+  }
+  
+  .order-details {
+    margin: 20px 0;
+  }
+  
+  .payment-options label {
+    display: inline-block;
+    margin-right: 20px;
+  }
+  
+  .terms {
+    text-align: center;
+    margin: 20px 0;
+  }
+  
+  .terms a {
+    color: blue;
+    text-decoration: underline;
+  }
+  
+  .place-order-button {
+    background-color: #28a745;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    font-size: 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .place-order-button:hover {
+    background-color: #218838;
+  }
+  
+  @media (max-width: 768px) {
+    .checkout-forms {
+      flex-direction: column;
+    }
+  
+    .form-section {
+      min-width: 100%;
+    }
+  }
+  
