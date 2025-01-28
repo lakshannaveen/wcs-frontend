@@ -40,12 +40,12 @@ const AdminLogin = () => {
         credentials: "include", // Include credentials (cookies) in the request
       });
 
-      // If login is successful, redirect to the admin dashboard
+      // If login is successful, redirect to the admin dashbord
       if (response.ok) {
-        window.location.href = "/admindashbord"; // Redirect on success
+        window.location.href = "/admindashbord"; 
       } else {
         const data = await response.json();
-        setError(data.message || "Invalid admin username or password!"); // Set error message
+        setError(data.message || "Invalid admin username or password!"); 
       }
     } catch (err) {
       setError("Something went wrong. Please try again.");
@@ -55,27 +55,27 @@ const AdminLogin = () => {
   return (
     <div className="admin-login-container">
       <h1 className="admin-login-title">Admin Login</h1>
-      {error && <p className="admin-login-error">{error}</p>}
       <form className="admin-login-form" onSubmit={handleLogin}>
-        <input
-          type="email"
-          placeholder="Admin Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          className="admin-login-input"
-        />
-        <input
-          type="password"
-          placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          className="admin-login-input"
-        />
-        <button type="submit" className="admin-login-button">
-          Login
-        </button>
-      </form>
-    </div>
+        {error && <p className="admin-login-error">{error}</p>}
+          <input
+            type="email"
+            placeholder="Admin Email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            className="admin-login-input"
+          />
+          <input
+            type="password"
+            placeholder="Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            className="admin-login-input"
+          />
+          <button type="submit" className="admin-login-button">
+            Login
+          </button>
+        </form>
+   </div>
   );
 };
 
