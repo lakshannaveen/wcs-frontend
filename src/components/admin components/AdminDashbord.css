@@ -1,0 +1,41 @@
+/* Scoped to AdminDashboard only */
+.admin-dashboard-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #4a90e2, #007aff);
+    font-family: Arial, sans-serif;
+  }
+  
+  .admin-dashboard-title {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #fff;
+    margin-bottom: 1.5rem;
+  }
+  
+  .admin-dashboard-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .admin-dashboard-button {
+    padding: 0.8rem;
+    font-size: 1rem;
+    font-weight: bold;
+    color: #000; 
+    background: #fff; 
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    width: 200px;
+  }
+  
+  .admin-dashboard-button:hover {
+    background: #f0f0f0; 
+  }
+  

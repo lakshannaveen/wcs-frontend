@@ -22,6 +22,7 @@ import CustomSubscription from './components/Subscriptionplans';
 import ProtectedRoute from './components/ProtectedRoute';
 import useAuth from './hooks/useAuth';
 import AdminLogin from './components/admin components/AdminLogin';
+import AdminDashboard from './components/admin components/AdminDashbord';
 
 function Layout({ children }) {
   return (
@@ -144,6 +145,7 @@ function App() {
 
            {/* Hidden Route: Admin Login */}
            <Route path="/admin-login" element={<AdminLogin />} />
+           <Route path="/adminhome" element={<AdminDashboard />} />
         </Routes>
       </Router>
     </div>
