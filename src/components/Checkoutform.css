@@ -103,8 +103,8 @@
     font-size: 1rem;
     border-radius: 5px;
     cursor: pointer;
-    width: auto; /* Button should be auto-width */
-    margin-top: 10px; /* Add space above the button */
+    width: auto; 
+    margin-top: 10px; 
   }
   
   .order-payment-box .place-order-button:hover {

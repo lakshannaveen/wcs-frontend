@@ -21,6 +21,7 @@ import CustomRegister from './components/Register';
 import CustomSubscription from './components/Subscriptionplans';
 import ProtectedRoute from './components/ProtectedRoute';
 import useAuth from './hooks/useAuth';
+import AdminLogin from './components/admin components/AdminLogin';
 
 function Layout({ children }) {
   return (
@@ -140,6 +141,9 @@ function App() {
           <Route path="/register" element={<CustomRegister />} />
           <Route path="/customsubscription" element={<CustomSubscription />} />
           <Route path="/customguidance" element={<Customguidance />} />
+
+           {/* Hidden Route: Admin Login */}
+           <Route path="/admin-login" element={<AdminLogin />} />
         </Routes>
       </Router>
     </div>

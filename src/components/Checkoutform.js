@@ -105,7 +105,7 @@ function Checkoutform() {
       </div>
       <div className="order-payment-box">
   <div className="order-details">
-    <h3>Order/Payment Details</h3>
+    <h3>Payment Details</h3>
     <div className="payment-options">
       <label><input type="radio" name="payment" /> Pay Online</label>
       <label><input type="radio" name="payment" /> Pay Cash</label>
