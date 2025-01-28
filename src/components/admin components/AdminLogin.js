@@ -42,7 +42,7 @@ const AdminLogin = () => {
 
       // If login is successful, redirect to the admin dashboard
       if (response.ok) {
-        window.location.href = "/adminhome"; // Redirect on success
+        window.location.href = "/admindashbord"; // Redirect on success
       } else {
         const data = await response.json();
         setError(data.message || "Invalid admin username or password!"); // Set error message

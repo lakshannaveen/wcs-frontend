@@ -23,6 +23,7 @@ import ProtectedRoute from './components/ProtectedRoute';
 import useAuth from './hooks/useAuth';
 import AdminLogin from './components/admin components/AdminLogin';
 import AdminDashboard from './components/admin components/AdminDashbord';
+import AdminProtectedRoute from './components/AdminProtectRoute';
 
 function Layout({ children }) {
   return (
@@ -57,7 +58,7 @@ function App() {
               </Layout>
             }
           />
-          
+
           {/* Public Routes (Accessible without authentication) */}
           <Route
             path="/aboutus"
@@ -83,7 +84,7 @@ function App() {
               </Layout>
             }
           />
-          
+
           {/* Protected Routes: These will require authentication */}
           <Route element={<ProtectedRoute isAuthenticated={!!user} />}>
             <Route
@@ -126,7 +127,6 @@ function App() {
                 </Layout>
               }
             />
-            {/* Checkout route should be protected */}
             <Route
               path="/checkout"
               element={
@@ -143,14 +143,21 @@ function App() {
           <Route path="/customsubscription" element={<CustomSubscription />} />
           <Route path="/customguidance" element={<Customguidance />} />
 
-           {/* Hidden Route: Admin Login */}
-           <Route path="/admin-login" element={<AdminLogin />} />
-           <Route path="/adminhome" element={<AdminDashboard />} />
+          {/* Hidden Route: Admin Login */}
+          <Route path="/admin-login" element={<AdminLogin />} />
+          <Route path="/admindashbord" element={<AdminDashboard />} />
+          {/* Admin Protected Routes */}
+          <Route
+            element={
+              <AdminProtectedRoute>
+                <AdminDashboard />
+              </AdminProtectedRoute>
+            }
+          />
         </Routes>
       </Router>
     </div>
   );
 }
-
 
 export default App;
