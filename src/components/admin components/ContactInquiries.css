@@ -1,0 +1,29 @@
+.contact-inquiries-container {
+    padding: 20px;
+  }
+  
+  .contact-inquiries-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+  }
+  
+  .contact-inquiries-table th, .contact-inquiries-table td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: left;
+  }
+  
+  .contact-inquiries-table th {
+    background-color: #f2f2f2;
+  }
+  
+  .email-link, .phone-link {
+    color: #007bff;
+    text-decoration: none;
+  }
+  
+  .email-link:hover, .phone-link:hover {
+    text-decoration: underline;
+  }
+  

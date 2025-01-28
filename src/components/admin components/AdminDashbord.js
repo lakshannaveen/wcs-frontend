@@ -1,4 +1,6 @@
+// AdminDashboard.js
 import React from 'react';
+import { Link } from 'react-router-dom'; 
 import './AdminDashbord.css';
 
 const AdminDashboard = () => {
@@ -8,6 +10,9 @@ const AdminDashboard = () => {
       <div className="admin-dashboard-buttons">
         <button className="admin-dashboard-button">Map</button>
         <button className="admin-dashboard-button">Orders</button>
+        <Link to="/contactinquiries"> 
+          <button className="admin-dashboard-button">Contact Inquiries</button>
+        </Link>
       </div>
     </div>
   );

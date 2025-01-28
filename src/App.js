@@ -24,6 +24,7 @@ import useAuth from './hooks/useAuth';
 import AdminLogin from './components/admin components/AdminLogin';
 import AdminDashboard from './components/admin components/AdminDashbord';
 import AdminProtectedRoute from './components/AdminProtectRoute';
+import ContactInquiries from './components/admin components/ContactInquiries';
 
 function Layout({ children }) {
   return (
@@ -155,8 +156,18 @@ function App() {
               </AdminProtectedRoute>
             }
           />
-          </Routes>
-          </Router>
+         
+          {/* Admin Route for Contact Inquiries (Accessible only to admin) */}
+          <Route
+            path="/contactinquiries"
+            element={
+              <AdminProtectedRoute>
+                <ContactInquiries />
+              </AdminProtectedRoute>
+            }
+          />
+        </Routes>
+      </Router>
     </div>
   );
 }
