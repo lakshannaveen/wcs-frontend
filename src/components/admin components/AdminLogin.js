@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import './AdminLogin.css'
+import './AdminLogin.css';
 
 const AdminLogin = () => {
   const [email, setEmail] = useState("");
@@ -7,13 +7,11 @@ const AdminLogin = () => {
   const [error, setError] = useState("");
 
   const validateEmail = (email) => {
-    // Basic email validation regex
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
   };
 
   const validatePassword = (password) => {
-    // Password must contain at least 8 characters, uppercase, lowercase, number, and special character
     const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
     return passwordRegex.test(password);
   };
@@ -21,7 +19,6 @@ const AdminLogin = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
 
-    // Validation checks
     if (!validateEmail(email)) {
       setError("Please enter a valid email address.");
       return;
@@ -33,19 +30,22 @@ const AdminLogin = () => {
     }
 
     try {
-      const response = await fetch("http://localhost:5000/api/admin/admin-login", {
+      // Send the login request to the backend API
+      const response = await fetch("http://localhost:5002/api/admin/adminlogin", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({ email, password }),
-        credentials: "include", // Ensure cookies are sent with the request
+        credentials: "include", // Include credentials (cookies) in the request
       });
 
+      // If login is successful, redirect to the admin dashboard
       if (response.ok) {
         window.location.href = "/admin-dashboard"; // Redirect on success
       } else {
-        setError("Invalid admin credentials!");
+        const data = await response.json();
+        setError(data.message || "Invalid admin username or password!"); // Set error message
       }
     } catch (err) {
       setError("Something went wrong. Please try again.");
