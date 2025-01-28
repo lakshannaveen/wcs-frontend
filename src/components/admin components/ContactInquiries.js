@@ -4,34 +4,21 @@ import './ContactInquiries.css';
 const ContactInquiries = () => {
   const [inquiries, setInquiries] = useState([]);
 
-  // Simulate fetching contact inquiries data
   useEffect(() => {
-    // Replace this with your actual data fetch from the API
-    const fetchData = async () => {
-      // For demonstration, we use static data
-      const response = [
-        {
-          firstName: 'John',
-          lastName: 'Doe',
-          email: 'johndoe@example.com',
-          message: 'I need more information about the services.',
-          phone: '0912234567',
-          date: '2025-01-28',
-        },
-        {
-          firstName: 'Jane',
-          lastName: 'Smith',
-          email: 'janesmith@example.com',
-          message: 'Interested in subscription plans.',
-          phone: '0912237890',
-          date: '2025-01-27',
-        },
-        // Add more inquiries as needed
-      ];
-      setInquiries(response);
+    const fetchInquiries = async () => {
+      try {
+        const response = await fetch('http://localhost:5002/api/contact/contact');
+        if (!response.ok) {
+          throw new Error('Failed to fetch contact inquiries');
+        }
+        const data = await response.json();
+        setInquiries(data);
+      } catch (error) {
+        console.error('Error fetching inquiries:', error);
+      }
     };
 
-    fetchData();
+    fetchInquiries();
   }, []);
 
   return (
@@ -64,7 +51,7 @@ const ContactInquiries = () => {
                 </a>
               </td>
               <td>{inquiry.message}</td>
-              <td>{inquiry.date}</td>
+              <td>{new Date(inquiry.date).toLocaleDateString()}</td>
             </tr>
           ))}
         </tbody>
