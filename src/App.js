@@ -143,19 +143,20 @@ function App() {
           <Route path="/customsubscription" element={<CustomSubscription />} />
           <Route path="/customguidance" element={<Customguidance />} />
 
-          {/* Hidden Route: Admin Login */}
-          <Route path="/admin-login" element={<AdminLogin />} />
-          <Route path="/admindashbord" element={<AdminDashboard />} />
+        {/* Hidden Route: Admin Login */}
+        <Route path="/admin-login" element={<AdminLogin />} />
+
           {/* Admin Protected Routes */}
           <Route
+            path="/admindashbord"
             element={
               <AdminProtectedRoute>
                 <AdminDashboard />
               </AdminProtectedRoute>
             }
           />
-        </Routes>
-      </Router>
+          </Routes>
+          </Router>
     </div>
   );
 }
