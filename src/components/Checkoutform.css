@@ -1,7 +1,7 @@
 .checkout-container {
   width: 90%;
   max-width: 800px;
-  margin: 40px auto; /* Added margin-top and margin-bottom */
+  margin: 40px auto; 
   padding: 20px;
   background: #f8f9fa;
   border-radius: 8px;
@@ -40,7 +40,7 @@ h3 {
 .input-group label {
   font-weight: bold;
   margin-bottom: 5px;
-  text-align: left; /* Align labels to the left */
+  text-align: left; 
 }
 
 .input-group input,
@@ -54,14 +54,14 @@ h3 {
   display: flex;
   flex-direction: column;
   gap: 5px;
-  text-align: left; /* Align checkboxes to the left */
+  text-align: left; 
 }
 
 .input-with-kg {
   display: flex;
   align-items: center;
   gap: 5px;
-  text-align: left; /* Align input fields to the left */
+  text-align: left; 
 }
 
 .input-with-kg input {
@@ -84,7 +84,7 @@ h3 {
   display: flex;
   flex-direction: column;
   gap: 5px;
-  text-align: left; /* Align payment options to the left */
+  text-align: left; 
 }
 
 .terms {
