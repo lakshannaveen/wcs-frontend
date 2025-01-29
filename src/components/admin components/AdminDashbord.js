@@ -13,6 +13,9 @@ const AdminDashboard = () => {
         <Link to="/contactinquiries"> 
           <button className="admin-dashboard-button">Contact Inquiries</button>
         </Link>
+        <Link to="/feedbackmessage"> 
+          <button className="admin-dashboard-button">Feedback</button>
+        </Link>
       </div>
     </div>
   );

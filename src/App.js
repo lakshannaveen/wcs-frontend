@@ -26,6 +26,7 @@ import AdminDashboard from './components/admin components/AdminDashbord';
 import AdminProtectedRoute from './components/AdminProtectRoute';
 import ContactInquiries from './components/admin components/ContactInquiries';
 import ChangePassword from './components/ChnagePassword';
+import FeedbackMessage from './components/admin components/FeedbackMessage';
 
 function Layout({ children }) {
   return (
@@ -173,6 +174,14 @@ function App() {
             element={
               <AdminProtectedRoute>
                 <ContactInquiries />
+              </AdminProtectedRoute>
+            }
+          />
+            <Route
+            path="/feedbackmessage"
+            element={
+              <AdminProtectedRoute>
+                <FeedbackMessage />
               </AdminProtectedRoute>
             }
           />
