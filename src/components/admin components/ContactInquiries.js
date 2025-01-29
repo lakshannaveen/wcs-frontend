@@ -21,13 +21,13 @@ const ContactInquiries = () => {
     };
     
     fetchInquiries();
-  }, []); // Empty dependency array means this runs once on mount
+  }, []); 
   const handleReplyStatusChange = async (id, replySent) => {
     console.log('Sending to backend:', { id, reply_sent: replySent }); // Debugging the data
     
     if (!id) {
       console.error('ID is missing or undefined!');
-      return; // Prevent further action if id is missing
+      return; 
     }
   
     try {
@@ -36,7 +36,7 @@ const ContactInquiries = () => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ id, reply_sent: replySent }), // Ensure proper data sent
+        body: JSON.stringify({ id, reply_sent: replySent }), 
       });
   
       if (!response.ok) {
@@ -55,8 +55,6 @@ const ContactInquiries = () => {
       console.error('Error updating reply status:', error);
     }
   };
-  
-  
   
   return (
     <div className="contact-inquiries-container">
@@ -92,17 +90,13 @@ const ContactInquiries = () => {
               <td>{new Date(inquiry.date).toLocaleDateString()}</td>
               <td>
               <input
-  type="checkbox"
-  checked={inquiry.replySent}  
-  onChange={async (e) => {
-    const newReplyStatus = e.target.checked;
-    await handleReplyStatusChange(inquiry.id, newReplyStatus);
-  }}
-/>
-
-
-
-
+                  type="checkbox"
+                  checked={!!inquiry.replySent} //  it's always a boolean (true/false) 
+                  onChange={async (e) => {
+                    const newReplyStatus = e.target.checked;
+                    await handleReplyStatusChange(inquiry.id, newReplyStatus);
+                  }}
+                />
               </td>
             </tr>
           ))}
