@@ -91,6 +91,11 @@ h3 {
   margin-top: 15px;
 }
 
+.error {
+  color: red;
+  font-size: 12px;
+}
+
 .place-order-button {
   width: 100%;
   padding: 10px;
