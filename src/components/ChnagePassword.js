@@ -8,8 +8,39 @@ const ChangePassword = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [message, setMessage] = useState("");
 
+  const validateEmail = (email) => {
+    // Email validation regex: checks for a valid email format
+    const emailRegex =
+      /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    return emailRegex.test(email);
+  };
+
+  const validatePassword = (password) => {
+    // Password should have at least 8 characters, 1 uppercase, 1 number, and 1 special character
+    const passwordRegex =
+      /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$/;
+    return passwordRegex.test(password);
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    if (!validateEmail(email)) {
+      setMessage("Please enter a valid email address.");
+      return;
+    }
+
+    if (!validatePassword(newPassword)) {
+      setMessage(
+        "Password must be at least 8 characters, contain 1 uppercase letter, 1 number, and 1 special character."
+      );
+      return;
+    }
+
+    if (newPassword === currentPassword) {
+      setMessage("New password cannot be the same as the current password.");
+      return;
+    }
 
     if (newPassword !== confirmPassword) {
       setMessage("New passwords do not match!");
@@ -27,7 +58,11 @@ const ChangePassword = () => {
         <h1>Change Password</h1>
 
         {/* Error or Success Message */}
-        {message && <div className="error">{message}</div>}
+        {message && (
+          <div className={message === "Password changed successfully!" ? "success" : "error"}>
+            {message}
+          </div>
+        )}
 
         <div className="input-box">
           <label>Email</label>
