@@ -1,8 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './Checkoutform.css';
 
 function Checkoutform() {
-  const [showRecipientForm, setShowRecipientForm] = useState(true);
   const [formErrors, setFormErrors] = useState({
     email: '',
     phone: '',
@@ -16,7 +15,6 @@ function Checkoutform() {
     wasteAmount: ''
   });
   const [hasSubmitted, setHasSubmitted] = useState(false); // Track form submission
-  const [paymentDetailsVisible, setPaymentDetailsVisible] = useState(false); // Control payment details visibility
 
   const [senderDetails, setSenderDetails] = useState({
     firstName: '',
@@ -25,7 +23,7 @@ function Checkoutform() {
     phone: '',
     email: '',
     wasteAmount: '',
-    selectedPlan: '' // Track selected plan
+    selectedPlan: '', // Track selected plan
   });
 
   const [recipientDetails, setRecipientDetails] = useState({
@@ -35,21 +33,19 @@ function Checkoutform() {
     phone: ''
   });
 
-  const handleNoOrderReceptionChange = () => {
-    setShowRecipientForm((prevState) => !prevState);
-    if (!showRecipientForm) {
-      setRecipientDetails({
-        firstName: senderDetails.firstName,
-        lastName: senderDetails.lastName,
-        zipCode: senderDetails.zipCode,
-        phone: senderDetails.phone,
-      });
-    }
-  };
+  const [isRecipientSame, setIsRecipientSame] = useState(false); // Track if sender and recipient are the same
 
   const handleSenderChange = (e) => {
     const { name, value } = e.target;
     setSenderDetails({ ...senderDetails, [name]: value });
+
+    // Auto-fill recipient fields if checkbox is checked
+    if (isRecipientSame && (name === 'firstName' || name === 'lastName' || name === 'zipCode' || name === 'phone')) {
+      setRecipientDetails({
+        ...recipientDetails,
+        [name]: value
+      });
+    }
   };
 
   const handleRecipientChange = (e) => {
@@ -60,6 +56,28 @@ function Checkoutform() {
   const handlePlanChange = (e) => {
     const { value } = e.target;
     setSenderDetails({ ...senderDetails, selectedPlan: value });
+  };
+
+  const handleCheckboxChange = () => {
+    setIsRecipientSame(!isRecipientSame);
+
+    // Auto-fill recipient details if checkbox is checked
+    if (!isRecipientSame) {
+      setRecipientDetails({
+        firstName: senderDetails.firstName,
+        lastName: senderDetails.lastName,
+        zipCode: senderDetails.zipCode,
+        phone: senderDetails.phone
+      });
+    } else {
+      // Reset recipient details if checkbox is unchecked
+      setRecipientDetails({
+        firstName: '',
+        lastName: '',
+        zipCode: '',
+        phone: ''
+      });
+    }
   };
 
   const validateForm = () => {
@@ -98,15 +116,13 @@ function Checkoutform() {
     if (!zipCode) errors.zipCode = 'Zip Code is required.';
     if (!wasteAmount || wasteAmount <= 0) errors.wasteAmount = 'Waste amount must be greater than 0.';
 
-    // Validate recipient details if not same as sender
-    if (!showRecipientForm) {
-      const { firstName, lastName, zipCode, phone } = recipientDetails;
+    // Validate recipient details
+    const { firstName: recipientFirstName, lastName: recipientLastName, zipCode: recipientZipCode, phone: recipientPhone } = recipientDetails;
 
-      if (!firstName) errors.recipient.firstName = 'Recipient First Name is required.';
-      if (!lastName) errors.recipient.lastName = 'Recipient Last Name is required.';
-      if (!zipCode) errors.recipient.zipCode = 'Recipient Zip Code is required.';
-      if (!phone) errors.recipient.phone = 'Recipient Phone Number is required.';
-    }
+    if (!recipientFirstName) errors.recipient.firstName = 'Recipient First Name is required.';
+    if (!recipientLastName) errors.recipient.lastName = 'Recipient Last Name is required.';
+    if (!recipientZipCode) errors.recipient.zipCode = 'Recipient Zip Code is required.';
+    if (!recipientPhone) errors.recipient.phone = 'Recipient Phone Number is required.';
 
     // Check if at least one plan is selected
     const planSelected = senderDetails.selectedPlan;
@@ -124,7 +140,6 @@ function Checkoutform() {
     if (validateForm()) {
       // Proceed with order submission
       alert('Order Placed Successfully!');
-      setPaymentDetailsVisible(true); // Show the payment details section after successful submission
     } else {
       alert('Please fix the errors before submitting.');
     }
@@ -135,15 +150,9 @@ function Checkoutform() {
       <h2 className="checkout-header">CHECKOUT</h2>
       <div className="checkout-forms">
         <div className="form-section">
-          <h3>Sender Details</h3>
+          <h3>Sender & Recipient Details</h3>
           <form className="sender-form" onSubmit={handleSubmit}>
-            <div className="input-group">
-              <label>Title</label>
-              <select>
-                <option>Mr.</option>
-                <option>Ms.</option>
-              </select>
-            </div>
+            {/* Sender details form */}
             <div className="input-group">
               <label>First Name*</label>
               <input
@@ -199,6 +208,8 @@ function Checkoutform() {
               />
               {hasSubmitted && formErrors.email && <p className="error">{formErrors.email}</p>}
             </div>
+
+            {/* Plan selection */}
             <div className="input-group">
               <label>Your Plan</label>
               <div className="checkbox-group">
@@ -232,6 +243,8 @@ function Checkoutform() {
               </div>
               {hasSubmitted && formErrors.plan && <p className="error">{formErrors.plan}</p>}
             </div>
+
+            {/* Waste amount */}
             <div className="input-group">
               <label>Waste Amount*</label>
               <div className="input-with-kg">
@@ -248,83 +261,69 @@ function Checkoutform() {
               </div>
               {hasSubmitted && formErrors.wasteAmount && <p className="error">{formErrors.wasteAmount}</p>}
             </div>
-            <div className="input-group checkbox-group-bottom">
+
+            {/* Recipient details form */}
+            <h3>Recipient Details</h3>
+            <div className="input-group">
+              <label>Recipient First Name*</label>
+              <input
+                type="text"
+                name="firstName"
+                value={recipientDetails.firstName}
+                onChange={handleRecipientChange}
+                disabled={isRecipientSame} // Disable input if sender and recipient are the same
+              />
+              {hasSubmitted && formErrors.recipient.firstName && <p className="error">{formErrors.recipient.firstName}</p>}
+            </div>
+            <div className="input-group">
+              <label>Recipient Last Name*</label>
+              <input
+                type="text"
+                name="lastName"
+                value={recipientDetails.lastName}
+                onChange={handleRecipientChange}
+                disabled={isRecipientSame}
+              />
+              {hasSubmitted && formErrors.recipient.lastName && <p className="error">{formErrors.recipient.lastName}</p>}
+            </div>
+            <div className="input-group">
+              <label>Recipient Zip Code*</label>
+              <input
+                type="text"
+                name="zipCode"
+                value={recipientDetails.zipCode}
+                onChange={handleRecipientChange}
+                disabled={isRecipientSame}
+              />
+              {hasSubmitted && formErrors.recipient.zipCode && <p className="error">{formErrors.recipient.zipCode}</p>}
+            </div>
+            <div className="input-group">
+              <label>Recipient Phone Number*</label>
+              <input
+                type="tel"
+                name="phone"
+                value={recipientDetails.phone}
+                onChange={handleRecipientChange}
+                disabled={isRecipientSame}
+              />
+              {hasSubmitted && formErrors.recipient.phone && <p className="error">{formErrors.recipient.phone}</p>}
+            </div>
+
+            <div className="checkbox-group">
               <label>
                 <input
                   type="checkbox"
-                  onChange={handleNoOrderReceptionChange}
-                />{' '}
-                Recipient details same as sender
+                  checked={isRecipientSame}
+                  onChange={handleCheckboxChange}
+                /> Recipient is the same as sender
               </label>
             </div>
-            <button type="submit" className="place-order-button">Pay Now</button>
+
+            <button type="submit" className="submit-button">
+              Place Order
+            </button>
           </form>
         </div>
-        {showRecipientForm && (
-          <div className="form-section">
-            <h3>Recipient Details</h3>
-            <form className="recipient-form">
-              <div className="input-group">
-                <label>Title</label>
-                <select>
-                  <option>Mr.</option>
-                  <option>Ms.</option>
-                </select>
-              </div>
-              <div className="input-group">
-                <label>First Name*</label>
-                <input
-                  type="text"
-                  name="firstName"
-                  value={recipientDetails.firstName}
-                  placeholder="First Name"
-                  onChange={handleRecipientChange}
-                />
-                {hasSubmitted && formErrors.recipient.firstName && <p className="error">{formErrors.recipient.firstName}</p>}
-              </div>
-              <div className="input-group">
-                <label>Last Name*</label>
-                <input
-                  type="text"
-                  name="lastName"
-                  value={recipientDetails.lastName}
-                  placeholder="Last Name"
-                  onChange={handleRecipientChange}
-                />
-                {hasSubmitted && formErrors.recipient.lastName && <p className="error">{formErrors.recipient.lastName}</p>}
-              </div>
-              <div className="input-group">
-                <label>Zip Code*</label>
-                <input
-                  type="text"
-                  name="zipCode"
-                  value={recipientDetails.zipCode}
-                  placeholder="Zip Code"
-                  onChange={handleRecipientChange}
-                />
-                {hasSubmitted && formErrors.recipient.zipCode && <p className="error">{formErrors.recipient.zipCode}</p>}
-              </div>
-              <div className="input-group">
-                <label>Phone Number*</label>
-                <input
-                  type="tel"
-                  name="phone"
-                  value={recipientDetails.phone}
-                  placeholder="Phone Number"
-                  onChange={handleRecipientChange}
-                />
-                {hasSubmitted && formErrors.recipient.phone && <p className="error">{formErrors.recipient.phone}</p>}
-              </div>
-            </form>
-          </div>
-        )}
-        {paymentDetailsVisible && (
-          <div className="payment-section">
-            <h3>Payment Details</h3>
-            <p>Please proceed with your payment details.</p>
-            {/* Add your payment form or details here */}
-          </div>
-        )}
       </div>
     </div>
   );

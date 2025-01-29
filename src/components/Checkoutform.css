@@ -1,17 +1,19 @@
+/* General container for the checkout form */
 .checkout-container {
-  width: 90%;
-  max-width: 800px;
-  margin: 40px auto; 
-  padding: 20px;
-  background: #f8f9fa;
+  width: 100%;
+  max-width: 900px;
+  margin: 20px auto;
+  padding: 30px 20px;  /* Increased padding for top and bottom space */
+  background-color: #f4f4f4;
   border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .checkout-header {
   text-align: center;
-  font-size: 24px;
+  font-size: 28px;
   margin-bottom: 20px;
+  color: #333;
 }
 
 .checkout-forms {
@@ -20,104 +22,149 @@
   gap: 20px;
 }
 
+/* Section for sender and recipient details */
 .form-section {
-  background: white;
+  background-color: white;
   padding: 20px;
   border-radius: 8px;
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-h3 {
-  margin-bottom: 10px;
+.form-section h3 {
+  font-size: 20px;
+  color: #333;
+  margin-bottom: 20px;
 }
 
+/* Input fields */
 .input-group {
-  display: flex;
-  flex-direction: column;
   margin-bottom: 15px;
 }
 
 .input-group label {
+  display: block;
   font-weight: bold;
   margin-bottom: 5px;
-  text-align: left; 
+  text-align: left;
+  color: #555;
 }
 
-.input-group input,
-.input-group select {
-  padding: 8px;
-  border: 1px solid #ccc;
+.input-group input {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ddd;
   border-radius: 4px;
-}
-
-.checkbox-group {
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
-  text-align: left; 
+  box-sizing: border-box;
 }
 
 .input-with-kg {
   display: flex;
   align-items: center;
-  gap: 5px;
-  text-align: left; 
 }
 
 .input-with-kg input {
   width: 80%;
+  margin-right: 10px;
 }
 
 .input-with-kg span {
-  font-weight: bold;
+  font-size: 16px;
 }
 
-.order-payment-box {
-  background: white;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-  margin-top: 20px;
-}
-
-.payment-options {
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
-  text-align: left; 
-}
-
-.terms {
-  margin-top: 15px;
-}
-
+/* Error messages */
 .error {
   color: red;
-  font-size: 12px;
+  font-size: 14px;
+  margin-top: 5px;
 }
 
-.place-order-button {
+/* Radio button and checkbox groups */
+.checkbox-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.checkbox-group input[type="checkbox"] {
+  margin-right: 5px;
+}
+
+.checkbox-group label {
+  font-size: 16px;
+  color: #555;
+}
+
+.checkbox-group input[type="radio"] {
+  margin-right: 5px;
+}
+
+/* Submit Button */
+.submit-button {
   width: 100%;
-  padding: 10px;
-  background: green;
-  color: white;
+  padding: 12px;
+  background-color: #28a745; /* Green color */
   border: none;
-  border-radius: 4px;
+  color: white;
+  font-size: 18px;
+  font-weight: bold;
   cursor: pointer;
-  margin-top: 15px; 
+  border-radius: 4px;
+  box-sizing: border-box;
 }
 
-.place-order-button:hover {
-  background: darkgreen;
+.submit-button:hover {
+  background-color: #218838; /* Darker green */
 }
 
-@media (min-width: 768px) {
-  .checkout-forms {
-    flex-direction: row;
-    gap: 20px;
+/* Responsive Design */
+@media (max-width: 768px) {
+  .checkout-container {
+    padding: 30px 15px; /* Slightly reduced padding on smaller screens */
   }
 
-  .form-section {
-    width: 48%;
+  .checkout-header {
+    font-size: 24px;
+  }
+
+  .form-section h3 {
+    font-size: 18px;
+  }
+
+  .input-group input {
+    font-size: 14px;
+    padding: 8px;
+  }
+
+  .checkbox-group input[type="checkbox"] {
+    transform: scale(1.2);
+  }
+
+  .submit-button {
+    font-size: 16px;
+  }
+}
+
+/* Mobile devices */
+@media (max-width: 480px) {
+  .checkout-container {
+    padding: 20px 10px; /* Further reduced padding for mobile */
+  }
+
+  .checkout-header {
+    font-size: 22px;
+  }
+
+  .form-section h3 {
+    font-size: 16px;
+  }
+
+  .input-group input {
+    font-size: 14px;
+    padding: 8px;
+  }
+
+  .submit-button {
+    font-size: 16px;
   }
 }
