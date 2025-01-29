@@ -25,6 +25,7 @@ import AdminLogin from './components/admin components/AdminLogin';
 import AdminDashboard from './components/admin components/AdminDashbord';
 import AdminProtectedRoute from './components/AdminProtectRoute';
 import ContactInquiries from './components/admin components/ContactInquiries';
+import ChangePassword from './components/ChnagePassword';
 
 function Layout({ children }) {
   return (
@@ -88,55 +89,64 @@ function App() {
 
           {/* Protected Routes: These will require authentication */}
           <Route element={<ProtectedRoute isAuthenticated={!!user} />}>
-            <Route
-              path="/contact"
-              element={
-                <Layout>
-                  <Contactus />
-                </Layout>
-              }
-            />
-            <Route
-              path="/feedback"
-              element={
-                <Layout>
-                  <Feedback />
-                </Layout>
-              }
-            />
-            <Route
-              path="/customprofile"
-              element={
-                <Layout>
-                  <Customprofile />
-                </Layout>
-              }
-            />
-            <Route
-              path="/map"
-              element={
-                <Layout>
-                  <MapPage />
-                </Layout>
-              }
-            />
-            <Route
-              path="/search"
-              element={
-                <Layout>
-                  <Search />
-                </Layout>
-              }
-            />
-            <Route
-              path="/checkout"
-              element={
-                <Layout>
-                  <Checkout />
-                </Layout>
-              }
-            />
-          </Route>
+                <Route
+                  path="/contact"
+                  element={
+                    <Layout>
+                      <Contactus />
+                    </Layout>
+                  }
+                />
+                <Route
+                  path="/feedback"
+                  element={
+                    <Layout>
+                      <Feedback />
+                    </Layout>
+                  }
+                />
+                <Route
+                  path="/customprofile"
+                  element={
+                    <Layout>
+                      <Customprofile />
+                    </Layout>
+                  }
+                />
+                <Route
+                  path="/map"
+                  element={
+                    <Layout>
+                      <MapPage />
+                    </Layout>
+                  }
+                />
+                <Route
+                  path="/search"
+                  element={
+                    <Layout>
+                      <Search />
+                    </Layout>
+                  }
+                />
+                <Route
+                  path="/checkout"
+                  element={
+                    <Layout>
+                      <Checkout />
+                    </Layout>
+                  }
+                />
+                
+                <Route
+                  path="/changepassword"
+                  element={
+                    // Directly rendering ChangePassword without Layout (no Navbar/Footer)
+                    <ChangePassword />
+                  }
+                />
+              </Route>
+
 
           {/* Pages without Navbar and Footer (accessible without login) */}
           <Route path="/login" element={<CustomLogin />} />

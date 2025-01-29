@@ -122,8 +122,8 @@ function CustomNavbar() {
             {user ? (
               <>
                 {/* Display Edit Profile and Log Out links when user is logged in */}
-                <Nav.Link as={Link} to="/editprofile">
-                  Edit Profile
+                <Nav.Link as={Link} to="/changepassword">
+                  Change Password
                 </Nav.Link>
                 <Nav.Link onClick={handleLogout} className="logout-link">
                   Log Out
