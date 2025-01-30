@@ -112,68 +112,75 @@ function Checkoutform() {
       paymentMethod: '',
       terms: ''
     };
-
+  
     // Validate email
     const email = senderDetails.email;
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!email || !emailRegex.test(email)) {
       errors.email = 'Please enter a valid email address.';
     }
-
+  
     // Validate phone number
     const phone = senderDetails.phone;
     const phoneRegex = /^\d{10}$/; // Assuming phone number should be 10 digits
     if (!phone || !phoneRegex.test(phone)) {
       errors.phone = 'Please enter a valid phone number.';
     }
-
+  
     // Validate sender details
     const { firstName, lastName, zipCode, wasteAmount } = senderDetails;
-
+  
     if (!firstName) errors.firstName = 'First Name is required.';
     if (!lastName) errors.lastName = 'Last Name is required.';
     if (!zipCode) errors.zipCode = 'Zip Code is required.';
     if (!wasteAmount || wasteAmount <= 0) errors.wasteAmount = 'Waste amount must be greater than 0.';
-
-    // Validate recipient details
-    const { firstName: recipientFirstName, lastName: recipientLastName, zipCode: recipientZipCode, phone: recipientPhone } = recipientDetails;
-
-    if (!recipientFirstName) errors.recipient.firstName = 'Recipient First Name is required.';
-    if (!recipientLastName) errors.recipient.lastName = 'Recipient Last Name is required.';
-    if (!recipientZipCode) errors.recipient.zipCode = 'Recipient Zip Code is required.';
-    if (!recipientPhone) errors.recipient.phone = 'Recipient Phone Number is required.';
-
+  
+    // Skip recipient fields validation if "Recipient is the same as sender" is checked
+    if (!isRecipientSame) {
+      const { firstName: recipientFirstName, lastName: recipientLastName, zipCode: recipientZipCode, phone: recipientPhone } = recipientDetails;
+  
+      if (!recipientFirstName) errors.recipient.firstName = 'Recipient First Name is required.';
+      if (!recipientLastName) errors.recipient.lastName = 'Recipient Last Name is required.';
+      if (!recipientZipCode) errors.recipient.zipCode = 'Recipient Zip Code is required.';
+      if (!recipientPhone) errors.recipient.phone = 'Recipient Phone Number is required.';
+    }
+  
     // Check if at least one plan is selected
     const planSelected = senderDetails.selectedPlan;
     if (!planSelected) {
       errors.plan = 'Please select a plan.';
     }
-
+  
     // Validate payment method
     const paymentMethod = paymentDetails.paymentMethod;
     if (!paymentMethod) {
       errors.paymentMethod = 'Please select a payment method.';
     }
-
+  
     // Validate terms and conditions
     if (!paymentDetails.agreedToTerms) {
       errors.terms = 'You must agree to the terms and conditions.';
     }
-
+  
     setFormErrors(errors);
     return Object.values(errors).every((error) => error === '' && typeof error === 'object' && Object.values(error).every(e => e === ''));
   };
-
+  
   const handleSubmit = (event) => {
     event.preventDefault();
     setHasSubmitted(true); // Mark the form as submitted
+    
     if (validateForm()) {
-      // Proceed with order submission
+      // Proceed to payment page or submit the form
       alert('Order Placed Successfully!');
+      // Redirect to the payment page
+      // For example, using react-router-dom
+      window.location.href = '/payment';  // You can use `history.push('/payment')` if you are using react-router.
     } else {
       alert('Please fix the errors before submitting.');
     }
   };
+  
 
   return (
     <div className="checkout-container">
