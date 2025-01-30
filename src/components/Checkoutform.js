@@ -12,8 +12,11 @@ function Checkoutform() {
       phone: ''
     },
     plan: '',
-    wasteAmount: ''
+    wasteAmount: '',
+    paymentMethod: '',
+    terms: ''
   });
+
   const [hasSubmitted, setHasSubmitted] = useState(false); // Track form submission
 
   const [senderDetails, setSenderDetails] = useState({
@@ -34,6 +37,11 @@ function Checkoutform() {
   });
 
   const [isRecipientSame, setIsRecipientSame] = useState(false); // Track if sender and recipient are the same
+
+  const [paymentDetails, setPaymentDetails] = useState({
+    paymentMethod: '',
+    agreedToTerms: false
+  });
 
   const handleSenderChange = (e) => {
     const { name, value } = e.target;
@@ -80,6 +88,15 @@ function Checkoutform() {
     }
   };
 
+  const handlePaymentChange = (e) => {
+    const { name, value } = e.target;
+    setPaymentDetails({ ...paymentDetails, [name]: value });
+  };
+
+  const handleTermsChange = () => {
+    setPaymentDetails({ ...paymentDetails, agreedToTerms: !paymentDetails.agreedToTerms });
+  };
+
   const validateForm = () => {
     let errors = {
       email: '',
@@ -91,7 +108,9 @@ function Checkoutform() {
         phone: ''
       },
       plan: '',
-      wasteAmount: ''
+      wasteAmount: '',
+      paymentMethod: '',
+      terms: ''
     };
 
     // Validate email
@@ -128,6 +147,17 @@ function Checkoutform() {
     const planSelected = senderDetails.selectedPlan;
     if (!planSelected) {
       errors.plan = 'Please select a plan.';
+    }
+
+    // Validate payment method
+    const paymentMethod = paymentDetails.paymentMethod;
+    if (!paymentMethod) {
+      errors.paymentMethod = 'Please select a payment method.';
+    }
+
+    // Validate terms and conditions
+    if (!paymentDetails.agreedToTerms) {
+      errors.terms = 'You must agree to the terms and conditions.';
     }
 
     setFormErrors(errors);
@@ -280,7 +310,7 @@ function Checkoutform() {
                 name="firstName"
                 value={recipientDetails.firstName}
                 onChange={handleRecipientChange}
-                disabled={isRecipientSame} // Disable input if sender and recipient are the same
+                disabled={isRecipientSame} // Disable input if checkbox is checked
               />
               {hasSubmitted && formErrors.recipient.firstName && <p className="error">{formErrors.recipient.firstName}</p>}
             </div>
@@ -291,7 +321,7 @@ function Checkoutform() {
                 name="lastName"
                 value={recipientDetails.lastName}
                 onChange={handleRecipientChange}
-                disabled={isRecipientSame}
+                disabled={isRecipientSame} // Disable input if checkbox is checked
               />
               {hasSubmitted && formErrors.recipient.lastName && <p className="error">{formErrors.recipient.lastName}</p>}
             </div>
@@ -302,7 +332,7 @@ function Checkoutform() {
                 name="zipCode"
                 value={recipientDetails.zipCode}
                 onChange={handleRecipientChange}
-                disabled={isRecipientSame}
+                disabled={isRecipientSame} // Disable input if checkbox is checked
               />
               {hasSubmitted && formErrors.recipient.zipCode && <p className="error">{formErrors.recipient.zipCode}</p>}
             </div>
@@ -313,12 +343,49 @@ function Checkoutform() {
                 name="phone"
                 value={recipientDetails.phone}
                 onChange={handleRecipientChange}
-                disabled={isRecipientSame}
+                disabled={isRecipientSame} // Disable input if checkbox is checked
               />
               {hasSubmitted && formErrors.recipient.phone && <p className="error">{formErrors.recipient.phone}</p>}
             </div>
 
-            <button type="submit" className="submit-button">
+            {/* Payment method */}
+            <h3>Payment Details</h3>
+            <div className="input-group">
+              <label>Payment Method</label>
+              <div className="radio-group">
+                <label>
+                  <input
+                    type="radio"
+                    name="paymentMethod"
+                    value="Online"
+                    onChange={handlePaymentChange}
+                  /> Online Payment
+                </label>
+                <label>
+                  <input
+                    type="radio"
+                    name="paymentMethod"
+                    value="Cash"
+                    onChange={handlePaymentChange}
+                  /> Cash on Delivery
+                </label>
+              </div>
+              {hasSubmitted && formErrors.paymentMethod && <p className="error">{formErrors.paymentMethod}</p>}
+            </div>
+
+            {/* Terms and Conditions */}
+            <div className="checkbox-group">
+              <label>
+                <input
+                  type="checkbox"
+                  checked={paymentDetails.agreedToTerms}
+                  onChange={handleTermsChange}
+                /> I agree to the Terms and Conditions
+              </label>
+              {hasSubmitted && formErrors.terms && <p className="error">{formErrors.terms}</p>}
+            </div>
+
+            <button type="submit" className="submit-btn">
               Place Order
             </button>
           </form>
