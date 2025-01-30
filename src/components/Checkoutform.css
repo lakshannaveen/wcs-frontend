@@ -28,6 +28,7 @@
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  
 }
 
 .form-section h3 {
@@ -83,7 +84,7 @@
 .checkbox-group {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 20px;
 }
 
 .checkbox-group input[type="checkbox"] {
@@ -95,8 +96,8 @@
   color: #555;
 }
 
-.checkbox-group input[type="radio"] {
-  margin-right: 5px;
+.radio-group label {
+  margin-right: 15px; /* Adds space between radio buttons */
 }
 
 /* Submit Button */
