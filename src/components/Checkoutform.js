@@ -287,13 +287,12 @@ function Checkoutform() {
                   onChange={handleSenderChange}
                   placeholder="0"
                 />
-                <span>kg</span>
+                <span className="kg">kg</span>
               </div>
               {hasSubmitted && formErrors.wasteAmount && <p className="error">{formErrors.wasteAmount}</p>}
             </div>
 
-            {/* Recipient details form */}
-            <h3>Recipient Details</h3>
+            {/* Recipient Same As Sender Checkbox */}
             <div className="checkbox-group">
               <label>
                 <input
@@ -303,92 +302,97 @@ function Checkoutform() {
                 /> Recipient is the same as sender
               </label>
             </div>
-            <div className="input-group">
-              <label>Recipient First Name*</label>
-              <input
-                type="text"
-                name="firstName"
-                value={recipientDetails.firstName}
-                onChange={handleRecipientChange}
-                disabled={isRecipientSame} // Disable input if checkbox is checked
-              />
-              {hasSubmitted && formErrors.recipient.firstName && <p className="error">{formErrors.recipient.firstName}</p>}
-            </div>
-            <div className="input-group">
-              <label>Recipient Last Name*</label>
-              <input
-                type="text"
-                name="lastName"
-                value={recipientDetails.lastName}
-                onChange={handleRecipientChange}
-                disabled={isRecipientSame} // Disable input if checkbox is checked
-              />
-              {hasSubmitted && formErrors.recipient.lastName && <p className="error">{formErrors.recipient.lastName}</p>}
-            </div>
-            <div className="input-group">
-              <label>Recipient Zip Code*</label>
-              <input
-                type="text"
-                name="zipCode"
-                value={recipientDetails.zipCode}
-                onChange={handleRecipientChange}
-                disabled={isRecipientSame} // Disable input if checkbox is checked
-              />
-              {hasSubmitted && formErrors.recipient.zipCode && <p className="error">{formErrors.recipient.zipCode}</p>}
-            </div>
-            <div className="input-group">
-              <label>Recipient Phone Number*</label>
-              <input
-                type="tel"
-                name="phone"
-                value={recipientDetails.phone}
-                onChange={handleRecipientChange}
-                disabled={isRecipientSame} // Disable input if checkbox is checked
-              />
-              {hasSubmitted && formErrors.recipient.phone && <p className="error">{formErrors.recipient.phone}</p>}
-            </div>
-
-            {/* Payment method */}
-            <h3>Payment Details</h3>
-            <div className="input-group">
-              <label>Payment Method</label>
-              <div className="radio-group">
-                <label>
-                  <input
-                    type="radio"
-                    name="paymentMethod"
-                    value="Online"
-                    onChange={handlePaymentChange}
-                  /> Online Payment
-                </label>
-                <label>
-                  <input
-                    type="radio"
-                    name="paymentMethod"
-                    value="Cash"
-                    onChange={handlePaymentChange}
-                  /> Cash on Delivery
-                </label>
-              </div>
-              {hasSubmitted && formErrors.paymentMethod && <p className="error">{formErrors.paymentMethod}</p>}
-            </div>
-
-            {/* Terms and Conditions */}
-            <div className="checkbox-group">
-              <label>
-                <input
-                  type="checkbox"
-                  checked={paymentDetails.agreedToTerms}
-                  onChange={handleTermsChange}
-                /> I agree to the Terms and Conditions
-              </label>
-              {hasSubmitted && formErrors.terms && <p className="error">{formErrors.terms}</p>}
-            </div>
-
-            <button type="submit" className="submit-btn">
-              Place Order
-            </button>
           </form>
+        </div>
+
+        <div className="form-section">
+          <h3>Recipient Details</h3>
+          <div className="input-group">
+            <label>First Name*</label>
+            <input
+              type="text"
+              name="firstName"
+              value={recipientDetails.firstName}
+              placeholder="Recipient First Name"
+              onChange={handleRecipientChange}
+              disabled={isRecipientSame}
+            />
+            {hasSubmitted && formErrors.recipient.firstName && <p className="error">{formErrors.recipient.firstName}</p>}
+          </div>
+          <div className="input-group">
+            <label>Last Name*</label>
+            <input
+              type="text"
+              name="lastName"
+              value={recipientDetails.lastName}
+              placeholder="Recipient Last Name"
+              onChange={handleRecipientChange}
+              disabled={isRecipientSame}
+            />
+            {hasSubmitted && formErrors.recipient.lastName && <p className="error">{formErrors.recipient.lastName}</p>}
+          </div>
+          <div className="input-group">
+            <label>Zip Code*</label>
+            <input
+              type="text"
+              name="zipCode"
+              value={recipientDetails.zipCode}
+              placeholder="Recipient Zip Code"
+              onChange={handleRecipientChange}
+              disabled={isRecipientSame}
+            />
+            {hasSubmitted && formErrors.recipient.zipCode && <p className="error">{formErrors.recipient.zipCode}</p>}
+          </div>
+          <div className="input-group">
+            <label>Phone Number*</label>
+            <input
+              type="tel"
+              name="phone"
+              value={recipientDetails.phone}
+              placeholder="Recipient Phone Number"
+              onChange={handleRecipientChange}
+              disabled={isRecipientSame}
+            />
+            {hasSubmitted && formErrors.recipient.phone && <p className="error">{formErrors.recipient.phone}</p>}
+          </div>
+        </div>
+
+        <div className="form-section">
+          <h3>Payment Details</h3>
+          <div className="radio-group">
+            <label>
+              <input
+                type="radio"
+                name="paymentMethod"
+                value="Online"
+                onChange={handlePaymentChange}
+                checked={paymentDetails.paymentMethod === 'Online'}
+              /> Online Payment
+            </label>
+            <label>
+              <input
+                type="radio"
+                name="paymentMethod"
+                value="Cash"
+                onChange={handlePaymentChange}
+                checked={paymentDetails.paymentMethod === 'Cash'}
+              /> Cash on Delivery
+            </label>
+            {hasSubmitted && formErrors.paymentMethod && <p className="error">{formErrors.paymentMethod}</p>}
+          </div>
+
+          <div className="checkbox-group">
+            <label>
+              <input
+                type="checkbox"
+                checked={paymentDetails.agreedToTerms}
+                onChange={handleTermsChange}
+              /> I agree to the terms and conditions
+            </label>
+            {hasSubmitted && formErrors.terms && <p className="error">{formErrors.terms}</p>}
+          </div>
+
+          <button type="submit" onClick={handleSubmit}>Place Order</button>
         </div>
       </div>
     </div>
