@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import './Checkoutform.css';
 
 function Checkoutform() {
@@ -264,6 +264,15 @@ function Checkoutform() {
 
             {/* Recipient details form */}
             <h3>Recipient Details</h3>
+            <div className="checkbox-group">
+              <label>
+                <input
+                  type="checkbox"
+                  checked={isRecipientSame}
+                  onChange={handleCheckboxChange}
+                /> Recipient is the same as sender
+              </label>
+            </div>
             <div className="input-group">
               <label>Recipient First Name*</label>
               <input
@@ -307,16 +316,6 @@ function Checkoutform() {
                 disabled={isRecipientSame}
               />
               {hasSubmitted && formErrors.recipient.phone && <p className="error">{formErrors.recipient.phone}</p>}
-            </div>
-
-            <div className="checkbox-group">
-              <label>
-                <input
-                  type="checkbox"
-                  checked={isRecipientSame}
-                  onChange={handleCheckboxChange}
-                /> Recipient is the same as sender
-              </label>
             </div>
 
             <button type="submit" className="submit-button">
