@@ -104,7 +104,7 @@ function Checkoutform() {
       recipient: {
         firstName: '',
         lastName: '',
-        zipCode: '',
+        zipCode: '',  // Added validation for recipient zipCode
         phone: ''
       },
       plan: '',
@@ -120,11 +120,11 @@ function Checkoutform() {
       errors.email = 'Please enter a valid email address.';
     }
   
-    // Validate phone number
-    const phone = senderDetails.phone;
-    const phoneRegex = /^\d{10}$/; // Assuming phone number should be 10 digits
-    if (!phone || !phoneRegex.test(phone)) {
-      errors.phone = 'Please enter a valid phone number.';
+    // Validate sender phone number (10 digits)
+    const senderPhone = senderDetails.phone;
+    const phoneRegex = /^\d{10}$/; // Phone number should be exactly 10 digits
+    if (!senderPhone || !phoneRegex.test(senderPhone)) {
+      errors.phone = 'Please enter a valid 10-digit phone number.';
     }
   
     // Validate sender details
@@ -132,7 +132,13 @@ function Checkoutform() {
   
     if (!firstName) errors.firstName = 'First Name is required.';
     if (!lastName) errors.lastName = 'Last Name is required.';
-    if (!zipCode) errors.zipCode = 'Zip Code is required.';
+    
+    // Validate sender zip code (numeric, max 6 digits)
+    const zipCodeRegex = /^\d{1,6}$/; // Zip code should be numeric and maximum 6 digits
+    if (!zipCode || !zipCodeRegex.test(zipCode)) {
+      errors.zipCode = 'Please enter a valid zip code (up to 6 digits).';
+    }
+  
     if (!wasteAmount || wasteAmount <= 0) errors.wasteAmount = 'Waste amount must be greater than 0.';
   
     // Skip recipient fields validation if "Recipient is the same as sender" is checked
@@ -141,8 +147,16 @@ function Checkoutform() {
   
       if (!recipientFirstName) errors.recipient.firstName = 'Recipient First Name is required.';
       if (!recipientLastName) errors.recipient.lastName = 'Recipient Last Name is required.';
-      if (!recipientZipCode) errors.recipient.zipCode = 'Recipient Zip Code is required.';
-      if (!recipientPhone) errors.recipient.phone = 'Recipient Phone Number is required.';
+      
+      // Validate recipient zip code (numeric, max 6 digits)
+      if (!recipientZipCode || !zipCodeRegex.test(recipientZipCode)) {
+        errors.recipient.zipCode = 'Please enter a valid recipient zip code (up to 6 digits).';
+      }
+  
+      // Validate recipient phone number (10 digits)
+      if (!recipientPhone || !phoneRegex.test(recipientPhone)) {
+        errors.recipient.phone = 'Please enter a valid 10-digit recipient phone number.';
+      }
     }
   
     // Check if at least one plan is selected
@@ -173,6 +187,7 @@ function Checkoutform() {
     });
   };
   
+  
   const handleSubmit = (event) => {
     event.preventDefault();
     setHasSubmitted(true); // Mark the form as submitted
@@ -194,7 +209,7 @@ function Checkoutform() {
       <h2 className="checkout-header">CHECKOUT</h2>
       <div className="checkout-forms">
         <div className="form-section">
-          <h3>Sender & Recipient Details</h3>
+          <h3>Sender Details</h3>
           <form className="sender-form" onSubmit={handleSubmit}>
             {/* Sender details form */}
             <div className="input-group">
