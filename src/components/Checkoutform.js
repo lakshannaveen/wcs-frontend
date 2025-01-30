@@ -163,7 +163,14 @@ function Checkoutform() {
     }
   
     setFormErrors(errors);
-    return Object.values(errors).every((error) => error === '' && typeof error === 'object' && Object.values(error).every(e => e === ''));
+  
+    // Check if all errors are resolved
+    return Object.values(errors).every((error) => {
+      if (typeof error === 'object') {
+        return Object.values(error).every(e => e === '');  // Check nested errors
+      }
+      return error === '';  // Check top-level errors
+    });
   };
   
   const handleSubmit = (event) => {
