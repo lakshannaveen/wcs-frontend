@@ -12,7 +12,6 @@ function Checkoutform() {
       phone: ''
     },
     plan: '',
-    wasteAmount: '',
     paymentMethod: '',
     terms: ''
   });
@@ -29,7 +28,6 @@ const [timeError, setTimeError] = useState('');
     zipCode: '',
     phone: '',
     email: '',
-    wasteAmount: '',
     selectedPlan: '', // Track selected plan
   });
 
@@ -112,11 +110,10 @@ const [timeError, setTimeError] = useState('');
       recipient: {
         firstName: '',
         lastName: '',
-        zipCode: '',  // Added validation for recipient zipCode
+        zipCode: '',  
         phone: ''
       },
       plan: '',
-      wasteAmount: '',
       paymentMethod: '',
       terms: ''
     };
@@ -142,7 +139,7 @@ const [timeError, setTimeError] = useState('');
     }
   
     // Validate sender details
-    const { firstName, lastName, zipCode, wasteAmount } = senderDetails;
+    const { firstName, lastName, zipCode } = senderDetails;
   
     if (!firstName) errors.firstName = 'First Name is required.';
     if (!lastName) errors.lastName = 'Last Name is required.';
@@ -153,7 +150,6 @@ const [timeError, setTimeError] = useState('');
       errors.zipCode = 'Please enter a valid zip code (up to 6 digits).';
     }
   
-    if (!wasteAmount || wasteAmount <= 0) errors.wasteAmount = 'Waste amount must be greater than 0.';
   
     // Skip recipient fields validation if "Recipient is the same as sender" is checked
     if (!isRecipientSame) {
@@ -356,24 +352,6 @@ const [timeError, setTimeError] = useState('');
               {hasSubmitted && timeError && <p className="error">{timeError}</p>}
             </div>
 
-            {/* Waste amount */}
-            <div className="input-group">
-              <label className='wasteamoutlable'>Waste Amount*</label>
-              <div className="input-with-kg">
-                <input
-                  type="number"
-                  name="wasteAmount"
-                  min="0"
-                  step="1"
-                  value={senderDetails.wasteAmount}
-                  onChange={handleSenderChange}
-                  placeholder="0"
-                />
-                <span className="kg">kg</span>
-              </div>
-              {hasSubmitted && formErrors.wasteAmount && <p className="error">{formErrors.wasteAmount}</p>}
-            </div>
-            
             {/* Recipient Same As Sender Checkbox */}
             <div className="checkbox-group">
               <label>
