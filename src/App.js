@@ -133,9 +133,7 @@ function App() {
                 <Route
                   path="/checkout"
                   element={
-                    <Layout>
                       <Checkout />
-                    </Layout>
                   }
                 />
                 

@@ -85,7 +85,8 @@
 .checkbox-group {
   display: flex;
   align-items: center;
-  gap: 20px;
+  flex-direction:column;
+  gap: 5px;
 }
 
 .checkbox-group input[type="checkbox"] {
