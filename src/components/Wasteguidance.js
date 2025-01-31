@@ -19,13 +19,14 @@ function Wasteguidance() {
               className="card-img-top"
             />
             <div className="card-body">
-              <h5 className="card-title">Food Waste</h5>
-              <p className="card-text">
-                Please dispose of all organic food scraps in this bin. <br />
-                <strong>Examples:</strong> Fruit peels, vegetable trimmings, and
-                leftover food.
-              </p>
-            </div>
+            <h5 className="card-title">Food Waste</h5>
+            <p className="card-text">
+              It is mandatory to dispose of all organic food scraps separately in this bin for collection. <br />
+              <strong>Examples:</strong> Fruit peels, vegetable trimmings, and leftover food.
+            </p>
+            <p className="card-text text-danger"><strong>Important:</strong> Please ensure that food waste is separated from other waste before disposal.</p>
+          </div>
+
           </div>
         </div>
         <div className="col-md-4 col-sm-12">
@@ -36,14 +37,14 @@ function Wasteguidance() {
               className="card-img-top"
             />
             <div className="card-body">
-              <h5 className="card-title">Degradable Waste</h5>
-              <p className="card-text">
-                Use this bin for biodegradable items that can break down
-                naturally. <br />
-                <strong>Examples:</strong> Paper, cardboard, and garden waste
-                like leaves and branches.
-              </p>
-            </div>
+            <h5 className="card-title">Degradable Waste</h5>
+            <p className="card-text">
+              It is mandatory to dispose of all biodegradable items separately in this bin for collection. <br />
+              <strong>Examples:</strong> Paper, cardboard, and garden waste like leaves and branches.
+            </p>
+            <p className="card-text text-danger"><strong>Important:</strong> Please ensure that degradable waste is separated from other waste before disposal.</p>
+          </div>
+
           </div>
         </div>
         <div className="col-md-4 col-sm-12">
@@ -56,19 +57,20 @@ function Wasteguidance() {
             <div className="card-body">
               <h5 className="card-title">Non-Degradable Waste</h5>
               <p className="card-text">
-                Place all non-recyclable items in this bin. <br />
-                <strong>Examples:</strong> Plastic wrappers, broken
-                electronics, and ceramic items.
+                It is mandatory to dispose of all non-recyclable items separately in this bin for collection. <br />
+                <strong>Examples:</strong> Plastic wrappers, broken electronics, and ceramic items.
               </p>
+              <p className="card-text text-danger"><strong>Important:</strong> Please ensure that non-degradable waste is separated from other waste before disposal.</p>
             </div>
+
           </div>
         </div>
       </div>
       <div className="alert alert-warning mt-4" role="alert">
-        <strong>Important:</strong> Proper waste segregation is mandatory.
-        Ensuring that you dispose of waste in the correct bin helps maintain an
-        efficient and eco-friendly collection system for everyone.
+        <strong>Important:</strong> Proper waste segregation is mandatory. You must dispose of waste separately in the correct bin. <br />
+        If waste is not separated, we will not be able to collect it. This helps maintain an efficient and eco-friendly collection system for everyone.
       </div>
+
     </div>
   );
 }
