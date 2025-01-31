@@ -26,10 +26,11 @@ function CustomSubscription() {
           </div>
           <h2>Daily Collection</h2>
           <ul>
-            <li>Daily waste collection.</li>
-            <li>On-demand pickups within service hours.</li>
-            <li>Access to a limited recycling and waste reporting dashboard.</li>
-            <li>Ideal for temporary or high-demand situations.</li>
+          <li>Daily waste collection at a specific time of your choosing (up to 10 kg per day).</li>
+          <li>On-demand pickups within service hours.</li>
+          <li>Ideal for temporary or high-demand situations, valid for 3 months from the order date.</li>
+          <li>You can cancel your order at any time.</li>
+
           </ul>
         </div>
 
@@ -44,9 +45,12 @@ function CustomSubscription() {
           </div>
           <h2>Weekly Collection</h2>
           <ul>
-            <li>Scheduled weekly waste collection.</li>
-            <li>Priority scheduling for additional pickups.</li>
-            <li>Great for small businesses or residential communities.</li>
+          <li>Scheduled weekly waste collection (up to 20 kg per week) on your chosen day and time, valid for 3 months.</li>
+          <li>On-demand pickups within service hours.</li>
+          <li>Great for small businesses or residential communities.</li>
+          <li>Ideal for those who need consistent weekly service.</li>
+          <li>You can cancel your order at any time.</li>
+
           </ul>
         </div>
 
@@ -61,10 +65,11 @@ function CustomSubscription() {
           </div>
           <h2>Monthly Collection</h2>
           <ul>
-            <li>Multiple collections per month.</li>
-            <li>Priority customer support.</li>
-            <li>Detailed waste and recycling reports, accessible monthly.</li>
-            <li>Best for small waste volumes, long-term savings.</li>
+          <li>One-time collection per month (up to 50 kg per month), valid for 3 months.</li>
+          <li>Priority customer support.</li>
+          <li>Ideal for small waste volumes, providing long-term savings.</li>
+          <li>You can cancel your order at any time.</li>
+
           </ul>
         </div>
       </div>
