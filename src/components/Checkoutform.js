@@ -305,7 +305,7 @@ function Checkoutform() {
 
             {/* Waste amount */}
             <div className="input-group">
-              <label>Waste Amount*</label>
+              <label className='wasteamoutlable'>Waste Amount*</label>
               <div className="input-with-kg">
                 <input
                   type="number"
@@ -411,7 +411,7 @@ function Checkoutform() {
           </div>
 
           <div className="checkbox-group">
-            <label>
+            <label class>
               <input
                 type="checkbox"
                 checked={paymentDetails.agreedToTerms}

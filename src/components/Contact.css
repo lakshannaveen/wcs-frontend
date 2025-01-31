@@ -35,6 +35,9 @@
   .contact-form h2 {
     margin-bottom: 20px;
   }
+  .heading-contact{
+color: white;
+  }
   .form-group {
     display: flex;
     justify-content: space-between;

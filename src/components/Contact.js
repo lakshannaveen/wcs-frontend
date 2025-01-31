@@ -76,7 +76,7 @@ const CustomContact = () => {
   return (
     <div className='contactus'>
       <div className='left-section'>
-        <h2>Contact Information</h2>
+        <h2 className='heading-contact'>Contact Information</h2>
         <p>Feel Free to Contact us via</p>
         <p><strong>Email:</strong> wastecollectionsystem.lk@gmail.com</p>
         <p><strong>Phone:</strong> 0912234567</p>
