@@ -16,6 +16,10 @@ function Checkoutform() {
     paymentMethod: '',
     terms: ''
   });
+  
+
+const [wasteCollectionTime, setWasteCollectionTime] = useState('');
+const [timeError, setTimeError] = useState('');
 
   const [hasSubmitted, setHasSubmitted] = useState(false); // Track form submission
 
@@ -87,7 +91,11 @@ function Checkoutform() {
       });
     }
   };
-
+  const handleTimeChange = (e) => {
+    setWasteCollectionTime(e.target.value);
+    setTimeError(''); // Clear error when user selects a time
+  };
+  
   const handlePaymentChange = (e) => {
     const { name, value } = e.target;
     setPaymentDetails({ ...paymentDetails, [name]: value });
@@ -119,6 +127,12 @@ function Checkoutform() {
     if (!email || !emailRegex.test(email)) {
       errors.email = 'Please enter a valid email address.';
     }
+
+        // Validate Waste Collection Time
+    if (!wasteCollectionTime) {
+      setTimeError('You must select a waste collection time.');
+    }
+
   
     // Validate sender phone number (10 digits)
     const senderPhone = senderDetails.phone;
@@ -270,7 +284,7 @@ function Checkoutform() {
 
             {/* Plan selection */}
             <div className="input-group">
-              <label>Your Plan</label>
+              <label>Your Plan*</label>
               <div className="checkbox-group">
                 <label>
                   <input
@@ -303,6 +317,45 @@ function Checkoutform() {
               {hasSubmitted && formErrors.plan && <p className="error">{formErrors.plan}</p>}
             </div>
 
+            {/*waste collection time */}
+
+                      <div className="input-group">
+              <label className='timelable'>Waste Collection Time*</label>
+              <div className="time-radio-group">
+                <label>
+                  <input
+                    type="radio"
+                    name="wasteCollectionTime"
+                    value="Morning"
+                    checked={wasteCollectionTime === 'Morning'}
+                    onChange={handleTimeChange}
+                  />
+                  Morning
+                </label>
+                <label>
+                  <input
+                    type="radio"
+                    name="wasteCollectionTime"
+                    value="Afternoon"
+                    checked={wasteCollectionTime === 'Afternoon'}
+                    onChange={handleTimeChange}
+                  />
+                  Afternoon
+                </label>
+                <label>
+                  <input
+                    type="radio"
+                    name="wasteCollectionTime"
+                    value="Evening"
+                    checked={wasteCollectionTime === 'Evening'}
+                    onChange={handleTimeChange}
+                  />
+                  Evening
+                </label>
+              </div>
+              {hasSubmitted && timeError && <p className="error">{timeError}</p>}
+            </div>
+
             {/* Waste amount */}
             <div className="input-group">
               <label className='wasteamoutlable'>Waste Amount*</label>
@@ -320,7 +373,7 @@ function Checkoutform() {
               </div>
               {hasSubmitted && formErrors.wasteAmount && <p className="error">{formErrors.wasteAmount}</p>}
             </div>
-
+            
             {/* Recipient Same As Sender Checkbox */}
             <div className="checkbox-group">
               <label>
