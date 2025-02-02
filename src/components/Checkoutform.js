@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import './Checkoutform.css';
+import { useNavigate } from 'react-router-dom';
 
 function Checkoutform() {
+  const navigate = useNavigate();
   const [formErrors, setFormErrors] = useState({
     email: '',
     phone: '',
@@ -189,20 +191,22 @@ const [timeError, setTimeError] = useState('');
   };
   
   
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    setHasSubmitted(true); // Mark the form as submitted
-    
-    if (validateForm()) {
-      // Proceed to payment page or submit the form
-      alert('Order Placed Successfully!');
-      // Redirect to the payment page
-      // For example, using react-router-dom
-      window.location.href = '/payment';  // You can use `history.push('/payment')` if you are using react-router.
-    } else {
-      alert('Please fix the errors before submitting.');
-    }
-  };
+
+    const handleSubmit = (event) => {
+      event.preventDefault();
+      setHasSubmitted(true); // Mark the form as submitted
+  
+      if (validateForm()) {
+        if (paymentDetails.paymentMethod === 'Online') {
+          navigate('/payment'); // Redirect to Payment.js
+        } else if (paymentDetails.paymentMethod === 'Cash') {
+          navigate('/orderreceipt'); // Redirect to OrderReceipt.js
+        }
+      } else {
+        alert('Please fix the errors before submitting.');
+      }
+    };
+  
   
 
   return (
