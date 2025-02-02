@@ -58,7 +58,8 @@ const Map = () => {
     });
     return null;
   };
-//use local sotage for sotre tmeparaly
+
+  // Handle confirm action and store data in sessionStorage
   const handleConfirm = () => {
     if (!houseNo.trim() || !streetName.trim()) {
       setShowWarning(true);
@@ -73,9 +74,9 @@ const Map = () => {
     } else {
       setShowWarning(false);
       setIsLocationConfirmed(true);
-  
-      // Store data in localStorage
-      localStorage.setItem('checkoutData', JSON.stringify({
+
+      // Store data in sessionStorage instead of localStorage
+      sessionStorage.setItem('checkoutData', JSON.stringify({
         address,
         houseNo,
         streetName,
@@ -83,12 +84,11 @@ const Map = () => {
         selectedWeekday,
         selectedDate
       }));
-  
+
       // Navigate to checkout
       navigate('/checkout');
     }
   };
-  
 
   return (
     <div className="map-container">
