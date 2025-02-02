@@ -76,9 +76,10 @@ function CustomSubscription() {
 
       
       <p className="note">
-        <strong>Important:</strong> All these subscription plans are valid for 3 months only. The pick-up date can be chosen on a day of your choice. <br />
-        The pick-up time can be scheduled in the morning, evening, or afternoon. You can select your subscription plan at checkout.
-      </p>
+          <strong>Important:</strong> All these subscription plans are valid for 3 months only. The pick-up date can be chosen on a day of your choice. <br />
+          The pick-up time can be scheduled in the <span className="highlight">morning</span>, <span className="highlight">afternoon</span>, or <span className="highlight">evening</span>. You can select your subscription plan at <span className="highlight">map selection</span>. <br />
+          Additionally, you can choose your preferred time (<span className="highlight">morning</span>, <span className="highlight">afternoon</span>, or <span className="highlight">evening</span>) for waste collection during <span className="highlight">checkout</span>.
+        </p>
     </div>
   );
 }

@@ -96,6 +96,10 @@ body {
   color: #000000;
 }
 
+.highlight {
+  font-weight: bold;
+}
+
 
 @media screen and (max-width: 768px) {
   .plans-wrapper {
