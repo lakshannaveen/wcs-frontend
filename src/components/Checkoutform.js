@@ -166,6 +166,11 @@ const [timeError, setTimeError] = useState('');
     if (!paymentMethod) {
       errors.paymentMethod = 'Please select a payment method.';
     }
+     // Waste collection time validation
+  if (!wasteCollectionTime) {
+    setTimeError('You must select a waste collection time.');
+    return false;
+  }
   
     // Validate terms and conditions
     if (!paymentDetails.agreedToTerms) {
