@@ -11,7 +11,6 @@ function Checkoutform() {
       zipCode: '',
       phone: ''
     },
-    plan: '',
     paymentMethod: '',
     terms: ''
   });
@@ -28,7 +27,6 @@ const [timeError, setTimeError] = useState('');
     zipCode: '',
     phone: '',
     email: '',
-    selectedPlan: '', // Track selected plan
   });
 
   const [recipientDetails, setRecipientDetails] = useState({
@@ -61,11 +59,6 @@ const [timeError, setTimeError] = useState('');
   const handleRecipientChange = (e) => {
     const { name, value } = e.target;
     setRecipientDetails({ ...recipientDetails, [name]: value });
-  };
-
-  const handlePlanChange = (e) => {
-    const { value } = e.target;
-    setSenderDetails({ ...senderDetails, selectedPlan: value });
   };
 
   const handleCheckboxChange = () => {
@@ -113,7 +106,6 @@ const [timeError, setTimeError] = useState('');
         zipCode: '',  
         phone: ''
       },
-      plan: '',
       paymentMethod: '',
       terms: ''
     };
@@ -167,12 +159,6 @@ const [timeError, setTimeError] = useState('');
       if (!recipientPhone || !phoneRegex.test(recipientPhone)) {
         errors.recipient.phone = 'Please enter a valid 10-digit recipient phone number.';
       }
-    }
-  
-    // Check if at least one plan is selected
-    const planSelected = senderDetails.selectedPlan;
-    if (!planSelected) {
-      errors.plan = 'Please select a plan.';
     }
   
     // Validate payment method
@@ -276,41 +262,6 @@ const [timeError, setTimeError] = useState('');
                 onChange={handleSenderChange}
               />
               {hasSubmitted && formErrors.email && <p className="error">{formErrors.email}</p>}
-            </div>
-
-            {/* Plan selection */}
-            <div className="input-group">
-              <label>Your Plan*</label>
-              <div className="checkbox-group">
-                <label>
-                  <input
-                    type="radio"
-                    name="plan"
-                    value="Daily"
-                    checked={senderDetails.selectedPlan === 'Daily'}
-                    onChange={handlePlanChange}
-                  /> Daily
-                </label>
-                <label>
-                  <input
-                    type="radio"
-                    name="plan"
-                    value="Weekly"
-                    checked={senderDetails.selectedPlan === 'Weekly'}
-                    onChange={handlePlanChange}
-                  /> Weekly
-                </label>
-                <label>
-                  <input
-                    type="radio"
-                    name="plan"
-                    value="Monthly"
-                    checked={senderDetails.selectedPlan === 'Monthly'}
-                    onChange={handlePlanChange}
-                  /> Monthly
-                </label>
-              </div>
-              {hasSubmitted && formErrors.plan && <p className="error">{formErrors.plan}</p>}
             </div>
 
             {/*waste collection time */}

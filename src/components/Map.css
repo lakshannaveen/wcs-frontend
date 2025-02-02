@@ -81,13 +81,13 @@
   border-radius: 4px;
   cursor: pointer;
   transition: background-color 0.3s ease;
+  margin-top: 20px; /* Space above the button */
+  margin-bottom: 20px; /* Space below the button */
 }
 
 .btn-primary:hover {
   background-color: rgb(76, 175, 80) !important; 
-  
 }
-
 
 /* Responsive design for small screens */
 @media (max-width: 768px) {
