@@ -19,6 +19,9 @@ const Map = () => {
   const [streetName, setStreetName] = useState(''); // Store street name
   const [showWarning, setShowWarning] = useState(false); // Toggle warning for invalid inputs
   const [isLocationConfirmed, setIsLocationConfirmed] = useState(false); // Flag to confirm location
+  const [subscriptionPlan, setSubscriptionPlan] = useState(''); // Store selected subscription plan
+  const [selectedWeekday, setSelectedWeekday] = useState(''); // Store selected weekday for weekly plan
+  const [selectedDate, setSelectedDate] = useState(''); // Store selected date for monthly plan
 
   const navigate = useNavigate(); // To navigate to checkout page
   const location = useLocation().state?.location;
@@ -57,14 +60,21 @@ const Map = () => {
   };
 
   const handleConfirm = () => {
+    // Check if all required fields are filled
     if (!houseNo.trim() || !streetName.trim()) {
       setShowWarning(true); // Trigger warning message for missing inputs
     } else if (!address || address === 'Unable to fetch address') {
       setShowWarning(true); // Trigger warning for invalid address
+    } else if (!subscriptionPlan) {
+      setShowWarning(true); // Trigger warning if no subscription plan is selected
+    } else if (subscriptionPlan === 'weekly' && !selectedWeekday) {
+      setShowWarning(true); // Trigger warning if no weekday is selected for weekly plan
+    } else if (subscriptionPlan === 'monthly' && !selectedDate) {
+      setShowWarning(true); // Trigger warning if no date is selected for monthly plan
     } else {
       setShowWarning(false); // Hide warning message
       setIsLocationConfirmed(true); // Set the flag to indicate successful confirmation
-      navigate('/checkout', { state: { address, houseNo, streetName } }); // Navigate to checkout page with address, house number, and street name
+      navigate('/checkout', { state: { address, houseNo, streetName, subscriptionPlan, selectedWeekday, selectedDate } }); // Navigate to checkout page with all details
     }
   };
 
@@ -72,7 +82,7 @@ const Map = () => {
     <div className="map-container">
       <h3>
         {selectedPosition
-          ? `Selected Location: ${address || 'Fetching address...'}`
+          ? `Selected Location: ${address || 'Fetching address...'}` 
           : 'Select a location on the map'}
       </h3>
 
@@ -113,11 +123,57 @@ const Map = () => {
             onChange={(e) => setStreetName(e.target.value)}
             className="street-name-input mb-2"
           />
-          {showWarning && (
-            <div className="alert alert-danger">
-              Please provide a valid house number, street name, and address on map.
+          <div className="subscription-plan-selection mb-2">
+            <select
+              value={subscriptionPlan}
+              onChange={(e) => setSubscriptionPlan(e.target.value)}
+              className="form-select"
+            >
+              <option value="">Select Subscription Plan</option>
+              <option value="daily">Daily</option>
+              <option value="weekly">Weekly</option>
+              <option value="monthly">Monthly</option>
+            </select>
+          </div>
+
+          {/* Show appropriate options based on subscription plan */}
+          {subscriptionPlan === 'weekly' && (
+            <div className="weekly-plan">
+              <select
+                value={selectedWeekday}
+                onChange={(e) => setSelectedWeekday(e.target.value)}
+                className="form-select"
+              >
+                <option value="">Select Weekday</option>
+                <option value="monday">Monday</option>
+                <option value="tuesday">Tuesday</option>
+                <option value="wednesday">Wednesday</option>
+                <option value="thursday">Thursday</option>
+                <option value="friday">Friday</option>
+              </select>
             </div>
           )}
+
+          {subscriptionPlan === 'monthly' && (
+            <div className="monthly-plan">
+              <input
+                type="date"
+                value={selectedDate}
+                onChange={(e) => setSelectedDate(e.target.value)}
+                className="form-control"
+                min={new Date().toISOString().split("T")[0]} // Disable past dates
+                max={new Date(new Date().setDate(new Date().getDate() + 30)).toISOString().split("T")[0]} // Disable dates beyond 30 days
+                placeholder="Select a date"
+              />
+            </div>
+          )}
+
+          {showWarning && (
+            <div className="alert alert-danger">
+              Please provide a valid house number, street name, address on map, and select a subscription plan.
+            </div>
+          )}
+
           <button onClick={handleConfirm} className="btn btn-primary">
             Confirm and Checkout
           </button>
