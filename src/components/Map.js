@@ -58,25 +58,37 @@ const Map = () => {
     });
     return null;
   };
-
+//use local sotage for sotre tmeparaly
   const handleConfirm = () => {
-    // Check if all required fields are filled
     if (!houseNo.trim() || !streetName.trim()) {
-      setShowWarning(true); // Trigger warning message for missing inputs
+      setShowWarning(true);
     } else if (!address || address === 'Unable to fetch address') {
-      setShowWarning(true); // Trigger warning for invalid address
+      setShowWarning(true);
     } else if (!subscriptionPlan) {
-      setShowWarning(true); // Trigger warning if no subscription plan is selected
+      setShowWarning(true);
     } else if (subscriptionPlan === 'weekly' && !selectedWeekday) {
-      setShowWarning(true); // Trigger warning if no weekday is selected for weekly plan
+      setShowWarning(true);
     } else if (subscriptionPlan === 'monthly' && !selectedDate) {
-      setShowWarning(true); // Trigger warning if no date is selected for monthly plan
+      setShowWarning(true);
     } else {
-      setShowWarning(false); // Hide warning message
-      setIsLocationConfirmed(true); // Set the flag to indicate successful confirmation
-      navigate('/checkout', { state: { address, houseNo, streetName, subscriptionPlan, selectedWeekday, selectedDate } }); // Navigate to checkout page with all details
+      setShowWarning(false);
+      setIsLocationConfirmed(true);
+  
+      // Store data in localStorage
+      localStorage.setItem('checkoutData', JSON.stringify({
+        address,
+        houseNo,
+        streetName,
+        subscriptionPlan,
+        selectedWeekday,
+        selectedDate
+      }));
+  
+      // Navigate to checkout
+      navigate('/checkout');
     }
   };
+  
 
   return (
     <div className="map-container">
