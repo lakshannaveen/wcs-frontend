@@ -12,7 +12,7 @@ const CustomAbout = () => {
         const response = await fetch('http://localhost:5002/api/feedback/feedback');
         if (response.ok) {
           const data = await response.json();
-          setFeedbackData(data.feedbacks.slice(0, 3)); // Get only the first 3 feedbacks
+          setFeedbackData(data.feedbacks.slice(-3).reverse()); // Get the latest 3 feedbacks
         } else {
           console.error('Failed to fetch feedback data');
         }
@@ -63,6 +63,9 @@ const CustomAbout = () => {
                     </Card.Header>
                     <Card.Body>
                       <Card.Text>{feedback.feedback}</Card.Text>
+                      <Card.Text>
+                        {'⭐'.repeat(feedback.rating)}
+                      </Card.Text>
                     </Card.Body>
                   </Card>
                 </Col>
