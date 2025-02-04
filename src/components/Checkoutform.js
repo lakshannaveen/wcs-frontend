@@ -275,42 +275,17 @@ const [timeError, setTimeError] = useState('');
 
             {/*waste collection time */}
 
-                      <div className="input-group">
-              <label className='timelable'>Waste Collection Time*</label>
-              <div className="time-radio-group">
-                <label>
-                  <input
-                    type="radio"
-                    name="wasteCollectionTime"
-                    value="Morning"
-                    checked={wasteCollectionTime === 'Morning'}
-                    onChange={handleTimeChange}
-                  />
-                  Morning
-                </label>
-                <label>
-                  <input
-                    type="radio"
-                    name="wasteCollectionTime"
-                    value="Afternoon"
-                    checked={wasteCollectionTime === 'Afternoon'}
-                    onChange={handleTimeChange}
-                  />
-                  Afternoon
-                </label>
-                <label>
-                  <input
-                    type="radio"
-                    name="wasteCollectionTime"
-                    value="Evening"
-                    checked={wasteCollectionTime === 'Evening'}
-                    onChange={handleTimeChange}
-                  />
-                  Evening
-                </label>
-              </div>
-              {hasSubmitted && timeError && <p className="error">{timeError}</p>}
-            </div>
+                    <div className="input-group">
+        <label className="timelable">Waste Collection Time*</label>
+        <select name="wasteCollectionTime" value={wasteCollectionTime} onChange={handleTimeChange} className="time-dropdown">
+          <option value="">Select a time</option>
+          <option value="Morning">Morning (9AM-12PM)</option>
+          <option value="Afternoon">Afternoon (12PM-3PM)</option>
+          <option value="Evening">Evening (3PM-6PM)</option>
+        </select>
+        {hasSubmitted && timeError && <p className="error">{timeError}</p>}
+      </div>
+
 
             {/* Recipient Same As Sender Checkbox */}
             <div className="checkbox-group">
