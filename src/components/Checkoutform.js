@@ -402,16 +402,19 @@ const [timeError, setTimeError] = useState('');
           </div>
 
           <div className="checkbox-group">
-            <label class>
-              <input
-                type="checkbox"
-                checked={paymentDetails.agreedToTerms}
-                onChange={handleTermsChange}
-              /> I agree to the terms and conditions
-            </label>
-            {hasSubmitted && formErrors.terms && <p className="error">{formErrors.terms}</p>}
-          </div>
-          
+         <label>
+        <input
+          type="checkbox"
+          checked={paymentDetails.agreedToTerms}
+          onChange={handleTermsChange}
+        />  
+        I agree to the  
+        <a href="/teamsandconditions" target="_blank" rel="noopener noreferrer"> terms and conditions</a>
+      </label>
+      {hasSubmitted && formErrors.terms && <p className="error">{formErrors.terms}</p>}
+    </div>
+
+
           {/*waste guidance note */}
           <div className="important-note">
         <strong>Important:</strong> Waste disposal guidelines are essential for proper waste management.  

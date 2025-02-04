@@ -27,6 +27,7 @@ import AdminProtectedRoute from './components/AdminProtectRoute';
 import ContactInquiries from './components/admin components/ContactInquiries';
 import ChangePassword from './components/ChnagePassword';
 import FeedbackMessage from './components/admin components/FeedbackMessage';
+import OrderHistory from './components/OrderHistory';
 
 function Layout({ children }) {
   return (
@@ -74,9 +75,7 @@ function App() {
           <Route
             path="/teamsandconditions"
             element={
-              <Layout>
                 <Teamsandconditions />
-              </Layout>
             }
           />
           <Route
@@ -96,6 +95,12 @@ function App() {
                     <Layout>
                       <Contactus />
                     </Layout>
+                  }
+                />
+                   <Route
+                  path="/orderhistory"
+                  element={
+                      <OrderHistory/>
                   }
                 />
                 <Route
