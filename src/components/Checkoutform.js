@@ -411,6 +411,16 @@ const [timeError, setTimeError] = useState('');
             </label>
             {hasSubmitted && formErrors.terms && <p className="error">{formErrors.terms}</p>}
           </div>
+          
+          {/*waste guidance note */}
+          <div className="important-note">
+        <strong>Important:</strong> Waste disposal guidelines are essential for proper waste management.  
+        <br />
+        <a href="/customguidance" className="check-waste-guidance" target="_blank" rel="noopener noreferrer">
+          Click here for more information on waste disposal
+        </a>
+      </div>
+
 
           <button type="submit" onClick={handleSubmit}>Place Order</button>
         </div>
