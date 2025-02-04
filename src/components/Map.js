@@ -59,7 +59,6 @@ const Map = () => {
     return null;
   };
 
-  // Handle confirm action and store data in sessionStorage
   const handleConfirm = () => {
     if (!houseNo.trim() || !streetName.trim()) {
       setShowWarning(true);
@@ -74,8 +73,6 @@ const Map = () => {
     } else {
       setShowWarning(false);
       setIsLocationConfirmed(true);
-
-      // Store data in sessionStorage instead of localStorage
       sessionStorage.setItem('checkoutData', JSON.stringify({
         address,
         houseNo,
@@ -84,8 +81,6 @@ const Map = () => {
         selectedWeekday,
         selectedDate
       }));
-
-      // Navigate to checkout
       navigate('/checkout');
     }
   };
@@ -98,64 +93,40 @@ const Map = () => {
           : 'Select a location on the map'}
       </h3>
 
-      {/* Map */}
-      <MapContainer
-        center={coordinates}
-        zoom={7} // Adjusted zoom level to show the whole of Sri Lanka
-        style={{ height: '500px', width: '100%' }}
-      >
+      <MapContainer center={coordinates} zoom={7} style={{ height: '500px', width: '100%' }}>
         <TileLayer
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         />
         <LocationSelector />
-        {/* Move marker to the selected position */}
         <Marker position={selectedPosition} icon={wasteBinIcon}>
           <Popup>{address || 'Loading address...'}</Popup>
         </Marker>
       </MapContainer>
+      
       <div className="important-note">
         <strong>Important:</strong> Please note that when changing the location on our map, your address will be automatically adjusted based on the new map location selected, ensuring a smooth and hassle-free experience.
+        <br />
+        <a href="/customsubscription" className="check-subscription">Check Subscription Plans</a>
       </div>
 
-      {/* Address and Details Form */}
       {!isLocationConfirmed ? (
         <div className="address-details-form mt-3">
-          <input
-            type="text"
-            placeholder="House Number (e.g., No 4)"
-            value={houseNo}
-            onChange={(e) => setHouseNo(e.target.value)}
-            className="house-number-input mb-2"
-          />
-          <input
-            type="text"
-            placeholder="Street Name (e.g., Dewata road)"
-            value={streetName}
-            onChange={(e) => setStreetName(e.target.value)}
-            className="street-name-input mb-2"
-          />
+          <input type="text" placeholder="House Number (e.g., No 4)" value={houseNo} onChange={(e) => setHouseNo(e.target.value)} className="house-number-input mb-2" />
+          <input type="text" placeholder="Street Name (e.g., Dewata road)" value={streetName} onChange={(e) => setStreetName(e.target.value)} className="street-name-input mb-2" />
           <div className="subscription-plan-selection mb-2">
-            <select
-              value={subscriptionPlan}
-              onChange={(e) => setSubscriptionPlan(e.target.value)}
-              className="form-select"
-            >
+            <select value={subscriptionPlan} onChange={(e) => setSubscriptionPlan(e.target.value)} className="form-select">
               <option value="">Select Subscription Plan</option>
               <option value="daily">Daily</option>
               <option value="weekly">Weekly</option>
               <option value="monthly">Monthly</option>
+              <option value="one-time">One Time</option>
             </select>
           </div>
 
-          {/* Show appropriate options based on subscription plan */}
           {subscriptionPlan === 'weekly' && (
             <div className="weekly-plan">
-              <select
-                value={selectedWeekday}
-                onChange={(e) => setSelectedWeekday(e.target.value)}
-                className="form-select"
-              >
+              <select value={selectedWeekday} onChange={(e) => setSelectedWeekday(e.target.value)} className="form-select">
                 <option value="">Select Weekday</option>
                 <option value="monday">Monday</option>
                 <option value="tuesday">Tuesday</option>
@@ -168,27 +139,18 @@ const Map = () => {
 
           {subscriptionPlan === 'monthly' && (
             <div className="monthly-plan">
-              <input
-                type="date"
-                value={selectedDate}
-                onChange={(e) => setSelectedDate(e.target.value)}
-                className="form-control"
-                min={new Date().toISOString().split("T")[0]} // Disable past dates
-                max={new Date(new Date().setDate(new Date().getDate() + 30)).toISOString().split("T")[0]} // Disable dates beyond 30 days
-                placeholder="Select a date"
-              />
+              <input type="date" value={selectedDate} onChange={(e) => setSelectedDate(e.target.value)} className="form-control" min={new Date().toISOString().split("T")[0]} max={new Date(new Date().setDate(new Date().getDate() + 30)).toISOString().split("T")[0]} />
             </div>
           )}
 
-          {showWarning && (
-            <div className="alert alert-danger">
-              Please provide a valid house number, street name, address on map, and select a subscription plan.
-            </div>
-          )}
+            {showWarning && (
+              <div className="alert custom-alert">
+                Please provide correct location on map, house number, street name, and subscription plan.
+              </div>
+            )}
 
-          <button onClick={handleConfirm} className="btn btn-primary">
-            Confirm and Checkout
-          </button>
+
+          <button onClick={handleConfirm} className="btn btn-primary">Confirm and Checkout</button>
         </div>
       ) : null}
     </div>
