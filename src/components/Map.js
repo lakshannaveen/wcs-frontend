@@ -107,8 +107,15 @@ const Map = () => {
       <div className="important-note">
         <strong>Important:</strong> Please note that when changing the location on our map, your address will be automatically adjusted based on the new map location selected, ensuring a smooth and hassle-free experience.
         <br />
-        <a href="/customsubscription" className="check-subscription">Check Subscription Plans</a>
+        <a href="/customsubscription" className="check-subscription" target="_blank" rel="noopener noreferrer">
+          Check Subscription Plans
+        </a> |
+        <a href="/customguidance" className="check-waste-guidance" target="_blank" rel="noopener noreferrer">
+          Check How to Dispose of Your Waste
+        </a>
       </div>
+
+
 
       {!isLocationConfirmed ? (
         <div className="address-details-form mt-3">
