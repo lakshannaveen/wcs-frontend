@@ -4,7 +4,7 @@ import './Subscriptionplans.css';
 import dailyImage from '../images/IMG_6151.JPG';  
 import weeklyImage from '../images/IMG_6152.JPG';  
 import monthlyImage from '../images/IMG_6153.JPG';  
-import oneTimeImage from '../images/IMG_6153.JPG';  
+import oneTimeImage from '../images/IMG_6154.JPG';  
 
 function CustomSubscription() {
   return (
