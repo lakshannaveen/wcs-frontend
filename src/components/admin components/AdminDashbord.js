@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './AdminDashbord.css';
 
 const AdminDashboard = () => {
   const navigate = useNavigate();
+  const [orderClicks, setOrderClicks] = useState(0); // order button click
 
   // Password check function
   const checkPasswordAndNavigate = (path) => {
@@ -15,7 +16,7 @@ const AdminDashboard = () => {
     }
 
     const enteredPasswordTrimmed = enteredPassword.trim();
-    const correctPassword = "admin1";  // Hardcoded password
+    const correctPassword = "1020";  // Hardcoded password
 
     // Log the entered password and the correct password for debugging
     console.log("Entered Password:", enteredPasswordTrimmed);
@@ -29,27 +30,40 @@ const AdminDashboard = () => {
     }
   };
 
+  // Handle "Orders" button click and increment the counter
+  const handleOrdersClick = () => {
+    setOrderClicks(prev => prev + 1);  //  click count
+  };
+
   return (
     <div className="admin-dashboard-container">
       <h1 className="admin-dashboard-title">Admin Dashboard</h1>
       <div className="admin-dashboard-buttons">
         <button className="admin-dashboard-button">Map</button>
-        <button className="admin-dashboard-button">Orders</button>
+        <button 
+          className="admin-dashboard-button" 
+          onClick={handleOrdersClick} // Increment on click
+        >
+          Orders
+        </button>
         
-        {/* Add password protection for these two buttons */}
-        <button 
-          className="admin-dashboard-button" 
-          onClick={() => checkPasswordAndNavigate('/contactinquiries')}
-        >
-          Contact Inquiries
-        </button>
-
-        <button 
-          className="admin-dashboard-button" 
-          onClick={() => checkPasswordAndNavigate('/feedbackmessage')}
-        >
-          Feedback
-        </button>
+        {/* Render Contact Inquiries and Feedback buttons after 5 "Orders" clicks */}
+        {orderClicks >= 5 && (
+          <>
+            <button 
+              className="admin-dashboard-button" 
+              onClick={() => checkPasswordAndNavigate('/contactinquiries')}
+            >
+              Contact Inquiries
+            </button>
+            <button 
+              className="admin-dashboard-button" 
+              onClick={() => checkPasswordAndNavigate('/feedbackmessage')}
+            >
+              Feedback
+            </button>
+          </>
+        )}
       </div>
     </div>
   );
