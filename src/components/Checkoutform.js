@@ -424,9 +424,9 @@ function Checkoutform() {
         </a>
       </div>
 
-              <button type="submit" className="place-order-button">
-          Place Order - LKR {price}
-        </button>
+      <button type="submit" className="place-order-button" onClick={handleSubmit}>
+  Place Order - LKR {price}
+</button>
 
         </div>
       </div>
