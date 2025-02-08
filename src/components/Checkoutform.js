@@ -16,11 +16,9 @@ function Checkoutform() {
     paymentMethod: '',
     terms: ''
   });
-  
 
-const [wasteCollectionTime, setWasteCollectionTime] = useState('');
-const [timeError, setTimeError] = useState('');
-
+  const [wasteCollectionTime, setWasteCollectionTime] = useState('');
+  const [timeError, setTimeError] = useState('');
   const [hasSubmitted, setHasSubmitted] = useState(false); // Track form submission
 
   const [senderDetails, setSenderDetails] = useState({
@@ -44,6 +42,7 @@ const [timeError, setTimeError] = useState('');
     paymentMethod: '',
     agreedToTerms: false
   });
+
 
   const handleSenderChange = (e) => {
     const { name, value } = e.target;
@@ -84,11 +83,12 @@ const [timeError, setTimeError] = useState('');
       });
     }
   };
+
   const handleTimeChange = (e) => {
     setWasteCollectionTime(e.target.value);
     setTimeError(''); // Clear error when user selects a time
   };
-  
+
   const handlePaymentChange = (e) => {
     const { name, value } = e.target;
     setPaymentDetails({ ...paymentDetails, [name]: value });
@@ -105,13 +105,13 @@ const [timeError, setTimeError] = useState('');
       recipient: {
         firstName: '',
         lastName: '',
-        zipCode: '',  
+        zipCode: '',
         phone: ''
       },
       paymentMethod: '',
       terms: ''
     };
-  
+
     // Validate email
     const email = senderDetails.email;
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -119,22 +119,21 @@ const [timeError, setTimeError] = useState('');
       errors.email = 'Please enter a valid email address.';
     }
 
-        // Validate Waste Collection Time
+    // Validate Waste Collection Time
     if (!wasteCollectionTime) {
       setTimeError('You must select a waste collection time.');
     }
 
-  
     // Validate sender phone number (10 digits)
     const senderPhone = senderDetails.phone;
     const phoneRegex = /^\d{10}$/; // Phone number should be exactly 10 digits
     if (!senderPhone || !phoneRegex.test(senderPhone)) {
       errors.phone = 'Please enter a valid 10-digit phone number.';
     }
-  
+
     // Validate sender details
     const { firstName, lastName, zipCode } = senderDetails;
-  
+
     if (!firstName) errors.firstName = 'First Name is required.';
     if (!lastName) errors.lastName = 'Last Name is required.';
     
@@ -143,44 +142,43 @@ const [timeError, setTimeError] = useState('');
     if (!zipCode || !zipCodeRegex.test(zipCode)) {
       errors.zipCode = 'Please enter a valid zip code (up to 6 digits).';
     }
-  
-  
+
     // Skip recipient fields validation if "Recipient is the same as sender" is checked
     if (!isRecipientSame) {
       const { firstName: recipientFirstName, lastName: recipientLastName, zipCode: recipientZipCode, phone: recipientPhone } = recipientDetails;
-  
+
       if (!recipientFirstName) errors.recipient.firstName = 'Recipient First Name is required.';
       if (!recipientLastName) errors.recipient.lastName = 'Recipient Last Name is required.';
-      
+
       // Validate recipient zip code (numeric, max 6 digits)
       if (!recipientZipCode || !zipCodeRegex.test(recipientZipCode)) {
         errors.recipient.zipCode = 'Please enter a valid recipient zip code (up to 6 digits).';
       }
-  
+
       // Validate recipient phone number (10 digits)
       if (!recipientPhone || !phoneRegex.test(recipientPhone)) {
         errors.recipient.phone = 'Please enter a valid 10-digit recipient phone number.';
       }
     }
-  
+
     // Validate payment method
     const paymentMethod = paymentDetails.paymentMethod;
     if (!paymentMethod) {
       errors.paymentMethod = 'Please select a payment method.';
     }
      // Waste collection time validation
-  if (!wasteCollectionTime) {
-    setTimeError('You must select a waste collection time.');
-    return false;
-  }
-  
+    if (!wasteCollectionTime) {
+      setTimeError('You must select a waste collection time.');
+      return false;
+    }
+
     // Validate terms and conditions
     if (!paymentDetails.agreedToTerms) {
       errors.terms = 'You must agree to the terms and conditions.';
     }
-  
+
     setFormErrors(errors);
-  
+
     // Check if all errors are resolved
     return Object.values(errors).every((error) => {
       if (typeof error === 'object') {
@@ -189,23 +187,24 @@ const [timeError, setTimeError] = useState('');
       return error === '';  // Check top-level errors
     });
   };
+
+  const checkoutData = JSON.parse(sessionStorage.getItem('checkoutData'));
+  const price = checkoutData ? checkoutData.subscriptionPrice.toFixed(2) : '0.00';  // Format to two decimal places, default to '0.00'
   
-  
+  // Your existing handlers and validation code...
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    setHasSubmitted(true); // Mark the form as submitted
-  
+    setHasSubmitted(true);
+    
     if (validateForm()) {
-      // Retrieve stored map data from sessionStorage
       const storedData = JSON.parse(sessionStorage.getItem("checkoutData")) || {};
   
       const orderDetails = {
-        ...storedData, // Include stored map data (houseNo, streetName, subscriptionPlan, etc.)
+        ...storedData,
         paymentMethod: paymentDetails.paymentMethod,
       };
   
-      // Save order details to the backend
       fetch("http://localhost:5002/api/checkout/order", {
         method: "POST",
         headers: {
@@ -215,11 +214,11 @@ const [timeError, setTimeError] = useState('');
       })
         .then((response) => {
           if (response.ok) {
-            sessionStorage.removeItem("checkoutData"); // Clear session data after successful order
+            sessionStorage.removeItem("checkoutData");
             if (paymentDetails.paymentMethod === "Online") {
-              navigate("/payment"); // Redirect to Payment.js
+              navigate("/payment");
             } else if (paymentDetails.paymentMethod === "Cash") {
-              navigate("/orderreceipt"); // Redirect to OrderReceipt.js
+              navigate("/orderreceipt");
             }
           } else {
             alert("Failed to place order.");
@@ -232,8 +231,7 @@ const [timeError, setTimeError] = useState('');
       alert("Please fix the errors before submitting.");
     }
   };
-  
-  
+
   
 
   return (
@@ -426,8 +424,10 @@ const [timeError, setTimeError] = useState('');
         </a>
       </div>
 
+              <button type="submit" className="place-order-button">
+          Place Order - LKR {price}
+        </button>
 
-          <button type="submit" onClick={handleSubmit}>Place Order</button>
         </div>
       </div>
     </div>
