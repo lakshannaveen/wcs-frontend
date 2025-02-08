@@ -22,7 +22,7 @@ const Map = () => {
   const [subscriptionPlan, setSubscriptionPlan] = useState(''); // Store selected subscription plan
   const [selectedWeekday, setSelectedWeekday] = useState(''); // Store selected weekday for weekly plan
   const [selectedDate, setSelectedDate] = useState(''); // Store selected date for monthly plan
-
+ 
   const navigate = useNavigate(); // To navigate to checkout page
   const location = useLocation().state?.location;
 
@@ -73,18 +73,33 @@ const Map = () => {
     } else {
       setShowWarning(false);
       setIsLocationConfirmed(true);
+  
+      // Calculate subscription price based on selected plan
+      let price = 0;
+      if (subscriptionPlan === 'one-time') {
+        price = 200;
+      } else if (subscriptionPlan === 'weekly') {
+        price = 2000; // 3 months of weekly service
+      } else if (subscriptionPlan === 'daily') {
+        price = 5000;
+      } else if (subscriptionPlan === 'monthly') {
+        price = 1000;
+      }
+  
       sessionStorage.setItem('checkoutData', JSON.stringify({
         address,
         houseNo,
         streetName,
         subscriptionPlan,
+        subscriptionPrice: price,
         selectedWeekday,
         selectedDate
       }));
       navigate('/checkout');
     }
   };
-
+  
+  
   return (
     <div className="map-container">
       <h3>
@@ -114,8 +129,6 @@ const Map = () => {
           Check How to Dispose of Your Waste
         </a>
       </div>
-
-
 
       {!isLocationConfirmed ? (
         <div className="address-details-form mt-3">
@@ -150,12 +163,11 @@ const Map = () => {
             </div>
           )}
 
-            {showWarning && (
-              <div className="alert custom-alert">
-                Please provide correct location on map, house number, street name, and subscription plan.
-              </div>
-            )}
-
+          {showWarning && (
+            <div className="alert custom-alert">
+              Please provide correct location on map, house number, street name, and subscription plan.
+            </div>
+          )}
 
           <button onClick={handleConfirm} className="btn btn-primary">Confirm and Checkout</button>
         </div>
