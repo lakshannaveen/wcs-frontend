@@ -4,6 +4,8 @@ import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
 import { useLocation, useNavigate } from 'react-router-dom';
 import './Map.css';
+import Cookies from 'js-cookie';
+import { jwtDecode } from 'jwt-decode';  // Corrected import
 
 // Custom waste bin icon for map
 const wasteBinIcon = new L.Icon({
@@ -22,9 +24,24 @@ const Map = () => {
   const [subscriptionPlan, setSubscriptionPlan] = useState(''); // Store selected subscription plan
   const [selectedWeekday, setSelectedWeekday] = useState(''); // Store selected weekday for weekly plan
   const [selectedDate, setSelectedDate] = useState(''); // Store selected date for monthly plan
- 
+  const [userId, setUserId] = useState(null); // State for user ID
+
   const navigate = useNavigate(); // To navigate to checkout page
   const location = useLocation().state?.location;
+
+  // Get the JWT token from the cookies
+  useEffect(() => {
+    const token = Cookies.get('token'); // Get JWT token from cookie
+
+    if (token) {
+      try {
+        const decoded = jwtDecode(token); // Decode the JWT token
+        setUserId(decoded.id); // Assuming 'id' is the user ID in the payload
+      } catch (error) {
+        console.error("Failed to decode JWT token:", error);
+      }
+    }
+  }, []);
 
   useEffect(() => {
     if (location) {
@@ -62,8 +79,6 @@ const Map = () => {
   const handleConfirm = () => {
     if (!houseNo.trim() || !streetName.trim()) {
       setShowWarning(true);
-    } else if (!address || address === 'Unable to fetch address') {
-      setShowWarning(true);
     } else if (!subscriptionPlan) {
       setShowWarning(true);
     } else if (subscriptionPlan === 'weekly' && !selectedWeekday) {
@@ -73,7 +88,7 @@ const Map = () => {
     } else {
       setShowWarning(false);
       setIsLocationConfirmed(true);
-  
+
       // Calculate subscription price based on selected plan
       let price = 0;
       if (subscriptionPlan === 'one-time') {
@@ -85,9 +100,12 @@ const Map = () => {
       } else if (subscriptionPlan === 'monthly') {
         price = 1000;
       }
-  
+
+      // Store checkout data including user ID and location (latitude, longitude)
       sessionStorage.setItem('checkoutData', JSON.stringify({
-        address,
+        userId, // Add user ID from decoded token
+        latitude: selectedPosition[0],
+        longitude: selectedPosition[1],
         houseNo,
         streetName,
         subscriptionPlan,
@@ -95,11 +113,11 @@ const Map = () => {
         selectedWeekday,
         selectedDate
       }));
+
       navigate('/checkout');
     }
   };
-  
-  
+
   return (
     <div className="map-container">
       <h3>
