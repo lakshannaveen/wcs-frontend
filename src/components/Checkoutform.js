@@ -192,20 +192,47 @@ const [timeError, setTimeError] = useState('');
   
   
 
-    const handleSubmit = (event) => {
-      event.preventDefault();
-      setHasSubmitted(true); // Mark the form as submitted
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    setHasSubmitted(true); // Mark the form as submitted
   
-      if (validateForm()) {
-        if (paymentDetails.paymentMethod === 'Online') {
-          navigate('/payment'); // Redirect to Payment.js
-        } else if (paymentDetails.paymentMethod === 'Cash') {
-          navigate('/orderreceipt'); // Redirect to OrderReceipt.js
-        }
-      } else {
-        alert('Please fix the errors before submitting.');
-      }
-    };
+    if (validateForm()) {
+      // Retrieve stored map data from sessionStorage
+      const storedData = JSON.parse(sessionStorage.getItem("checkoutData")) || {};
+  
+      const orderDetails = {
+        ...storedData, // Include stored map data (houseNo, streetName, subscriptionPlan, etc.)
+        paymentMethod: paymentDetails.paymentMethod,
+      };
+  
+      // Save order details to the backend
+      fetch("http://localhost:5002/api/checkout/order", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(orderDetails),
+      })
+        .then((response) => {
+          if (response.ok) {
+            sessionStorage.removeItem("checkoutData"); // Clear session data after successful order
+            if (paymentDetails.paymentMethod === "Online") {
+              navigate("/payment"); // Redirect to Payment.js
+            } else if (paymentDetails.paymentMethod === "Cash") {
+              navigate("/orderreceipt"); // Redirect to OrderReceipt.js
+            }
+          } else {
+            alert("Failed to place order.");
+          }
+        })
+        .catch((error) => {
+          console.error("Error placing order:", error);
+        });
+    } else {
+      alert("Please fix the errors before submitting.");
+    }
+  };
+  
   
   
 
