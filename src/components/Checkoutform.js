@@ -196,41 +196,80 @@ function Checkoutform() {
   const handleSubmit = (event) => {
     event.preventDefault();
     setHasSubmitted(true);
-    
+
+    // Validate form data
     if (validateForm()) {
-      const storedData = JSON.parse(sessionStorage.getItem("checkoutData")) || {};
-  
-      const orderDetails = {
-        ...storedData,
-        paymentMethod: paymentDetails.paymentMethod,
-      };
-  
-      fetch("http://localhost:5002/api/checkout/order", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(orderDetails),
-      })
-        .then((response) => {
-          if (response.ok) {
-            sessionStorage.removeItem("checkoutData");
-            if (paymentDetails.paymentMethod === "Online") {
-              navigate("/payment");
-            } else if (paymentDetails.paymentMethod === "Cash") {
-              navigate("/orderreceipt");
-            }
-          } else {
-            alert("Failed to place order.");
-          }
-        })
-        .catch((error) => {
-          console.error("Error placing order:", error);
-        });
+        // Prepare the order details (order + checkout data)
+        const orderDetails = {
+            senderDetails: senderDetails,
+            recipientDetails: recipientDetails,
+            wasteCollectionTime: wasteCollectionTime,
+            paymentDetails: paymentDetails,
+            price: price, // Include any other fields needed
+        };
+
+        const checkoutDetails = {
+            orderId: orderDetails.orderId, // Assuming orderId is generated somewhere in the form
+            paymentMethod: paymentDetails.paymentMethod,
+            paymentStatus: paymentDetails.paymentStatus,
+            totalAmount: price, // Store the total amount or any other relevant data
+        };
+
+        // Save both orderDetails and checkoutDetails to sessionStorage
+        sessionStorage.setItem('orderDetails', JSON.stringify(orderDetails));
+        sessionStorage.setItem('checkoutDetails', JSON.stringify(checkoutDetails));
+
+        // Show a loading message or spinner (optional)
+        alert('Your order is being processed...');
+
+        // Wait for 3 seconds before sending data to backend
+        setTimeout(() => {
+            // Retrieve both orderDetails and checkoutDetails from sessionStorage
+            const storedOrderDetails = JSON.parse(sessionStorage.getItem('orderDetails'));
+            const storedCheckoutDetails = JSON.parse(sessionStorage.getItem('checkoutDetails'));
+
+            // Send POST request to backend with both orderDetails and checkoutDetails
+            fetch("http://localhost:5002/api/checkout/order", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    orderDetails: storedOrderDetails,
+                    checkoutDetails: storedCheckoutDetails,
+                }),
+            })
+            .then((response) => {
+                if (response.ok) {
+                    // On successful order placement, handle the navigation or further actions
+                    sessionStorage.removeItem("orderDetails");
+                    sessionStorage.removeItem("checkoutDetails");
+
+                    alert("Order placed successfully!");
+
+                    // Navigate based on payment method
+                    if (storedCheckoutDetails.paymentMethod === "Online") {
+                        navigate("/payment");
+                    } else if (storedCheckoutDetails.paymentMethod === "Cash") {
+                        navigate("/orderreceipt");
+                    }
+                } else {
+                    // Handle failure to place order
+                    response.json().then((data) => {
+                        alert(data.message || "Failed to place order.");
+                    });
+                }
+            })
+            .catch((error) => {
+                // Handle network or server errors
+                console.error("Error placing order:", error);
+                alert("There was an error processing your order. Please try again.");
+            });
+        }, 3000); // Wait for 3 seconds before sending data
     } else {
-      alert("Please fix the errors before submitting.");
+        alert("Please fix the errors before submitting.");
     }
-  };
+};
 
   
 
