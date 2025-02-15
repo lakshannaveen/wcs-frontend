@@ -197,91 +197,98 @@ function Checkoutform() {
   const handleSubmit = (event) => {
     event.preventDefault();
     setHasSubmitted(true);
-
+  
     if (!senderDetails.firstName || !senderDetails.lastName || !senderDetails.zipCode || !senderDetails.phone) {
-        alert("Please fill in all sender details.");
-        return;
+      alert("Please fill in all sender details.");
+      return;
     }
-
+  
     if (!recipientDetails.firstName || !recipientDetails.lastName || !recipientDetails.zipCode || !recipientDetails.phone) {
-        alert("Please fill in all recipient details.");
-        return;
+      alert("Please fill in all recipient details.");
+      return;
     }
-
+  
     if (validateForm()) {
-        const mappagedata = JSON.parse(sessionStorage.getItem('mappagedata'));
-
-        if (!mappagedata || !mappagedata.userId) {
-            alert("User ID is missing! Please go back and select a location.");
-            return;
-        }
-
-        const userId = mappagedata.userId;
-        console.log("Extracted User ID:", userId);
-
-        // Ensure subscription details are included
-        const checkoutpagedata = {
-          senderDetails,
-          recipientDetails,
-          wasteCollectionTime,
-          paymentDetails,
-          mapPageData: {
-            ...mappagedata,
-            subscriptionType: mappagedata.subscriptionPlan || null,
-            selectedDates: mappagedata.selectedDates || null,
-            selectedDays: mappagedata.selectedDays || null,
+      const mappagedata = JSON.parse(sessionStorage.getItem('mappagedata'));
+  
+      if (!mappagedata || !mappagedata.userId) {
+        alert("User ID is missing! Please go back and select a location.");
+        return;
+      }
+  
+      const userId = mappagedata.userId;
+      console.log("Extracted User ID:", userId);
+  
+      // Get the price from mappagedata
+      const price = mappagedata.subscriptionPrice;
+  
+      if (!price) {
+        alert("Price is missing! Please go back and select a subscription.");
+        return;
+      }
+  
+      const checkoutpagedata = {
+        senderDetails,
+        recipientDetails,
+        wasteCollectionTime,
+        paymentDetails,
+        mapPageData: {
+          ...mappagedata,
+          subscriptionType: mappagedata.subscriptionPlan || null,
+          selectedDates: mappagedata.selectedDates || null,
+          selectedDays: mappagedata.selectedDays || null,
+          price, // Add price to the mapPageData
+        },
+        user_id: mappagedata.userId,
+        selected_days: Array.isArray(mappagedata.selectedDays) ? mappagedata.selectedDays : [mappagedata.selectedDays],
+        selected_dates: Array.isArray(mappagedata.selectedDates) ? mappagedata.selectedDates : [mappagedata.selectedDates],
+      };
+  
+      console.log("Final Checkout Data:", checkoutpagedata);
+  
+      sessionStorage.setItem('checkoutpagedata', JSON.stringify(checkoutpagedata));
+  
+      alert('Your order is being processed...');
+  
+      setTimeout(() => {
+        const storedCheckoutPageData = JSON.parse(sessionStorage.getItem('checkoutpagedata'));
+        console.log("Sending Checkout Data to Backend:", storedCheckoutPageData);
+  
+        fetch("http://localhost:5002/api/checkout/order", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
           },
-          user_id: mappagedata.userId,
-          selected_days: Array.isArray(mappagedata.selectedDays) ? mappagedata.selectedDays : [mappagedata.selectedDays],
-          selected_dates: Array.isArray(mappagedata.selectedDates) ? mappagedata.selectedDates : [mappagedata.selectedDates],
-        
-        };
-        
-        console.log("Final Checkout Data:", checkoutpagedata);
-
-        sessionStorage.setItem('checkoutpagedata', JSON.stringify(checkoutpagedata));
-
-        alert('Your order is being processed...');
-
-        setTimeout(() => {
-            const storedCheckoutPageData = JSON.parse(sessionStorage.getItem('checkoutpagedata'));
-            console.log("Sending Checkout Data to Backend:", storedCheckoutPageData);
-
-            fetch("http://localhost:5002/api/checkout/order", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                    orderDetails: storedCheckoutPageData.paymentDetails,
-                    checkoutDetails: storedCheckoutPageData,
-                }),
-            })
-            .then((response) => response.json())
-            .then((data) => {
-                if (data.message === "Order placed successfully") {
-                    sessionStorage.removeItem("checkoutpagedata");
-                    alert("Order placed successfully!");
-
-                    if (storedCheckoutPageData.paymentDetails.paymentMethod === "Online") {
-                        navigate("/payment");
-                    } else {
-                        navigate("/orderreceipt");
-                    }
-                } else {
-                    alert(data.message || "Failed to place order.");
-                }
-            })
-            .catch((error) => {
-                console.error("Error placing order:", error);
-                alert("There was an error processing your order. Please try again.");
-            });
-        }, 3000);
+          body: JSON.stringify({
+            orderDetails: storedCheckoutPageData.paymentDetails,
+            checkoutDetails: storedCheckoutPageData,
+          }),
+        })
+        .then((response) => response.json())
+        .then((data) => {
+          if (data.message === "Order placed successfully") {
+            sessionStorage.removeItem("checkoutpagedata");
+            alert("Order placed successfully!");
+  
+            if (storedCheckoutPageData.paymentDetails.paymentMethod === "Online") {
+              navigate("/payment");
+            } else {
+              navigate("/orderreceipt");
+            }
+          } else {
+            alert(data.message || "Failed to place order.");
+          }
+        })
+        .catch((error) => {
+          console.error("Error placing order:", error);
+          alert("There was an error processing your order. Please try again.");
+        });
+      }, 3000);
     } else {
-        alert("Please fix the errors before submitting.");
+      alert("Please fix the errors before submitting.");
     }
-};
-
+  };
+  
   
   
   
