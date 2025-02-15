@@ -219,17 +219,13 @@ function Checkoutform() {
         return;
       }
   
-      // Get the price from the map page data
-      const price = mappagedata.subscriptionPrice.toFixed(2);  // Format to two decimal places
-  
       // Prepare the combined checkout data
       const checkoutpagedata = {
         senderDetails,
         recipientDetails,
         wasteCollectionTime,
         paymentDetails,
-        price,
-        mapPageData: mappagedata,  // Include mapPageData
+        mapPageData: mappagedata,  // Include mapPageData directly
       };
   
       // Store the combined checkoutpagedata in sessionStorage
@@ -275,6 +271,7 @@ function Checkoutform() {
       alert("Please fix the errors before submitting.");
     }
   };
+  
   
   
   
