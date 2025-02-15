@@ -232,6 +232,9 @@ function Checkoutform() {
             selectedDays: mappagedata.selectedDays || null,
           },
           user_id: mappagedata.userId,
+          selected_days: Array.isArray(mappagedata.selectedDays) ? mappagedata.selectedDays : [mappagedata.selectedDays],
+          selected_dates: Array.isArray(mappagedata.selectedDates) ? mappagedata.selectedDates : [mappagedata.selectedDates],
+        
         };
         
         console.log("Final Checkout Data:", checkoutpagedata);
