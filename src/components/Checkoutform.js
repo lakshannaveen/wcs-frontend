@@ -198,80 +198,84 @@ function Checkoutform() {
     event.preventDefault();
     setHasSubmitted(true);
   
-    // Validate sender details before proceeding
+    // Validate sender and recipient details
     if (!senderDetails.firstName || !senderDetails.lastName || !senderDetails.zipCode || !senderDetails.phone) {
       alert("Please fill in all sender details.");
       return;
     }
   
-    // Validate recipient details
     if (!recipientDetails.firstName || !recipientDetails.lastName || !recipientDetails.zipCode || !recipientDetails.phone) {
       alert("Please fill in all recipient details.");
       return;
     }
   
-    // Ensure form validation is passed
     if (validateForm()) {
-      const mappagedata = JSON.parse(sessionStorage.getItem('mappagedata'));
+        const mappagedata = JSON.parse(sessionStorage.getItem('mappagedata'));
   
-      if (!mappagedata) {
-        alert("Map page data not found in session.");
-        return;
-      }
+        if (!mappagedata || !mappagedata.userId) {
+            alert("User ID is missing! Please go back and select a location.");
+            return;
+        }
   
-      // Prepare the combined checkout data
-      const checkoutpagedata = {
-        senderDetails,
-        recipientDetails,
-        wasteCollectionTime,
-        paymentDetails,
-        mapPageData: mappagedata,  // Include mapPageData directly
-      };
+        const userId = mappagedata.userId;
+        console.log("Extracted User ID:", userId);
   
-      // Store the combined checkoutpagedata in sessionStorage
-      sessionStorage.setItem('checkoutpagedata', JSON.stringify(checkoutpagedata));
+        // Prepare the checkout data
+        const checkoutpagedata = {
+            senderDetails,
+            recipientDetails,
+            wasteCollectionTime,
+            paymentDetails,
+            mapPageData: mappagedata,
+            user_id: userId,  // Ensuring user_id is stored
+        };
   
-      alert('Your order is being processed...');
+        console.log("Final Checkout Data:", checkoutpagedata);  // Debugging log
   
-      setTimeout(() => {
-        const storedCheckoutPageData = JSON.parse(sessionStorage.getItem('checkoutpagedata'));
+        // Store data in sessionStorage
+        sessionStorage.setItem('checkoutpagedata', JSON.stringify(checkoutpagedata));
   
-        fetch("http://localhost:5002/api/checkout/order", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            checkoutpagedata: storedCheckoutPageData,
-          }),
-        })
-        .then((response) => {
-          if (response.ok) {
-            sessionStorage.removeItem("checkoutpagedata");
+        alert('Your order is being processed...');
   
-            alert("Order placed successfully!");
+        setTimeout(() => {
+            const storedCheckoutPageData = JSON.parse(sessionStorage.getItem('checkoutpagedata'));
+            console.log("Sending Checkout Data to Backend:", storedCheckoutPageData);
   
-            if (storedCheckoutPageData.paymentDetails.paymentMethod === "Online") {
-              navigate("/payment");
-            } else if (storedCheckoutPageData.paymentDetails.paymentMethod === "Cash") {
-              navigate("/orderreceipt");
-            }
-          } else {
-            response.json().then((data) => {
-              alert(data.message || "Failed to place order.");
+            fetch("http://localhost:5002/api/checkout/order", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    orderDetails: storedCheckoutPageData.paymentDetails,
+                    checkoutDetails: storedCheckoutPageData,
+                }),
+            })
+            .then((response) => response.json())
+            .then((data) => {
+                if (data.message === "Order placed successfully") {
+                    sessionStorage.removeItem("checkoutpagedata");
+                    alert("Order placed successfully!");
+  
+                    if (storedCheckoutPageData.paymentDetails.paymentMethod === "Online") {
+                        navigate("/payment");
+                    } else {
+                        navigate("/orderreceipt");
+                    }
+                } else {
+                    alert(data.message || "Failed to place order.");
+                }
+            })
+            .catch((error) => {
+                console.error("Error placing order:", error);
+                alert("There was an error processing your order. Please try again.");
             });
-          }
-        })
-        .catch((error) => {
-          console.error("Error placing order:", error);
-          alert("There was an error processing your order. Please try again.");
-        });
-      }, 3000);
+        }, 3000);
     } else {
-      alert("Please fix the errors before submitting.");
+        alert("Please fix the errors before submitting.");
     }
-  };
-  
+};
+
   
   
   
