@@ -103,17 +103,20 @@ const Map = () => {
 
     
   // Store checkout data including user ID and location (latitude, longitude)
-        sessionStorage.setItem('mappagedata', JSON.stringify({
-          userId, // Add user ID from decoded token
-          latitude: selectedPosition[0],
-          longitude: selectedPosition[1],
-          houseNo,
-          streetName,
-          subscriptionPlan,
-          subscriptionPrice: price,
-          selectedWeekday,
-          selectedDate
-        }));
+      sessionStorage.setItem('mappagedata', JSON.stringify({
+        userId, // User ID from decoded token
+        latitude: selectedPosition[0],
+        longitude: selectedPosition[1],
+        houseNo,
+        streetName,
+        subscriptionPlan,
+        subscriptionPrice: price,
+        selectedWeekday,
+        selectedDate,
+        selectedDays: selectedWeekday, // Store the days selected for weekly plan
+        selectedDates: selectedDate,   // Store the selected dates for monthly plan
+      }));
+  
 
 
       navigate('/checkout');
