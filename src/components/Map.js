@@ -101,18 +101,20 @@ const Map = () => {
         price = 1000;
       }
 
-      // Store checkout data including user ID and location (latitude, longitude)
-      sessionStorage.setItem('checkoutData', JSON.stringify({
-        userId, // Add user ID from decoded token
-        latitude: selectedPosition[0],
-        longitude: selectedPosition[1],
-        houseNo,
-        streetName,
-        subscriptionPlan,
-        subscriptionPrice: price,
-        selectedWeekday,
-        selectedDate
-      }));
+    
+  // Store checkout data including user ID and location (latitude, longitude)
+        sessionStorage.setItem('mappagedata', JSON.stringify({
+          userId, // Add user ID from decoded token
+          latitude: selectedPosition[0],
+          longitude: selectedPosition[1],
+          houseNo,
+          streetName,
+          subscriptionPlan,
+          subscriptionPrice: price,
+          selectedWeekday,
+          selectedDate
+        }));
+
 
       navigate('/checkout');
     }

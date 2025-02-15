@@ -189,8 +189,8 @@ function Checkoutform() {
     });
   };
 
-  const checkoutData = JSON.parse(sessionStorage.getItem('checkoutData'));
-  const price = checkoutData ? checkoutData.subscriptionPrice.toFixed(2) : '0.00';  // Format to two decimal places, default to '0.00'
+  const mappagedata = JSON.parse(sessionStorage.getItem('mappagedata'));
+  const price = mappagedata ? mappagedata.subscriptionPrice.toFixed(2) : '0.00';  // Format to two decimal places, default to '0.00'
   
   // Your existing handlers and validation code...
 
@@ -212,52 +212,33 @@ function Checkoutform() {
   
     // Ensure form validation is passed
     if (validateForm()) {
-      const checkoutData = JSON.parse(sessionStorage.getItem('checkoutData'));
-      const userId = checkoutData ? checkoutData.userId : null;
+      const mappagedata = JSON.parse(sessionStorage.getItem('mappagedata'));
   
-      if (!userId) {
-        alert("User ID is not found in session data.");
+      if (!mappagedata) {
+        alert("Map page data not found in session.");
         return;
       }
   
-      // Get checkout data from sessionStorage
-      const storedSenderDetails = JSON.parse(sessionStorage.getItem('senderDetails')) || senderDetails;
-      const storedRecipientDetails = JSON.parse(sessionStorage.getItem('recipientDetails')) || recipientDetails;
+      // Get the price from the map page data
+      const price = mappagedata.subscriptionPrice.toFixed(2);  // Format to two decimal places
   
-      // Ensure sender and recipient details are populated
-      const orderDetails = {
-        senderDetails: storedSenderDetails,
-        recipientDetails: storedRecipientDetails,
-        wasteCollectionTime: wasteCollectionTime,
-        paymentDetails: paymentDetails,
-        price: price,
+      // Prepare the combined checkout data
+      const checkoutpagedata = {
+        senderDetails,
+        recipientDetails,
+        wasteCollectionTime,
+        paymentDetails,
+        price,
+        mapPageData: mappagedata,  // Include mapPageData
       };
   
-      const checkoutDetails = {
-        orderId: orderDetails.orderId,
-        paymentMethod: paymentDetails.paymentMethod,
-        paymentStatus: paymentDetails.paymentStatus,
-        totalAmount: price,
-        user_id: userId, // Ensure user_id is passed from checkoutData
-        sender_firstname: storedSenderDetails.firstName, // Ensure sender_firstname is included
-        sender_lastname: storedSenderDetails.lastName, // Ensure sender_lastname is included
-        sender_zipCode: storedSenderDetails.zipCode, // Ensure sender_zipCode is included
-        sender_phone: storedSenderDetails.phone, // Ensure sender_phone is included
-        recipient_firstname: storedRecipientDetails.firstName, // Ensure recipient's first name
-        recipient_lastname: storedRecipientDetails.lastName, // Ensure recipient's last name
-        recipient_zipCode: storedRecipientDetails.zipCode, // Ensure recipient's zip code
-        recipient_phone: storedRecipientDetails.phone, // Ensure recipient's phone number
-      };
-  
-      // Store order and checkout details in sessionStorage
-      sessionStorage.setItem('orderDetails', JSON.stringify(orderDetails));
-      sessionStorage.setItem('checkoutDetails', JSON.stringify(checkoutDetails));
+      // Store the combined checkoutpagedata in sessionStorage
+      sessionStorage.setItem('checkoutpagedata', JSON.stringify(checkoutpagedata));
   
       alert('Your order is being processed...');
   
       setTimeout(() => {
-        const storedOrderDetails = JSON.parse(sessionStorage.getItem('orderDetails'));
-        const storedCheckoutDetails = JSON.parse(sessionStorage.getItem('checkoutDetails'));
+        const storedCheckoutPageData = JSON.parse(sessionStorage.getItem('checkoutpagedata'));
   
         fetch("http://localhost:5002/api/checkout/order", {
           method: "POST",
@@ -265,20 +246,18 @@ function Checkoutform() {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            orderDetails: storedOrderDetails,
-            checkoutDetails: storedCheckoutDetails,
+            checkoutpagedata: storedCheckoutPageData,
           }),
         })
         .then((response) => {
           if (response.ok) {
-            sessionStorage.removeItem("orderDetails");
-            sessionStorage.removeItem("checkoutDetails");
+            sessionStorage.removeItem("checkoutpagedata");
   
             alert("Order placed successfully!");
   
-            if (storedCheckoutDetails.paymentMethod === "Online") {
+            if (storedCheckoutPageData.paymentDetails.paymentMethod === "Online") {
               navigate("/payment");
-            } else if (storedCheckoutDetails.paymentMethod === "Cash") {
+            } else if (storedCheckoutPageData.paymentDetails.paymentMethod === "Cash") {
               navigate("/orderreceipt");
             }
           } else {
@@ -296,6 +275,8 @@ function Checkoutform() {
       alert("Please fix the errors before submitting.");
     }
   };
+  
+  
   
   return (
     <div className="checkout-container">
