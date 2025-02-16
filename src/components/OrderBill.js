@@ -10,32 +10,38 @@ const OrderBill = () => {
     if (storedCheckoutData) {
       setCheckoutData(storedCheckoutData);
       
-      // Send the order data to the backend to trigger email
-      fetch('http://localhost:5002/api/email/sendOrderConfirmation', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(storedCheckoutData),
-      })
-      .then(response => response.json())  // Parse the response as JSON
-      .then(data => {
-        if (data.message) {
-          console.log(data.message);
-        }
-      })
-      .catch(error => console.error('Error sending email:', error));
+      // Check if email has already been sent for this session
+      if (!sessionStorage.getItem('emailSent')) {
+        // Send the order data to the backend to trigger email
+        fetch('http://localhost:5002/api/email/sendOrderConfirmation', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(storedCheckoutData),
+        })
+        .then(response => response.json())  // Parse the response as JSON
+        .then(data => {
+          if (data.message) {
+            console.log(data.message);
+            // Mark email as sent in sessionStorage
+            sessionStorage.setItem('emailSent', 'true');
+          }
+        })
+        .catch(error => console.error('Error sending email:', error));
+      }
       
       // Set timeout to clear session data after 5 minutes (300000 ms)
       setTimeout(() => {
         sessionStorage.removeItem('checkoutpagedata');
+        sessionStorage.removeItem('emailSent'); // Clear the email sent flag as well
         alert("Checkout data has been cleared due to inactivity.");
       }, 300000); // 5 minutes in milliseconds
     } else {
       alert("No order data found. Please complete the checkout process.");
     }
   }, []);
-
+  
   if (!checkoutData) {
     return <div>Loading...</div>;
   }
