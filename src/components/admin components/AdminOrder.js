@@ -42,41 +42,62 @@ const AdminOrders = () => {
     window.open(googleMapUrl, '_blank'); // Open Google Maps in a new tab
   };
 
-  return (
-    <div className="admin-orders-container">
-      <h1 className="admin-orders-title">Welcome to Admin Orders</h1>
+  // Function to filter checkouts by subscription type
+  const filterCheckoutsByType = (type) => {
+    return checkouts.filter((checkout) => checkout.subscription_type === type);
+  };
 
-      {/* Table to display checkout records */}
-      <table className="admin-orders-table">
-        <thead>
-          <tr>
-            <th>Checkout ID</th>
-            <th>User ID</th>
-            <th>Sender Email</th> {/* Updated to show Sender Email */}
-            <th>Sender Name</th>
-            <th>Recipient Name</th>
-            <th>Collection Time</th>
-            <th>Subscription Type</th>
-            <th>Actions</th> {/* Actions column */}
-            <th>Location</th> {/* New column for location button */}
-          </tr>
-        </thead>
-        <tbody>
-          {checkouts.length > 0 ? (
-            checkouts.map((checkout) => (
+  // Format selected dates or days to be shown in the table
+  const formatSelectedDates = (selectedDates) => {
+    if (selectedDates && selectedDates.length > 0) {
+      return selectedDates.join(', '); // Join dates with commas
+    }
+    return 'N/A'; // Show N/A if no dates are selected
+  };
+
+  const formatSelectedDays = (selectedDays) => {
+    if (selectedDays && selectedDays.length > 0) {
+      return selectedDays.join(', '); // Join days with commas
+    }
+    return 'N/A'; // Show N/A if no days are selected
+  };
+
+  // Function to render a table for a specific subscription type
+  const renderSubscriptionTable = (type) => {
+    const filteredCheckouts = filterCheckoutsByType(type);
+    if (filteredCheckouts.length === 0) return null;
+
+    return (
+      <div key={type}>
+        <h2>{type.charAt(0).toUpperCase() + type.slice(1)} Orders</h2>
+        <table className="admin-orders-table">
+          <thead>
+            <tr>
+              <th>Checkout ID</th>
+              <th>User ID</th>
+              <th>Sender Name</th>
+              <th>Recipient Name</th>
+              <th>Collection Time</th>
+              {type === 'monthly' && <th>Selected Dates</th>} {/* Show Selected Dates for Monthly */}
+              {type === 'weekly' && <th>Selected Days</th>} {/* Show Selected Days for Weekly */}
+              <th>Actions</th>
+              <th>Location</th>
+            </tr>
+          </thead>
+          <tbody>
+            {filteredCheckouts.map((checkout) => (
               <tr key={checkout.id}>
                 <td>{checkout.id}</td>
                 <td>{checkout.user_id}</td>
-                <td>{checkout.sender_email}</td> {/* Display Sender Email */}
                 <td>{checkout.sender_firstname} {checkout.sender_lastname}</td>
                 <td>{checkout.recipient_firstname} {checkout.recipient_lastname}</td>
                 <td>{checkout.collection_time}</td>
-                <td>{checkout.subscription_type || 'N/A'}</td>
+                {type === 'monthly' && <td>{formatSelectedDates(checkout.selected_dates)}</td>} {/* Show Selected Dates for Monthly */}
+                {type === 'weekly' && <td>{formatSelectedDays(checkout.selected_days)}</td>} {/* Show Selected Days for Weekly */}
                 <td>
                   <button onClick={() => cancelOrder(checkout.id)} className="cancel-btn">Cancel Order</button>
                 </td>
                 <td>
-                  {/* Location button to open Google Maps */}
                   {checkout.latitude && checkout.longitude && (
                     <button 
                       onClick={() => openLocationInMap(checkout.latitude, checkout.longitude)} 
@@ -87,14 +108,22 @@ const AdminOrders = () => {
                   )}
                 </td>
               </tr>
-            ))
-          ) : (
-            <tr>
-              <td colSpan="9">No orders found.</td>
-            </tr>
-          )}
-        </tbody>
-      </table>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    );
+  };
+
+  return (
+    <div className="admin-orders-container">
+      <h1 className="admin-orders-title">Welcome to Admin Orders</h1>
+
+      {/* Render separate tables for each subscription type */}
+      {renderSubscriptionTable('daily')}
+      {renderSubscriptionTable('weekly')}
+      {renderSubscriptionTable('monthly')}
+      {renderSubscriptionTable('one-time')}
     </div>
   );
 };
