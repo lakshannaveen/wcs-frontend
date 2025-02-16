@@ -12,7 +12,19 @@ const OrderBill = () => {
       setCheckoutData(storedCheckoutData);
     } else {
       alert("No order data found. Please complete the checkout process.");
+      return;
     }
+
+    // Set a timeout to delete session storage data after 5 minutes (300000ms)
+    const timeout = setTimeout(() => {
+        sessionStorage.removeItem('checkoutpagedata');
+        alert("Session expired. Data has been removed.");
+        window.close(); // Close the tab
+      }, 3600000); // 1 hour (60 minutes)
+      
+    // Cleanup function to clear the timeout if the component unmounts
+    return () => clearTimeout(timeout);
+
   }, []);
 
   if (!checkoutData) {
@@ -25,44 +37,81 @@ const OrderBill = () => {
     <div className="order-bill">
       <h2>Order Bill</h2>
 
-      {/* Sender Details */}
-      <div className="sender-details">
-        <h3>Sender Details</h3>
-        <p><strong>Name:</strong> {`${senderDetails.firstName} ${senderDetails.lastName}`}</p>
-        <p><strong>Phone:</strong> {senderDetails.phone}</p>
-        <p><strong>Zip Code:</strong> {senderDetails.zipCode}</p>
-      </div>
+      <table>
+        <tbody>
+          {/* Sender Details */}
+          <tr>
+            <th colSpan="2">Sender Details</th>
+          </tr>
+          <tr>
+            <td><strong>Name:</strong></td>
+            <td>{`${senderDetails.firstName} ${senderDetails.lastName}`}</td>
+          </tr>
+          <tr>
+            <td><strong>Phone:</strong></td>
+            <td>{senderDetails.phone}</td>
+          </tr>
+          <tr>
+            <td><strong>Zip Code:</strong></td>
+            <td>{senderDetails.zipCode}</td>
+          </tr>
 
-      {/* Recipient Details */}
-      <div className="recipient-details">
-        <h3>Recipient Details</h3>
-        <p><strong>Name:</strong> {`${recipientDetails.firstName} ${recipientDetails.lastName}`}</p>
-        <p><strong>Phone:</strong> {recipientDetails.phone}</p>
-        <p><strong>Zip Code:</strong> {recipientDetails.zipCode}</p>
-      </div>
+          {/* Recipient Details */}
+          <tr>
+            <th colSpan="2">Recipient Details</th>
+          </tr>
+          <tr>
+            <td><strong>Name:</strong></td>
+            <td>{`${recipientDetails.firstName} ${recipientDetails.lastName}`}</td>
+          </tr>
+          <tr>
+            <td><strong>Phone:</strong></td>
+            <td>{recipientDetails.phone}</td>
+          </tr>
+          <tr>
+            <td><strong>Zip Code:</strong></td>
+            <td>{recipientDetails.zipCode}</td>
+          </tr>
 
-      {/* Map Data (Location and Subscription Plan) */}
-      <div className="map-details">
-        <h3>Map and Subscription Details</h3>
-        <p><strong>Location:</strong> Lat: {mapPageData.latitude}, Long: {mapPageData.longitude}</p>
-        <p><strong>Subscription Plan:</strong> {mapPageData.subscriptionPlan}</p>
-        <p><strong>Subscription Price:</strong> {mapPageData.subscriptionPrice}</p>
-        <p><strong>Selected Dates:</strong> {mapPageData.selectedDates || 'N/A'}</p>
-        <p><strong>Selected Days:</strong> {mapPageData.selectedDays || 'N/A'}</p>
-      </div>
+          {/* Map Details */}
+          <tr>
+            <th colSpan="2">Map and Subscription Details</th>
+          </tr>
+          <tr>
+            <td><strong>Location:</strong></td>
+            <td>Lat: {mapPageData.latitude}, Long: {mapPageData.longitude}</td>
+          </tr>
+          <tr>
+            <td><strong>Subscription Plan:</strong></td>
+            <td>{mapPageData.subscriptionPlan}</td>
+          </tr>
+          <tr>
+            <td><strong>Subscription Price:</strong></td>
+            <td>{mapPageData.subscriptionPrice}</td>
+          </tr>
+          <tr>
+            <td><strong>Selected Dates:</strong></td>
+            <td>{mapPageData.selectedDates || 'N/A'}</td>
+          </tr>
+          <tr>
+            <td><strong>Selected Days:</strong></td>
+            <td>{mapPageData.selectedDays || 'N/A'}</td>
+          </tr>
 
-      {/* Payment Details */}
-      <div className="payment-details">
-        <h3>Payment Details</h3>
-        <p><strong>Payment Method:</strong> {paymentDetails.paymentMethod}</p>
-        <p><strong>Total Price:</strong> {mapPageData.subscriptionPrice}</p>
-      </div>
-
-      {/* Final Total */}
-      <div className="final-total">
-        <h3>Total</h3>
-        <p><strong>Total Price:</strong> {mapPageData.subscriptionPrice}</p>
-      </div>
+          {/* Payment Details */}
+          <tr>
+            <th colSpan="2">Payment Details</th>
+          </tr>
+          <tr>
+            <td><strong>Payment Method:</strong></td>
+            <td>{paymentDetails.paymentMethod}</td>
+          </tr>
+          <tr>
+            <td><strong>Total Price:</strong></td>
+            <td>{mapPageData.subscriptionPrice}</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   );
 };
