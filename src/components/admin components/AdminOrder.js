@@ -50,11 +50,14 @@ const AdminOrders = () => {
   // Format selected dates or days to be shown in the table
   const formatSelectedDates = (selectedDates) => {
     if (selectedDates && selectedDates.length > 0) {
-      return selectedDates.join(', '); // Join dates with commas
+      return selectedDates.map(date => {
+        const formattedDate = new Date(date);
+        return formattedDate.toISOString().split('T')[0]; // Extracts only the date part (YYYY-MM-DD)
+      }).join(', '); // Join dates with commas
     }
     return 'N/A'; // Show N/A if no dates are selected
   };
-
+  
   const formatSelectedDays = (selectedDays) => {
     if (selectedDays && selectedDays.length > 0) {
       return selectedDays.join(', '); // Join days with commas

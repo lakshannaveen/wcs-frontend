@@ -44,6 +44,9 @@
   .cancel-btn:hover {
     background-color: darkred; 
   }
+  .admin-orders-container h2 {
+    margin-top: 20px; 
+  }
   
   
   .admin-orders-table th,
