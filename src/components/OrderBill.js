@@ -15,7 +15,7 @@ const OrderBill = () => {
       return;
     }
 
-    // Set a timeout to delete session storage data after 5 minutes (300000ms)
+    // Set a timeout to delete session storage data after 1 hour (3600000ms)
     const timeout = setTimeout(() => {
         sessionStorage.removeItem('checkoutpagedata');
         alert("Session expired. Data has been removed.");
@@ -32,6 +32,12 @@ const OrderBill = () => {
   }
 
   const { senderDetails, recipientDetails, mapPageData, paymentDetails } = checkoutData;
+
+  // Check if sender and recipient are the same
+  const isSameSenderRecipient = senderDetails.firstName === recipientDetails.firstName && 
+                                senderDetails.lastName === recipientDetails.lastName && 
+                                senderDetails.phone === recipientDetails.phone && 
+                                senderDetails.zipCode === recipientDetails.zipCode;
 
   return (
     <div className="order-bill">
@@ -56,22 +62,26 @@ const OrderBill = () => {
             <td>{senderDetails.zipCode}</td>
           </tr>
 
-          {/* Recipient Details */}
-          <tr>
-            <th colSpan="2">Recipient Details</th>
-          </tr>
-          <tr>
-            <td><strong>Name:</strong></td>
-            <td>{`${recipientDetails.firstName} ${recipientDetails.lastName}`}</td>
-          </tr>
-          <tr>
-            <td><strong>Phone:</strong></td>
-            <td>{recipientDetails.phone}</td>
-          </tr>
-          <tr>
-            <td><strong>Zip Code:</strong></td>
-            <td>{recipientDetails.zipCode}</td>
-          </tr>
+          {/* Conditionally render Recipient Details */}
+          {!isSameSenderRecipient && (
+            <>
+              <tr>
+                <th colSpan="2">Recipient Details</th>
+              </tr>
+              <tr>
+                <td><strong>Name:</strong></td>
+                <td>{`${recipientDetails.firstName} ${recipientDetails.lastName}`}</td>
+              </tr>
+              <tr>
+                <td><strong>Phone:</strong></td>
+                <td>{recipientDetails.phone}</td>
+              </tr>
+              <tr>
+                <td><strong>Zip Code:</strong></td>
+                <td>{recipientDetails.zipCode}</td>
+              </tr>
+            </>
+          )}
 
           {/* Map Details */}
           <tr>
@@ -89,14 +99,20 @@ const OrderBill = () => {
             <td><strong>Subscription Price:</strong></td>
             <td>{mapPageData.subscriptionPrice}</td>
           </tr>
-          <tr>
-            <td><strong>Selected Dates:</strong></td>
-            <td>{mapPageData.selectedDates || 'N/A'}</td>
-          </tr>
-          <tr>
-            <td><strong>Selected Days:</strong></td>
-            <td>{mapPageData.selectedDays || 'N/A'}</td>
-          </tr>
+
+          {/* Conditionally render Selected Dates and Selected Days */}
+          {mapPageData.selectedDates && (
+            <tr>
+              <td><strong>Selected Dates:</strong></td>
+              <td>{mapPageData.selectedDates}</td>
+            </tr>
+          )}
+          {mapPageData.selectedDays && (
+            <tr>
+              <td><strong>Selected Days:</strong></td>
+              <td>{mapPageData.selectedDays}</td>
+            </tr>
+          )}
 
           {/* Payment Details */}
           <tr>
