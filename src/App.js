@@ -28,6 +28,7 @@ import ContactInquiries from './components/admin components/ContactInquiries';
 import ChangePassword from './components/ChnagePassword';
 import FeedbackMessage from './components/admin components/FeedbackMessage';
 import OrderHistory from './components/OrderHistory';
+import Bill from './pages/Bill';
 
 function Layout({ children }) {
   return (
@@ -139,6 +140,12 @@ function App() {
                   path="/checkout"
                   element={
                       <Checkout />
+                  }
+                />
+                 <Route
+                  path="/bill"
+                  element={
+                      <Bill />
                   }
                 />
                 

@@ -267,13 +267,13 @@ function Checkoutform() {
         .then((response) => response.json())
         .then((data) => {
           if (data.message === "Order placed successfully") {
-            sessionStorage.removeItem("checkoutpagedata");
+
             alert("Order placed successfully!");
   
             if (storedCheckoutPageData.paymentDetails.paymentMethod === "Online") {
               navigate("/payment");
             } else {
-              navigate("/orderreceipt");
+              navigate("/bill");
             }
           } else {
             alert(data.message || "Failed to place order.");
@@ -288,7 +288,6 @@ function Checkoutform() {
       alert("Please fix the errors before submitting.");
     }
   };
-  
   
   
   
