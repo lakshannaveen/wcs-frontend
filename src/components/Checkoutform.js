@@ -193,7 +193,6 @@ function Checkoutform() {
   const price = mappagedata ? mappagedata.subscriptionPrice.toFixed(2) : '0.00';  // Format to two decimal places, default to '0.00'
   
   // Your existing handlers and validation code...
-
   const handleSubmit = (event) => {
     event.preventDefault();
     setHasSubmitted(true);
@@ -219,7 +218,6 @@ function Checkoutform() {
       const userId = mappagedata.userId;
       console.log("Extracted User ID:", userId);
   
-      // Get the price from mappagedata
       const price = mappagedata.subscriptionPrice;
   
       if (!price) {
@@ -237,7 +235,7 @@ function Checkoutform() {
           subscriptionType: mappagedata.subscriptionPlan || null,
           selectedDates: mappagedata.selectedDates || null,
           selectedDays: mappagedata.selectedDays || null,
-          price, // Add price to the mapPageData
+          price,
         },
         user_id: mappagedata.userId,
         selected_days: Array.isArray(mappagedata.selectedDays) ? mappagedata.selectedDays : [mappagedata.selectedDays],
@@ -267,7 +265,13 @@ function Checkoutform() {
         .then((response) => response.json())
         .then((data) => {
           if (data.message === "Order placed successfully") {
-
+            const checkoutId = data.checkoutId;  // Extract checkoutId from response
+            sessionStorage.setItem('checkoutId', checkoutId);  // Store it in session storage
+            
+            // Update checkoutpagedata with checkoutId
+            storedCheckoutPageData.checkoutId = checkoutId;
+            sessionStorage.setItem('checkoutpagedata', JSON.stringify(storedCheckoutPageData));
+  
             alert("Order placed successfully!");
   
             if (storedCheckoutPageData.paymentDetails.paymentMethod === "Online") {

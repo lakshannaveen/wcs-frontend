@@ -6,10 +6,10 @@ const OrderBill = () => {
 
   useEffect(() => {
     const storedCheckoutData = JSON.parse(sessionStorage.getItem('checkoutpagedata'));
-    
+
     if (storedCheckoutData) {
       setCheckoutData(storedCheckoutData);
-      
+
       // Check if email has already been sent for this session
       if (!sessionStorage.getItem('emailSent')) {
         // Send the order data to the backend to trigger email
@@ -30,7 +30,7 @@ const OrderBill = () => {
         })
         .catch(error => console.error('Error sending email:', error));
       }
-      
+
       // Set timeout to clear session data after 5 minutes (300000 ms)
       setTimeout(() => {
         sessionStorage.removeItem('checkoutpagedata');
@@ -41,16 +41,19 @@ const OrderBill = () => {
       alert("No order data found. Please complete the checkout process.");
     }
   }, []);
-  
+
   if (!checkoutData) {
     return <div>Loading...</div>;
   }
 
-  const { senderDetails, recipientDetails, mapPageData, paymentDetails, wasteCollectionTime } = checkoutData;
-  const isSameSenderRecipient = senderDetails.firstName === recipientDetails.firstName && 
-                                senderDetails.lastName === recipientDetails.lastName && 
-                                senderDetails.phone === recipientDetails.phone && 
-                                senderDetails.zipCode === recipientDetails.zipCode;
+  const { senderDetails, recipientDetails, mapPageData, paymentDetails, wasteCollectionTime, checkoutId } = checkoutData;
+  const isSameSenderRecipient = senderDetails.firstName === recipientDetails.firstName &&
+    senderDetails.lastName === recipientDetails.lastName &&
+    senderDetails.phone === recipientDetails.phone &&
+    senderDetails.zipCode === recipientDetails.zipCode;
+
+  // Ensure checkoutId is set, if not fallback to "N/A"
+  const finalCheckoutId = checkoutId || "N/A";
 
   return (
     <div className="order-bill">
@@ -141,6 +144,15 @@ const OrderBill = () => {
           <tr>
             <td><strong>Total Price:</strong></td>
             <td>{mapPageData.subscriptionPrice}</td>
+          </tr>
+
+          {/* Display Checkout ID */}
+          <tr>
+            <th colSpan="2">Checkout ID</th>
+          </tr>
+          <tr>
+            <td><strong>ID:</strong></td>
+            <td>{finalCheckoutId}</td>
           </tr>
         </tbody>
       </table>
