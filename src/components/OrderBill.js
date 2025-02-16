@@ -1,5 +1,3 @@
-// OrderBill.js (Frontend)
-
 import React, { useEffect, useState } from 'react';
 import "./OrderBill.css";
 
@@ -42,7 +40,7 @@ const OrderBill = () => {
     return <div>Loading...</div>;
   }
 
-  const { senderDetails, recipientDetails, mapPageData, paymentDetails } = checkoutData;
+  const { senderDetails, recipientDetails, mapPageData, paymentDetails, wasteCollectionTime } = checkoutData;
   const isSameSenderRecipient = senderDetails.firstName === recipientDetails.firstName && 
                                 senderDetails.lastName === recipientDetails.lastName && 
                                 senderDetails.phone === recipientDetails.phone && 
@@ -116,6 +114,14 @@ const OrderBill = () => {
             <tr>
               <td><strong>Selected Days:</strong></td>
               <td>{mapPageData.selectedDays}</td>
+            </tr>
+          )}
+
+          {/* Show Waste Collection Time */}
+          {wasteCollectionTime && (
+            <tr>
+              <td><strong>Waste Collection Time:</strong></td>
+              <td>{wasteCollectionTime}</td>
             </tr>
           )}
 
