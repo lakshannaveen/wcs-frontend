@@ -18,14 +18,17 @@ const AdminOrders = () => {
     fetchCheckouts();
   }, []);
 
-  const cancelOrder = async (id) => {
+  const cancelOrder = async (orderId) => {
+    const confirmCancel = window.confirm("Are you sure you want to cancel this order?");
+    if (!confirmCancel) return; // If the user cancels, do nothing
+  
     try {
-      const response = await fetch(`http://localhost:5002/api/checkout/cancel/${id}`, {
+      const response = await fetch(`http://localhost:5002/api/checkout/cancel/${orderId}`, {
         method: 'DELETE',
       });
       if (response.ok) {
         // Filter out the canceled order from the state
-        setCheckouts(checkouts.filter(checkout => checkout.id !== id));
+        setCheckouts(checkouts.filter(checkout => checkout.id !== orderId));
         alert('Order canceled successfully');
       } else {
         alert('Error canceling order');
@@ -37,52 +40,47 @@ const AdminOrders = () => {
   };
 
   const openLocationInMap = (latitude, longitude) => {
-    // Construct Google Maps URL to open the location
     const googleMapUrl = `https://www.google.com/maps?q=${latitude},${longitude}`;
-    window.open(googleMapUrl, '_blank'); // Open Google Maps in a new tab
+    window.open(googleMapUrl, '_blank');
   };
 
-  // Function to filter checkouts by subscription type
   const filterCheckoutsByType = (type) => {
     return checkouts.filter((checkout) => checkout.subscription_type === type);
   };
 
-  // Format selected dates or days to be shown in the table
   const formatSelectedDates = (selectedDates) => {
     if (selectedDates && selectedDates.length > 0) {
       return selectedDates.map(date => {
         const formattedDate = new Date(date);
-        return formattedDate.toISOString().split('T')[0]; // Extracts only the date part (YYYY-MM-DD)
-      }).join(', '); // Join dates with commas
+        return formattedDate.toISOString().split('T')[0];
+      }).join(', ');
     }
-    return 'N/A'; // Show N/A if no dates are selected
-  };
-  
-  const formatSelectedDays = (selectedDays) => {
-    if (selectedDays && selectedDays.length > 0) {
-      return selectedDays.join(', '); // Join days with commas
-    }
-    return 'N/A'; // Show N/A if no days are selected
+    return 'N/A';
   };
 
-  // Function to get background color based on collection time
+  const formatSelectedDays = (selectedDays) => {
+    if (selectedDays && selectedDays.length > 0) {
+      return selectedDays.join(', ');
+    }
+    return 'N/A';
+  };
+
   const getRowBackgroundColor = (collectionTime) => {
     if (collectionTime) {
       const time = collectionTime.toLowerCase();
       if (time.includes('morning')) {
-        return '#d4edda';  // Light green for morning
+        return '#d4edda';
       }
       if (time.includes('afternoon')) {
-        return '#f8d7da';  // Light maroon for afternoon
+        return '#f8d7da';
       }
       if (time.includes('evening')) {
-        return '#fff3cd';  // Light orange for evening
+        return '#fff3cd';
       }
     }
-    return 'transparent';  // Default if no time found
+    return 'transparent';
   };
 
-  // Function to render a table for a specific subscription type
   const renderSubscriptionTable = (type) => {
     const filteredCheckouts = filterCheckoutsByType(type);
     if (filteredCheckouts.length === 0) return null;
@@ -98,8 +96,8 @@ const AdminOrders = () => {
               <th>Sender Name</th>
               <th>Recipient Name</th>
               <th>Collection Time</th>
-              {type === 'monthly' && <th>Selected Dates</th>} {/* Show Selected Dates for Monthly */}
-              {type === 'weekly' && <th>Selected Days</th>} {/* Show Selected Days for Weekly */}
+              {type === 'monthly' && <th>Selected Dates</th>}
+              {type === 'weekly' && <th>Selected Days</th>}
               <th>Actions</th>
               <th>Location</th>
             </tr>
@@ -112,8 +110,8 @@ const AdminOrders = () => {
                 <td>{checkout.sender_firstname} {checkout.sender_lastname}</td>
                 <td>{checkout.recipient_firstname} {checkout.recipient_lastname}</td>
                 <td>{checkout.collection_time}</td>
-                {type === 'monthly' && <td>{formatSelectedDates(checkout.selected_dates)}</td>} {/* Show Selected Dates for Monthly */}
-                {type === 'weekly' && <td>{formatSelectedDays(checkout.selected_days)}</td>} {/* Show Selected Days for Weekly */}
+                {type === 'monthly' && <td>{formatSelectedDates(checkout.selected_dates)}</td>}
+                {type === 'weekly' && <td>{formatSelectedDays(checkout.selected_days)}</td>}
                 <td>
                   <button onClick={() => cancelOrder(checkout.id)} className="cancel-btn">Cancel Order</button>
                 </td>
@@ -139,7 +137,6 @@ const AdminOrders = () => {
     <div className="admin-orders-container">
       <h1 className="admin-orders-title">Welcome to Admin Orders</h1>
 
-      {/* Show the separate color-coded indicators for morning, afternoon, and evening */}
       <div className="time-indicator-section">
         <div className="time-indicator">
           <span className="indicator" style={{ backgroundColor: '#d4edda' }}></span>
@@ -155,7 +152,6 @@ const AdminOrders = () => {
         </div>
       </div>
 
-      {/* Render separate tables for each subscription type */}
       {renderSubscriptionTable('daily')}
       {renderSubscriptionTable('weekly')}
       {renderSubscriptionTable('monthly')}

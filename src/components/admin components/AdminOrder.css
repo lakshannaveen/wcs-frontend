@@ -9,16 +9,59 @@
     margin-bottom: 20px;
   }
   
-  .admin-orders-description {
-    font-size: 16px;
-    margin-bottom: 30px;
+  .time-indicator-section {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 20px;
+  }
+  
+  .time-indicator {
+    display: flex;
+    align-items: center;
+  }
+  
+  .indicator {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    margin-right: 10px;
   }
   
   .admin-orders-table {
     width: 100%;
     border-collapse: collapse;
-    overflow-x: auto; 
-    margin-bottom: 20px; 
+    margin-top: 20px;
+  }
+  
+  .admin-orders-table th,
+  .admin-orders-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center;
+  }
+  
+  .cancel-btn,
+  .location-btn {
+    padding: 5px 10px;
+    cursor: pointer;
+  }
+  
+  .cancel-btn {
+    background-color: red;
+    color: white;
+    border: none;
+  }
+  
+  .location-btn {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+  }
+  
+  .admin-orders-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
   }
   
   .cancel-btn {
@@ -96,7 +139,6 @@
   }
   
   @media (max-width: 768px) {
-    /* Stack table content vertically on small screens */
     .admin-orders-table th, .admin-orders-table td {
       display: block;
       width: 100%;
@@ -113,7 +155,6 @@
       padding-top: 10px;
     }
   
-    /* Make actions buttons full width on small screens */
     .cancel-btn, .location-btn {
       width: 100%;
       padding: 12px;
