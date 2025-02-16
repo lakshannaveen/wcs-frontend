@@ -4,7 +4,8 @@ import './AdminDashbord.css';
 
 const AdminDashboard = () => {
   const navigate = useNavigate();
-  const [orderClicks, setOrderClicks] = useState(0); // order button click
+  const [headingClicks, setHeadingClicks] = useState(0); // Heading click count
+  const [showAdditionalButtons, setShowAdditionalButtons] = useState(false); // To control the visibility of additional buttons
 
   // Password check function
   const checkPasswordAndNavigate = (path) => {
@@ -18,10 +19,6 @@ const AdminDashboard = () => {
     const enteredPasswordTrimmed = enteredPassword.trim();
     const correctPassword = "1020";  // Hardcoded password
 
-    // Log the entered password and the correct password for debugging
-    console.log("Entered Password:", enteredPasswordTrimmed);
-    console.log("Correct Password:", correctPassword);
-
     if (enteredPasswordTrimmed === correctPassword) {
       localStorage.setItem("adminToken", "fake-jwt-token");  // Set token
       navigate(path);  // Navigate if the password matches
@@ -30,26 +27,33 @@ const AdminDashboard = () => {
     }
   };
 
-  // Handle "Orders" button click and navigate to orders page
+  // Handle Admin Dashboard heading click
+  const handleHeadingClick = () => {
+    setHeadingClicks(prev => prev + 1); // Increment click count on heading
+    if (headingClicks >= 4) {  // Show additional buttons after the 5th click on heading
+      setShowAdditionalButtons(true);
+    }
+  };
+
+  // Handle Orders button click and navigate to orderbills page
   const handleOrdersClick = () => {
-    setOrderClicks(prev => prev + 1);  // Increment click count
-    navigate('/orders');  // Navigate to the Orders page
+    navigate('/orders'); // Navigate to the orderbills page
   };
 
   return (
     <div className="admin-dashboard-container">
-      <h1 className="admin-dashboard-title">Admin Dashboard</h1>
+      <h1 className="admin-dashboard-title" onClick={handleHeadingClick}>
+        Admin Dashboard
+      </h1>
+
       <div className="admin-dashboard-buttons">
         <button className="admin-dashboard-button">Map</button>
-        <button 
-          className="admin-dashboard-button" 
-          onClick={handleOrdersClick} // Increment and navigate on click
-        >
+        <button className="admin-dashboard-button" onClick={handleOrdersClick}>
           Orders
         </button>
-        
-        {/* Render Contact Inquiries and Feedback buttons after 5 "Orders" clicks */}
-        {orderClicks >= 5 && (
+
+        {/* Render additional buttons after 5 clicks on the heading */}
+        {showAdditionalButtons && (
           <>
             <button 
               className="admin-dashboard-button" 
