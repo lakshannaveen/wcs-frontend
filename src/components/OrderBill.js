@@ -1,3 +1,5 @@
+// OrderBill.js (Frontend)
+
 import React, { useEffect, useState } from 'react';
 import "./OrderBill.css";
 
@@ -5,26 +7,35 @@ const OrderBill = () => {
   const [checkoutData, setCheckoutData] = useState(null);
 
   useEffect(() => {
-    // Retrieve checkout data from session storage
     const storedCheckoutData = JSON.parse(sessionStorage.getItem('checkoutpagedata'));
     
     if (storedCheckoutData) {
       setCheckoutData(storedCheckoutData);
+      
+      // Send the order data to the backend to trigger email
+      fetch('http://localhost:5002/api/email/sendOrderConfirmation', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(storedCheckoutData),
+      })
+      .then(response => response.json())  // Parse the response as JSON
+      .then(data => {
+        if (data.message) {
+          console.log(data.message);
+        }
+      })
+      .catch(error => console.error('Error sending email:', error));
+      
+      // Set timeout to clear session data after 5 minutes (300000 ms)
+      setTimeout(() => {
+        sessionStorage.removeItem('checkoutpagedata');
+        alert("Checkout data has been cleared due to inactivity.");
+      }, 300000); // 5 minutes in milliseconds
     } else {
       alert("No order data found. Please complete the checkout process.");
-      return;
     }
-
-    // Set a timeout to delete session storage data after 1 hour (3600000ms)
-    const timeout = setTimeout(() => {
-        sessionStorage.removeItem('checkoutpagedata');
-        alert("Session expired. Data has been removed.");
-        window.close(); // Close the tab
-      }, 300000); // delete after 5 minutes 
-      
-    // Cleanup function to clear the timeout if the component unmounts
-    return () => clearTimeout(timeout);
-
   }, []);
 
   if (!checkoutData) {
@@ -32,8 +43,6 @@ const OrderBill = () => {
   }
 
   const { senderDetails, recipientDetails, mapPageData, paymentDetails } = checkoutData;
-
-  // Check if sender and recipient are the same
   const isSameSenderRecipient = senderDetails.firstName === recipientDetails.firstName && 
                                 senderDetails.lastName === recipientDetails.lastName && 
                                 senderDetails.phone === recipientDetails.phone && 
@@ -45,7 +54,6 @@ const OrderBill = () => {
 
       <table>
         <tbody>
-          {/* Sender Details */}
           <tr>
             <th colSpan="2">Sender Details</th>
           </tr>
@@ -62,7 +70,6 @@ const OrderBill = () => {
             <td>{senderDetails.zipCode}</td>
           </tr>
 
-          {/* Conditionally render Recipient Details */}
           {!isSameSenderRecipient && (
             <>
               <tr>
@@ -83,7 +90,6 @@ const OrderBill = () => {
             </>
           )}
 
-          {/* Map Details */}
           <tr>
             <th colSpan="2">Map and Subscription Details</th>
           </tr>
@@ -100,7 +106,6 @@ const OrderBill = () => {
             <td>{mapPageData.subscriptionPrice}</td>
           </tr>
 
-          {/* Conditionally render Selected Dates and Selected Days */}
           {mapPageData.selectedDates && (
             <tr>
               <td><strong>Selected Dates:</strong></td>
@@ -114,7 +119,6 @@ const OrderBill = () => {
             </tr>
           )}
 
-          {/* Payment Details */}
           <tr>
             <th colSpan="2">Payment Details</th>
           </tr>
