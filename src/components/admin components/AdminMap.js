@@ -21,6 +21,12 @@ const AdminMap = () => {
     try {
       const response = await fetch('http://localhost:5002/api/checkout/checkouts');
       const data = await response.json();
+
+      // Check if the fields exist in the data
+      data.forEach((checkout) => {
+        console.log(checkout.house_number, checkout.street_name);  // Log house_number and street_name to verify they're coming correctly
+      });
+
       setCheckouts(data);
     } catch (error) {
       console.error('Error fetching checkouts:', error);
@@ -67,7 +73,15 @@ const AdminMap = () => {
                     <td>{checkout.expire_date ? new Date(checkout.expire_date).toLocaleDateString('en-GB') : 'N/A'}</td>
                   </tr>
                   <tr>
-                    <td colSpan="2">
+                    <td><strong>House No:</strong></td>
+                    <td>{checkout.house_number}</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Street Name:</strong></td>
+                    <td>{checkout.street_name}</td>
+                  </tr>
+                  <tr>
+                    <td colSpan="2" className="popup-footer">
                       <a
                         href={`https://www.google.com/maps?q=${checkout.latitude},${checkout.longitude}`}
                         target="_blank"
