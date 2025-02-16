@@ -20,7 +20,7 @@ const OrderBill = () => {
         sessionStorage.removeItem('checkoutpagedata');
         alert("Session expired. Data has been removed.");
         window.close(); // Close the tab
-      }, 3600000); // 1 hour (60 minutes)
+      }, 300000); // delete after 5 minutes 
       
     // Cleanup function to clear the timeout if the component unmounts
     return () => clearTimeout(timeout);
