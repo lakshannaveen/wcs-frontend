@@ -48,9 +48,7 @@ const AdminDashboard = () => {
 
       <div className="admin-dashboard-buttons">
         <button className="admin-dashboard-button">Map</button>
-        <button className="admin-dashboard-button" onClick={handleOrdersClick}>
-          Orders
-        </button>
+       
 
         {/* Render additional buttons after 5 clicks on the heading */}
         {showAdditionalButtons && (
@@ -61,6 +59,9 @@ const AdminDashboard = () => {
             >
               Contact Inquiries
             </button>
+            <button className="admin-dashboard-button" onClick={handleOrdersClick}>
+          Orders
+        </button>
             <button 
               className="admin-dashboard-button" 
               onClick={() => checkPasswordAndNavigate('/feedbackmessage', "1020")}
