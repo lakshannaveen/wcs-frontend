@@ -7,8 +7,8 @@ const AdminDashboard = () => {
   const [headingClicks, setHeadingClicks] = useState(0); // Heading click count
   const [showAdditionalButtons, setShowAdditionalButtons] = useState(false); // To control the visibility of additional buttons
 
-  // Password check function
-  const checkPasswordAndNavigate = (path) => {
+  // Password check function for navigating to a given path
+  const checkPasswordAndNavigate = (path, correctPassword) => {
     const enteredPassword = prompt("Enter Admin Password:");
 
     if (enteredPassword === null || enteredPassword.trim() === "") {
@@ -17,7 +17,6 @@ const AdminDashboard = () => {
     }
 
     const enteredPasswordTrimmed = enteredPassword.trim();
-    const correctPassword = "1020";  // Hardcoded password
 
     if (enteredPasswordTrimmed === correctPassword) {
       localStorage.setItem("adminToken", "fake-jwt-token");  // Set token
@@ -35,9 +34,10 @@ const AdminDashboard = () => {
     }
   };
 
-  // Handle Orders button click and navigate to orderbills page
+  // Handle Orders button click and navigate to the orders page after password check
   const handleOrdersClick = () => {
-    navigate('/orders'); // Navigate to the orderbills page
+    const correctPassword = "1050"; // Define the password for accessing Orders
+    checkPasswordAndNavigate('/orders', correctPassword); // Check password before navigating
   };
 
   return (
@@ -57,13 +57,13 @@ const AdminDashboard = () => {
           <>
             <button 
               className="admin-dashboard-button" 
-              onClick={() => checkPasswordAndNavigate('/contactinquiries')}
+              onClick={() => checkPasswordAndNavigate('/contactinquiries', "1020")}
             >
               Contact Inquiries
             </button>
             <button 
               className="admin-dashboard-button" 
-              onClick={() => checkPasswordAndNavigate('/feedbackmessage')}
+              onClick={() => checkPasswordAndNavigate('/feedbackmessage', "1020")}
             >
               Feedback
             </button>
