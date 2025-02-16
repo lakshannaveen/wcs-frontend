@@ -143,15 +143,15 @@ const AdminOrders = () => {
       <div className="time-indicator-section">
         <div className="time-indicator">
           <span className="indicator" style={{ backgroundColor: '#d4edda' }}></span>
-          <span>Morning</span>
+          <span>Morning (9AM-12PM)</span>
         </div>
         <div className="time-indicator">
           <span className="indicator" style={{ backgroundColor: '#f8d7da' }}></span>
-          <span>Afternoon</span>
+          <span>Afternoon (12PM-3PM)</span>
         </div>
         <div className="time-indicator">
           <span className="indicator" style={{ backgroundColor: '#fff3cd' }}></span>
-          <span>Evening</span>
+          <span>Evening (3PM-6PM)</span>
         </div>
       </div>
 
