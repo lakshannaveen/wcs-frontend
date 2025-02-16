@@ -47,8 +47,10 @@ const AdminDashboard = () => {
       </h1>
 
       <div className="admin-dashboard-buttons">
-        <button className="admin-dashboard-button">Map</button>
-       
+      <button className="admin-dashboard-button" onClick={() => navigate('/adminmap')}>
+          Map
+        </button>
+              
 
         {/* Render additional buttons after 5 clicks on the heading */}
         {showAdditionalButtons && (

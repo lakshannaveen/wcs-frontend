@@ -30,6 +30,7 @@ import FeedbackMessage from './components/admin components/FeedbackMessage';
 import OrderHistory from './components/OrderHistory';
 import Bill from './pages/Bill';
 import AdminOrders from './components/admin components/AdminOrder';
+import AdminMap from './components/admin components/AdminMap';
 
 function Layout({ children }) {
   return (
@@ -193,6 +194,14 @@ function App() {
             element={
               <AdminProtectedRoute>
                 <AdminOrders />
+              </AdminProtectedRoute>
+            }
+          />
+            <Route
+            path="/adminmap"
+            element={
+              <AdminProtectedRoute>
+                <AdminMap />
               </AdminProtectedRoute>
             }
           />
