@@ -65,6 +65,23 @@ const AdminOrders = () => {
     return 'N/A'; // Show N/A if no days are selected
   };
 
+  // Function to get background color based on collection time
+  const getRowBackgroundColor = (collectionTime) => {
+    if (collectionTime) {
+      const time = collectionTime.toLowerCase();
+      if (time.includes('morning')) {
+        return '#d4edda';  // Light green for morning
+      }
+      if (time.includes('afternoon')) {
+        return '#f8d7da';  // Light maroon for afternoon
+      }
+      if (time.includes('evening')) {
+        return '#fff3cd';  // Light orange for evening
+      }
+    }
+    return 'transparent';  // Default if no time found
+  };
+
   // Function to render a table for a specific subscription type
   const renderSubscriptionTable = (type) => {
     const filteredCheckouts = filterCheckoutsByType(type);
@@ -89,7 +106,7 @@ const AdminOrders = () => {
           </thead>
           <tbody>
             {filteredCheckouts.map((checkout) => (
-              <tr key={checkout.id}>
+              <tr key={checkout.id} style={{ backgroundColor: getRowBackgroundColor(checkout.collection_time) }}>
                 <td>{checkout.id}</td>
                 <td>{checkout.user_id}</td>
                 <td>{checkout.sender_firstname} {checkout.sender_lastname}</td>
@@ -121,6 +138,22 @@ const AdminOrders = () => {
   return (
     <div className="admin-orders-container">
       <h1 className="admin-orders-title">Welcome to Admin Orders</h1>
+
+      {/* Show the separate color-coded indicators for morning, afternoon, and evening */}
+      <div className="time-indicator-section">
+        <div className="time-indicator">
+          <span className="indicator" style={{ backgroundColor: '#d4edda' }}></span>
+          <span>Morning</span>
+        </div>
+        <div className="time-indicator">
+          <span className="indicator" style={{ backgroundColor: '#f8d7da' }}></span>
+          <span>Afternoon</span>
+        </div>
+        <div className="time-indicator">
+          <span className="indicator" style={{ backgroundColor: '#fff3cd' }}></span>
+          <span>Evening</span>
+        </div>
+      </div>
 
       {/* Render separate tables for each subscription type */}
       {renderSubscriptionTable('daily')}
