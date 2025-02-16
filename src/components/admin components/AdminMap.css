@@ -51,4 +51,74 @@
   .view-google-map-btn:hover {
     background-color: #0056b3;
   }
+  .circle-icon {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+  }
+  
+  .circle-icon.blue {
+    background-color: #007bff; 
+  }
+  
+  .circle-icon.orange {
+    background-color: #ff7f0e; 
+  }
+  
+  .circle-icon.green {
+    background-color: #2ca02c; 
+  }
+  
+  .circle-icon.purple {
+    background-color: #9467bd; 
+  }
+  .legend {
+    background-color: #fff;
+    padding: 10px;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: center;  
+    align-items: center;
+  }
+  
+  .legend ul {
+    list-style-type: none;
+    padding: 0;
+    display: flex;
+    gap: 20px;  
+  }
+  
+  .legend li {
+    display: flex;
+    align-items: center;
+  }
+  
+  .legend-icon {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    margin-right: 8px;
+  }
+  
+  .legend-icon.blue {
+    background-color: #007bff;
+  }
+  
+  .legend-icon.orange {
+    background-color: #ff7f0e;
+  }
+  
+  .legend-icon.green {
+    background-color: #2ca02c;
+  }
+  
+  .legend-icon.purple {
+    background-color: #9467bd;
+  }
   
