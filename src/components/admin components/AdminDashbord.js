@@ -30,9 +30,10 @@ const AdminDashboard = () => {
     }
   };
 
-  // Handle "Orders" button click and increment the counter
+  // Handle "Orders" button click and navigate to orders page
   const handleOrdersClick = () => {
-    setOrderClicks(prev => prev + 1);  //  click count
+    setOrderClicks(prev => prev + 1);  // Increment click count
+    navigate('/orders');  // Navigate to the Orders page
   };
 
   return (
@@ -42,7 +43,7 @@ const AdminDashboard = () => {
         <button className="admin-dashboard-button">Map</button>
         <button 
           className="admin-dashboard-button" 
-          onClick={handleOrdersClick} // Increment on click
+          onClick={handleOrdersClick} // Increment and navigate on click
         >
           Orders
         </button>

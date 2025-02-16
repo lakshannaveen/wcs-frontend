@@ -29,6 +29,7 @@ import ChangePassword from './components/ChnagePassword';
 import FeedbackMessage from './components/admin components/FeedbackMessage';
 import OrderHistory from './components/OrderHistory';
 import Bill from './pages/Bill';
+import AdminOrders from './components/admin components/AdminOrder';
 
 function Layout({ children }) {
   return (
@@ -184,6 +185,14 @@ function App() {
             element={
               <AdminProtectedRoute>
                 <ContactInquiries />
+              </AdminProtectedRoute>
+            }
+          />
+           <Route
+            path="/orders"
+            element={
+              <AdminProtectedRoute>
+                <AdminOrders />
               </AdminProtectedRoute>
             }
           />
