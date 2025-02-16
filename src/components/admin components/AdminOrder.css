@@ -1,0 +1,40 @@
+.admin-orders-container {
+    padding: 20px;
+    background-color: #f9f9f9;
+  }
+  
+  .admin-orders-title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+  }
+  
+  .admin-orders-description {
+    font-size: 16px;
+    margin-bottom: 30px;
+  }
+  
+  .admin-orders-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .admin-orders-table th,
+  .admin-orders-table td {
+    padding: 12px;
+    text-align: left;
+    border: 1px solid #ddd;
+  }
+  
+  .admin-orders-table th {
+    background-color: #f2f2f2;
+  }
+  
+  .admin-orders-table tr:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+  
+  .admin-orders-table tr:hover {
+    background-color: #f1f1f1;
+  }
+  
