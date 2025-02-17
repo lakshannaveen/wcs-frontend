@@ -74,6 +74,11 @@ const OrderHistory = () => {
     setOrderToCancel(null);
   };
 
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    return date.toISOString().split('T')[0]; // Formats as "YYYY-MM-DD"
+  };
+
   if (loading) {
     return <div>Loading...</div>;
   }
@@ -114,7 +119,7 @@ const OrderHistory = () => {
                   {order.subscription_type === 'monthly' && (
                     <tr>
                       <td><strong>Selected Date:</strong></td>
-                      <td>{order.selected_dates?.length > 0 ? order.selected_dates[0] : 'N/A'}</td>
+                      <td>{order.selected_dates?.length > 0 ? formatDate(order.selected_dates[0]) : 'N/A'}</td>
                     </tr>
                   )}
                   {order.subscription_type === 'weekly' && (
