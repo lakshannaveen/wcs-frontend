@@ -2,27 +2,43 @@
     padding: 20px;
   }
   
-  table {
+  .order-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  .order-card {
+    border: 2px solid #ddd;
+    padding: 15px;
+    border-radius: 8px;
+    background-color: #fff;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .order-table {
     width: 100%;
     border-collapse: collapse;
   }
   
-  th, td {
-    padding: 10px;
-    text-align: left;
-    border: 1px solid #ddd;
+  .order-table td {
+    padding: 8px;
+    border-bottom: 1px solid #ddd;
   }
   
-  button.cancel-btn {
+  .cancel-btn {
     background-color: red;
     color: white;
     border: none;
     padding: 10px;
     cursor: pointer;
     font-size: 14px;
+    margin-top: 10px;
+    border-radius: 5px;
+    width: 100%;
   }
   
-  button.cancel-btn:hover {
+  .cancel-btn:hover {
     background-color: darkred;
   }
   
@@ -50,8 +66,8 @@
     margin-bottom: 20px;
   }
   
-  button.confirm-btn {
-    background-color: red ;
+  .confirm-btn {
+    background-color: red;
     color: white;
     padding: 10px 20px;
     margin-right: 10px;
@@ -59,19 +75,7 @@
     cursor: pointer;
   }
   
-  button.confirm-btn:hover {
-    background-color: darkred !important;
-  }
-  
-  button.cancel-btn {
-    background-color: red;
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    cursor: pointer;
-  }
-  
-  button.cancel-btn:hover {
+  .confirm-btn:hover {
     background-color: darkred;
   }
   
