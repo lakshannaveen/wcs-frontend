@@ -6,7 +6,7 @@ import './AdminMap.css';
 
 // Custom circle icons
 const icons = {
-  'one_time': new L.DivIcon({
+  'one-time': new L.DivIcon({
     className: 'circle-icon blue',  // Blue Circle for one-time
     iconSize: [30, 30],
   }),
@@ -32,6 +32,12 @@ const defaultIcon = new L.DivIcon({
 
 const AdminMap = () => {
   const [checkouts, setCheckouts] = useState([]);
+  const [subscriptionCounts, setSubscriptionCounts] = useState({
+    'one-time': 0,
+    daily: 0,
+    weekly: 0,
+    monthly: 0,
+  });
 
   useEffect(() => {
     fetchCheckouts();
@@ -41,13 +47,26 @@ const AdminMap = () => {
     try {
       const response = await fetch('http://localhost:5002/api/checkout/checkouts');
       const data = await response.json();
-
-      // Log the data to check for subscription types
+  
+      // Count the subscription types
+      const counts = {
+        'one-time': 0,
+        daily: 0,
+        weekly: 0,
+        monthly: 0,
+      };
+  
       data.forEach((checkout) => {
-        console.log(checkout.subscription_type);  // Log subscription type to verify
+        const subscriptionType = checkout.subscription_type?.trim();
+  
+        // Ensure we match subscription types exactly (e.g., 'one-time', not 'one_time')
+        if (counts[subscriptionType] !== undefined) {
+          counts[subscriptionType]++;
+        }
       });
-
+  
       setCheckouts(data);
+      setSubscriptionCounts(counts); // Set updated counts
     } catch (error) {
       console.error('Error fetching checkouts:', error);
     }
@@ -57,13 +76,13 @@ const AdminMap = () => {
     <div className="admin-map-container">
       <h3 className="map-title">Checkout Locations</h3>
 
-      {/* Legend to display color code for subscription types */}
+      {/* Legend to display color code for subscription types with real-time count */}
       <div className="legend">
         <ul>
-          <li><span className="legend-icon blue"></span> One-Time</li>
-          <li><span className="legend-icon orange"></span> Daily</li>
-          <li><span className="legend-icon green"></span> Weekly</li>
-          <li><span className="legend-icon purple"></span> Monthly</li>
+          <li><span className="legend-icon blue"></span> One-Time ({subscriptionCounts['one-time']})</li>
+          <li><span className="legend-icon orange"></span> Daily ({subscriptionCounts.daily})</li>
+          <li><span className="legend-icon green"></span> Weekly ({subscriptionCounts.weekly})</li>
+          <li><span className="legend-icon purple"></span> Monthly ({subscriptionCounts.monthly})</li>
         </ul>
       </div>
 
