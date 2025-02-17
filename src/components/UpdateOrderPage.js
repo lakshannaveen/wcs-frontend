@@ -57,7 +57,7 @@ const UpdateOrderPage = () => {
   return (
     <div className="update-order-page">
       <p><strong>Checkout ID:</strong> {checkoutId}</p>
-
+  
       <div className="dropdown-container">
         <label htmlFor="time-slot" className="dropdown-label">
           Select a Time Slot:
@@ -73,10 +73,16 @@ const UpdateOrderPage = () => {
           <option value="evening">Evening (3 PM - 6 PM)</option>
         </select>
       </div>
-
+  
       <button className="update-button" onClick={handleUpdate}>Update</button>
+  
+      <div className="important-note">
+  <strong>Important:</strong> Changes will take effect from the next collection day. 
+</div>
+
     </div>
   );
+  
 };
 
 export default UpdateOrderPage;
