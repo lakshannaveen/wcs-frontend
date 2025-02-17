@@ -116,10 +116,6 @@ const AdminMap = () => {
         </ul>
       </div>
 
-      <button onClick={toggleCollectedVisibility} className="toggle-collected-btn">
-        {showCollected ? 'Hide Collected orders' : 'Unhide Collected orders'}
-      </button>
-
       <MapContainer center={[7.8731, 80.7718]} zoom={7} className="admin-map">
         <TileLayer
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -199,6 +195,10 @@ const AdminMap = () => {
           return null;  // Don't render collected markers if they should be hidden
         })}
       </MapContainer>
+
+      <button onClick={toggleCollectedVisibility} className="toggle-collected-btn">
+        {showCollected ? 'Hide Collected orders' : 'Unhide Collected orders'}
+      </button>
     </div>
   );
 };
