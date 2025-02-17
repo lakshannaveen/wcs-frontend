@@ -78,7 +78,12 @@ const OrderHistory = () => {
 
   const formatDate = (dateString) => {
     const date = new Date(dateString);
-    return date.toISOString().split('T')[0]; // Formats as "YYYY-MM-DD"
+    
+    // Adjust the date based on the local time zone
+    const localDate = new Date(date.getTime() - date.getTimezoneOffset() * 60000);
+    
+    // Format the date to "YYYY-MM-DD"
+    return localDate.toISOString().split('T')[0];
   };
 
   const handleUpdateClick = (checkoutId) => {
@@ -128,16 +133,28 @@ const OrderHistory = () => {
                     <td>{order.payment_type}</td>
                   </tr>
                   {order.subscription_type === 'monthly' && (
-                    <tr>
-                      <td><strong>Selected Date:</strong></td>
-                      <td>{order.selected_dates?.length > 0 ? formatDate(order.selected_dates[0]) : 'N/A'}</td>
-                    </tr>
+                    <>
+                      <tr>
+                        <td><strong>Selected Date:</strong></td>
+                        <td>{order.selected_dates?.length > 0 ? formatDate(order.selected_dates[0]) : 'N/A'}</td>
+                      </tr>
+                      <tr>
+                        <td><strong>Expiry Date:</strong></td>
+                        <td>{order.expiry_date ? formatDate(order.expiry_date) : 'N/A'}</td>
+                      </tr>
+                    </>
                   )}
                   {order.subscription_type === 'weekly' && (
-                    <tr>
-                      <td><strong>Selected Days:</strong></td>
-                      <td>{order.selected_days ? order.selected_days.join(', ') : 'N/A'}</td>
-                    </tr>
+                    <>
+                      <tr>
+                        <td><strong>Selected Days:</strong></td>
+                        <td>{order.selected_days ? order.selected_days.join(', ') : 'N/A'}</td>
+                      </tr>
+                      <tr>
+                        <td><strong>Expiry Date:</strong></td>
+                        <td>{order.expire_date ? formatDate(order.expire_date) : 'N/A'}</td>
+                      </tr>
+                    </>
                   )}
                   <tr>
                     <td><strong>House Number:</strong></td>
