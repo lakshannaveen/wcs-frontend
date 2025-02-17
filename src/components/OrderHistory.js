@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate for navigation
 import './OrderHistory.css';
 
 const OrderHistory = () => {
@@ -6,6 +7,7 @@ const OrderHistory = () => {
   const [loading, setLoading] = useState(true);
   const [showConfirmation, setShowConfirmation] = useState(false);
   const [orderToCancel, setOrderToCancel] = useState(null);
+  const navigate = useNavigate(); // Initialize the useNavigate hook
 
   const getUserIdFromToken = () => {
     const token = document.cookie.split(';').find(cookie => cookie.trim().startsWith('token='));
@@ -79,6 +81,11 @@ const OrderHistory = () => {
     return date.toISOString().split('T')[0]; // Formats as "YYYY-MM-DD"
   };
 
+  const handleUpdateClick = (checkoutId) => {
+    // Redirect to the update page and pass the checkout_id as a URL parameter
+    navigate(`/update/${checkoutId}`);
+  };
+
   if (loading) {
     return <div>Loading...</div>;
   }
@@ -143,12 +150,21 @@ const OrderHistory = () => {
                 </tbody>
               </table>
               <button
-                className="cancel-btn"
-                onClick={() => handleCancelClick(order)}
-                disabled={order.collected} 
-              >
-                {order.collected ? 'Collected' : 'Cancel Order'}
-              </button>
+                  className="cancel-btn"
+                  onClick={() => handleCancelClick(order)}
+                  disabled={order.collected}
+                >
+                  {order.collected ? 'Collected' : 'Cancel Order'}
+                </button>
+
+                {!order.collected && (
+                  <button
+                    className="update-btn"
+                    onClick={() => handleUpdateClick(order.checkout_id)}
+                  >
+                    Update Colletion Time
+                  </button>
+                )}
             </div>
           ))}
         </div>

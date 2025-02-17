@@ -31,6 +31,7 @@ import OrderHistory from './components/OrderHistory';
 import Bill from './pages/Bill';
 import AdminOrders from './components/admin components/AdminOrder';
 import AdminMap from './components/admin components/AdminMap';
+import Update from './pages/Update';
 
 function Layout({ children }) {
   return (
@@ -106,6 +107,11 @@ function App() {
                       <OrderHistory/>
                   }
                 />
+                 <Route
+                  path="/update/:checkoutId" 
+                 element={<Update />}
+                  />
+
                 <Route
                   path="/feedback"
                   element={
