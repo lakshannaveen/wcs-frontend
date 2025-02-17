@@ -111,14 +111,18 @@ const OrderHistory = () => {
                     <td><strong>Price:</strong></td>
                     <td>{order.price}</td>
                   </tr>
-                  <tr>
-                    <td><strong>Selected Date:</strong></td>
-                    <td>{order.selected_dates?.length > 0 ? order.selected_dates[0] : 'N/A'}</td>
-                  </tr>
-                  <tr>
-                    <td><strong>Selected Days:</strong></td>
-                    <td>{order.selected_days ? order.selected_days.join(', ') : 'N/A'}</td>
-                  </tr>
+                  {order.subscription_type === 'monthly' && (
+                    <tr>
+                      <td><strong>Selected Date:</strong></td>
+                      <td>{order.selected_dates?.length > 0 ? order.selected_dates[0] : 'N/A'}</td>
+                    </tr>
+                  )}
+                  {order.subscription_type === 'weekly' && (
+                    <tr>
+                      <td><strong>Selected Days:</strong></td>
+                      <td>{order.selected_days ? order.selected_days.join(', ') : 'N/A'}</td>
+                    </tr>
+                  )}
                   <tr>
                     <td><strong>House Number:</strong></td>
                     <td>{order.house_number}</td>
