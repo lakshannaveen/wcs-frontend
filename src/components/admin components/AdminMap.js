@@ -4,29 +4,27 @@ import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
 import './AdminMap.css';
 
-// Custom circle icons
 const icons = {
   'one-time': new L.DivIcon({
-    className: 'circle-icon blue',  // Blue Circle for one-time
+    className: 'circle-icon blue',  
     iconSize: [30, 30],
   }),
   'daily': new L.DivIcon({
-    className: 'circle-icon orange',  // Orange Circle for daily
+    className: 'circle-icon orange',  
     iconSize: [30, 30],
   }),
   'weekly': new L.DivIcon({
-    className: 'circle-icon green',  // Green Circle for weekly
+    className: 'circle-icon green',  
     iconSize: [30, 30],
   }),
   'monthly': new L.DivIcon({
-    className: 'circle-icon purple',  // Purple Circle for monthly
+    className: 'circle-icon purple',  
     iconSize: [30, 30],
   }),
 };
 
-// Default icon in case the subscription type doesn't match
 const defaultIcon = new L.DivIcon({
-  className: 'circle-icon blue',  // Default Blue Circle
+  className: 'circle-icon blue',  
   iconSize: [30, 30],
 });
 
@@ -38,9 +36,8 @@ const AdminMap = () => {
     weekly: 0,
     monthly: 0,
   });
-
-  // Add state for collected status
   const [collectedStatus, setCollectedStatus] = useState({});
+  const [showCollected, setShowCollected] = useState(false);  // Show collected markers by default
 
   useEffect(() => {
     fetchCheckouts();
@@ -68,7 +65,7 @@ const AdminMap = () => {
       setCheckouts(data);
       setSubscriptionCounts(counts);
       setCollectedStatus(data.reduce((acc, curr) => {
-        acc[curr.checkout_id] = curr.collected || false;  // Assuming `collected` is already part of your data
+        acc[curr.checkout_id] = curr.collected || false;
         return acc;
       }, {}));
     } catch (error) {
@@ -101,6 +98,11 @@ const AdminMap = () => {
     }
   };
 
+  // Toggle visibility of collected markers
+  const toggleCollectedVisibility = () => {
+    setShowCollected((prevState) => !prevState);
+  };
+
   return (
     <div className="admin-map-container">
       <h3 className="map-title">Checkout Locations</h3>
@@ -114,6 +116,10 @@ const AdminMap = () => {
         </ul>
       </div>
 
+      <button onClick={toggleCollectedVisibility} className="toggle-collected-btn">
+        {showCollected ? 'Hide Collected orders' : 'Unhide Collected orders'}
+      </button>
+
       <MapContainer center={[7.8731, 80.7718]} zoom={7} className="admin-map">
         <TileLayer
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -123,71 +129,74 @@ const AdminMap = () => {
         {checkouts.map((checkout) => {
           const icon = icons[checkout.subscription_type] || defaultIcon;
 
-          return (
-            <Marker key={checkout.checkout_id} position={[checkout.latitude, checkout.longitude]} icon={icon}>
-              <Popup>
-                <table className="popup-table">
-                  <tbody>
-                    {/* Display checkout data */}
-                    <tr>
-                      <td><strong>Checkout ID:</strong></td>
-                      <td>{checkout.checkout_id}</td>
-                    </tr>
-                    <tr>
-                      <td><strong>Sender:</strong></td>
-                      <td>{checkout.sender_firstname} {checkout.sender_lastname}</td>
-                    </tr>
-                    <tr>
-                      <td><strong>Recipient:</strong></td>
-                      <td>{checkout.recipient_firstname} {checkout.recipient_lastname}</td>
-                    </tr>
-                    <tr>
-                      <td><strong>Collection Time:</strong></td>
-                      <td>{checkout.collection_time}</td>
-                    </tr>
-                    <tr>
-                      <td><strong>Subscription Type:</strong></td>
-                      <td>{checkout.subscription_type}</td>
-                    </tr>
-                    <tr>
-                      <td><strong>Expire Date:</strong></td>
-                      <td>{checkout.expire_date ? new Date(checkout.expire_date).toLocaleDateString('en-GB') : 'N/A'}</td>
-                    </tr>
-                    <tr>
-                      <td><strong>House No:</strong></td>
-                      <td>{checkout.house_number}</td>
-                    </tr>
-                    <tr>
-                      <td><strong>Street Name:</strong></td>
-                      <td>{checkout.street_name}</td>
-                    </tr>
-                    <tr>
-                      <td><strong>Collected:</strong></td>
-                      <td>
-                        <input
-                          type="checkbox"
-                          checked={collectedStatus[checkout.checkout_id] || false}
-                          onChange={(e) => handleCollectedChange(checkout.checkout_id, e.target.checked)}
-                        />
-                      </td>
-                    </tr>
-                    <tr>
-                      <td colSpan="2" className="popup-footer">
-                        <a
-                          href={`https://www.google.com/maps?q=${checkout.latitude},${checkout.longitude}`}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="view-google-map-btn"
-                        >
-                          View Location
-                        </a>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </Popup>
-            </Marker>
-          );
+          // Only render the collected markers if showCollected is true
+          if (showCollected || !collectedStatus[checkout.checkout_id]) {
+            return (
+              <Marker key={checkout.checkout_id} position={[checkout.latitude, checkout.longitude]} icon={icon}>
+                <Popup>
+                  <table className="popup-table">
+                    <tbody>
+                      <tr>
+                        <td><strong>Checkout ID:</strong></td>
+                        <td>{checkout.checkout_id}</td>
+                      </tr>
+                      <tr>
+                        <td><strong>Sender:</strong></td>
+                        <td>{checkout.sender_firstname} {checkout.sender_lastname}</td>
+                      </tr>
+                      <tr>
+                        <td><strong>Recipient:</strong></td>
+                        <td>{checkout.recipient_firstname} {checkout.recipient_lastname}</td>
+                      </tr>
+                      <tr>
+                        <td><strong>Collection Time:</strong></td>
+                        <td>{checkout.collection_time}</td>
+                      </tr>
+                      <tr>
+                        <td><strong>Subscription Type:</strong></td>
+                        <td>{checkout.subscription_type}</td>
+                      </tr>
+                      <tr>
+                        <td><strong>Expire Date:</strong></td>
+                        <td>{checkout.expire_date ? new Date(checkout.expire_date).toLocaleDateString('en-GB') : 'N/A'}</td>
+                      </tr>
+                      <tr>
+                        <td><strong>House No:</strong></td>
+                        <td>{checkout.house_number}</td>
+                      </tr>
+                      <tr>
+                        <td><strong>Street Name:</strong></td>
+                        <td>{checkout.street_name}</td>
+                      </tr>
+                      <tr>
+                        <td><strong>Collected:</strong></td>
+                        <td>
+                          <input
+                            type="checkbox"
+                            checked={collectedStatus[checkout.checkout_id] || false}
+                            onChange={(e) => handleCollectedChange(checkout.checkout_id, e.target.checked)}
+                          />
+                        </td>
+                      </tr>
+                      <tr>
+                        <td colSpan="2" className="popup-footer">
+                          <a
+                            href={`https://www.google.com/maps?q=${checkout.latitude},${checkout.longitude}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="view-google-map-btn"
+                          >
+                            View Location
+                          </a>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </Popup>
+              </Marker>
+            );
+          }
+          return null;  // Don't render collected markers if they should be hidden
         })}
       </MapContainer>
     </div>
