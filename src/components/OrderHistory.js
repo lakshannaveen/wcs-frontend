@@ -4,6 +4,8 @@ import './OrderHistory.css';
 const OrderHistory = () => {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [showConfirmation, setShowConfirmation] = useState(false);
+  const [orderToCancel, setOrderToCancel] = useState(null);
 
   // Function to extract the user ID from the JWT token
   const getUserIdFromToken = () => {
@@ -43,6 +45,42 @@ const OrderHistory = () => {
     fetchOrders();
   }, []);
 
+  const handleCancelClick = (order) => {
+    setOrderToCancel(order);
+    setShowConfirmation(true);
+  };
+
+  const cancelOrder = async () => {
+    if (orderToCancel) {
+      const confirmCancel = window.confirm("You will not receive your money back if the order has been collected at least once.");
+
+      if (!confirmCancel) return;
+      
+      try {
+        const response = await fetch(`http://localhost:5002/api/checkout/cancel/${orderToCancel.checkout_id}`, {
+          method: 'DELETE',
+        });
+        if (response.ok) {
+          setOrders(orders.filter(order => order.checkout_id !== orderToCancel.checkout_id)); 
+          alert('Order canceled successfully');
+        } else {
+          alert('Error canceling order');
+        }
+      } catch (error) {
+        console.error('Error canceling order:', error);
+        alert('Error canceling order');
+      }
+    }
+    setShowConfirmation(false);
+    setOrderToCancel(null);
+  };
+  
+
+  const cancelCancellation = () => {
+    setShowConfirmation(false);
+    setOrderToCancel(null);
+  };
+
   if (loading) {
     return <div>Loading...</div>;
   }
@@ -60,10 +98,11 @@ const OrderHistory = () => {
               <th>Collection Time</th>
               <th>Subscription Type</th>
               <th>Price</th>
-              <th>Selected Date</th> 
+              <th>Selected Date</th>
               <th>Selected Days</th>
               <th>House Number</th>
               <th>Street Name</th>
+              <th>Action</th>
             </tr>
           </thead>
           <tbody>
@@ -75,16 +114,34 @@ const OrderHistory = () => {
                 <td>{order.collection_time}</td>
                 <td>{order.subscription_type}</td>
                 <td>{order.price}</td>
-                <td>{order.selected_dates && order.selected_dates.length > 0 ? order.selected_dates[0] : 'N/A'}</td> {/* Show only the first date */}
+                <td>{order.selected_dates && order.selected_dates.length > 0 ? order.selected_dates[0] : 'N/A'}</td> 
                 <td>{order.selected_days ? order.selected_days.join(', ') : 'N/A'}</td>
                 <td>{order.house_number}</td>
                 <td>{order.street_name}</td>
+                <td>
+                  <button
+                    className="cancel-btn"
+                    onClick={() => handleCancelClick(order)}
+                  >
+                    Cancel
+                  </button>
+                </td>
               </tr>
             ))}
           </tbody>
         </table>
       ) : (
         <p>No orders found</p>
+      )}
+
+      {showConfirmation && (
+        <div className="confirmation-overlay">
+          <div className="confirmation-box">
+            <p>Are you sure you want to cancel this order?</p>
+            <button className="confirm-btn" onClick={cancelOrder}>Yes</button>
+            <button className="no-btn" onClick={cancelCancellation}>No</button>
+          </div>
+        </div>
       )}
     </div>
   );
