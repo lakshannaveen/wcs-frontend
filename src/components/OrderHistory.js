@@ -127,9 +127,19 @@ const OrderHistory = () => {
                     <td><strong>Street Name:</strong></td>
                     <td>{order.street_name}</td>
                   </tr>
+                  <tr>
+                    <td><strong>Collected:</strong></td>
+                    <td>{order.collected ? 'Yes' : 'No'}</td>
+                  </tr>
                 </tbody>
               </table>
-              <button className="cancel-btn" onClick={() => handleCancelClick(order)}>Cancel Order</button>
+              <button
+                className="cancel-btn"
+                onClick={() => handleCancelClick(order)}
+                disabled={order.collected} 
+              >
+                {order.collected ? 'Collected' : 'Cancel Order'}
+              </button>
             </div>
           ))}
         </div>
