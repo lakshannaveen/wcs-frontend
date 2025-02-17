@@ -157,14 +157,15 @@ const OrderHistory = () => {
                   {order.collected ? 'Collected' : 'Cancel Order'}
                 </button>
 
-                {!order.collected && (
-                  <button
-                    className="update-btn"
-                    onClick={() => handleUpdateClick(order.checkout_id)}
-                  >
-                    Update Colletion Time
-                  </button>
-                )}
+                {!order.collected && order.subscription_type !== 'one-time' && (
+                    <button
+                      className="update-btn"
+                      onClick={() => handleUpdateClick(order.checkout_id)}
+                    >
+                      Update Collection Time
+                    </button>
+                  )}
+
             </div>
           ))}
         </div>
