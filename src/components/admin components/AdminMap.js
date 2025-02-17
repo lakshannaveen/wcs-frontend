@@ -105,16 +105,25 @@ const AdminMap = () => {
 
   return (
     <div className="admin-map-container">
-      <h3 className="map-title">Checkout Locations</h3>
+      <h3 className="map-title">Orders Locations</h3>
 
-      <div className="legend">
-        <ul>
-          <li><span className="legend-icon blue"></span> One-Time ({subscriptionCounts['one-time']})</li>
-          <li><span className="legend-icon orange"></span> Daily ({subscriptionCounts.daily})</li>
-          <li><span className="legend-icon green"></span> Weekly ({subscriptionCounts.weekly})</li>
-          <li><span className="legend-icon purple"></span> Monthly ({subscriptionCounts.monthly})</li>
-        </ul>
-      </div>
+              <div className="legend">
+          <ul>
+            <li><span className="legend-icon blue"></span> One-Time ({subscriptionCounts['one-time']})</li>
+            <li><span className="legend-icon orange"></span> Daily ({subscriptionCounts.daily})</li>
+            <li><span className="legend-icon green"></span> Weekly ({subscriptionCounts.weekly})</li>
+            <li><span className="legend-icon purple"></span> Monthly ({subscriptionCounts.monthly})</li>
+          </ul>
+          <div className="time-legend">
+            <ul>
+              <li>Morning (9 AM - 12 PM)</li>
+              <li>Afternoon (12 PM - 3 PM)</li>
+              <li>Evening (3 PM - 6 PM)</li>
+            </ul>
+          </div>
+        </div>
+
+
 
       <MapContainer center={[7.8731, 80.7718]} zoom={7} className="admin-map">
         <TileLayer
