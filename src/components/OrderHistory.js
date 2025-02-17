@@ -123,6 +123,10 @@ const OrderHistory = () => {
                     <td><strong>Price:</strong></td>
                     <td>{order.price}</td>
                   </tr>
+                  <tr>
+                    <td><strong>Payment Type:</strong></td>
+                    <td>{order.payment_type}</td>
+                  </tr>
                   {order.subscription_type === 'monthly' && (
                     <tr>
                       <td><strong>Selected Date:</strong></td>
@@ -157,15 +161,14 @@ const OrderHistory = () => {
                   {order.collected ? 'Collected' : 'Cancel Order'}
                 </button>
 
-                {!order.collected && order.subscription_type !== 'one-time' && (
-                    <button
-                      className="update-btn"
-                      onClick={() => handleUpdateClick(order.checkout_id)}
-                    >
-                      Update Collection Time
-                    </button>
-                  )}
-
+              {!order.collected && order.subscription_type !== 'one-time' && (
+                <button
+                  className="update-btn"
+                  onClick={() => handleUpdateClick(order.checkout_id)}
+                >
+                  Update Collection Time
+                </button>
+              )}
             </div>
           ))}
         </div>
