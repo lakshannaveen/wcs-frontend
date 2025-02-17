@@ -2,6 +2,12 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom'; // Import useNavigate for navigation
 import './OrderHistory.css';
 
+const isOrderExpired = (expiryDate) => {
+  const now = new Date();
+  const expiry = new Date(expiryDate);
+  return expiry < now;
+};
+
 const OrderHistory = () => {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -173,9 +179,9 @@ const OrderHistory = () => {
               <button
                   className="cancel-btn"
                   onClick={() => handleCancelClick(order)}
-                  disabled={order.collected}
+                  disabled={order.collected || isOrderExpired(order.expiry_date)}
                 >
-                  {order.collected ? 'Collected' : 'Cancel Order'}
+                  {order.collected || isOrderExpired(order.expiry_date) ? 'Expired' : 'Cancel Order'}
                 </button>
 
               {!order.collected && order.subscription_type !== 'one-time' && (
@@ -183,7 +189,7 @@ const OrderHistory = () => {
                   className="update-btn"
                   onClick={() => handleUpdateClick(order.checkout_id)}
                 >
-                  Update Collection Time
+                  {isOrderExpired(order.expiry_date) ? 'Expired' : 'Update Collection Time'}
                 </button>
               )}
             </div>
