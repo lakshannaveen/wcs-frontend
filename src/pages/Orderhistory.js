@@ -1,7 +1,7 @@
 import React from 'react'
 import OrderHistory from '../components/OrderHistory'
 
-function Feedback() {
+function  Orderhistory() {
   return (
     <div>
       <OrderHistory />
@@ -9,4 +9,4 @@ function Feedback() {
   )
 }
 
-export default Feedback
+export default Orderhistory
