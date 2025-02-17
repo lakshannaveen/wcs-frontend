@@ -39,6 +39,9 @@ const AdminMap = () => {
     monthly: 0,
   });
 
+  // Add state for collected status
+  const [collectedStatus, setCollectedStatus] = useState({});
+
   useEffect(() => {
     fetchCheckouts();
   }, []);
@@ -47,28 +50,54 @@ const AdminMap = () => {
     try {
       const response = await fetch('http://localhost:5002/api/checkout/checkouts');
       const data = await response.json();
-  
-      // Count the subscription types
+
       const counts = {
         'one-time': 0,
         daily: 0,
         weekly: 0,
         monthly: 0,
       };
-  
+
       data.forEach((checkout) => {
         const subscriptionType = checkout.subscription_type?.trim();
-  
-        // Ensure we match subscription types exactly (e.g., 'one-time', not 'one_time')
         if (counts[subscriptionType] !== undefined) {
           counts[subscriptionType]++;
         }
       });
-  
+
       setCheckouts(data);
-      setSubscriptionCounts(counts); // Set updated counts
+      setSubscriptionCounts(counts);
+      setCollectedStatus(data.reduce((acc, curr) => {
+        acc[curr.checkout_id] = curr.collected || false;  // Assuming `collected` is already part of your data
+        return acc;
+      }, {}));
     } catch (error) {
       console.error('Error fetching checkouts:', error);
+    }
+  };
+
+  const handleCollectedChange = async (checkoutId, collected) => {
+    try {
+      const response = await fetch(`http://localhost:5002/api/checkout/${checkoutId}/collected`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ collected }),
+      });
+
+      const result = await response.json();
+
+      if (response.ok) {
+        setCollectedStatus((prevState) => ({
+          ...prevState,
+          [checkoutId]: collected,
+        }));
+      } else {
+        console.error(result.message);
+      }
+    } catch (error) {
+      console.error('Error updating collected status:', error);
     }
   };
 
@@ -76,7 +105,6 @@ const AdminMap = () => {
     <div className="admin-map-container">
       <h3 className="map-title">Checkout Locations</h3>
 
-      {/* Legend to display color code for subscription types with real-time count */}
       <div className="legend">
         <ul>
           <li><span className="legend-icon blue"></span> One-Time ({subscriptionCounts['one-time']})</li>
@@ -92,15 +120,15 @@ const AdminMap = () => {
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         />
 
-        {checkouts.map((checkout, index) => {
-          // Get the correct icon based on subscription type, or use default if not found
+        {checkouts.map((checkout) => {
           const icon = icons[checkout.subscription_type] || defaultIcon;
 
           return (
-            <Marker key={index} position={[checkout.latitude, checkout.longitude]} icon={icon}>
+            <Marker key={checkout.checkout_id} position={[checkout.latitude, checkout.longitude]} icon={icon}>
               <Popup>
                 <table className="popup-table">
                   <tbody>
+                    {/* Display checkout data */}
                     <tr>
                       <td><strong>Checkout ID:</strong></td>
                       <td>{checkout.checkout_id}</td>
@@ -132,6 +160,16 @@ const AdminMap = () => {
                     <tr>
                       <td><strong>Street Name:</strong></td>
                       <td>{checkout.street_name}</td>
+                    </tr>
+                    <tr>
+                      <td><strong>Collected:</strong></td>
+                      <td>
+                        <input
+                          type="checkbox"
+                          checked={collectedStatus[checkout.checkout_id] || false}
+                          onChange={(e) => handleCollectedChange(checkout.checkout_id, e.target.checked)}
+                        />
+                      </td>
                     </tr>
                     <tr>
                       <td colSpan="2" className="popup-footer">
