@@ -1,4 +1,3 @@
-// In your React component (OrderHistory.js)
 import React, { useEffect, useState } from 'react';
 import './OrderHistory.css';
 
@@ -17,9 +16,7 @@ const OrderHistory = () => {
     }
     return null;
   };
-  
-  
-  
+
   useEffect(() => {
     const fetchOrders = async () => {
       const userId = getUserIdFromToken();
@@ -42,10 +39,10 @@ const OrderHistory = () => {
         setLoading(false);
       }
     };
-  
+
     fetchOrders();
   }, []);
-  
+
   if (loading) {
     return <div>Loading...</div>;
   }
@@ -63,6 +60,10 @@ const OrderHistory = () => {
               <th>Collection Time</th>
               <th>Subscription Type</th>
               <th>Price</th>
+              <th>Selected Date</th> 
+              <th>Selected Days</th>
+              <th>House Number</th>
+              <th>Street Name</th>
             </tr>
           </thead>
           <tbody>
@@ -74,6 +75,10 @@ const OrderHistory = () => {
                 <td>{order.collection_time}</td>
                 <td>{order.subscription_type}</td>
                 <td>{order.price}</td>
+                <td>{order.selected_dates && order.selected_dates.length > 0 ? order.selected_dates[0] : 'N/A'}</td> {/* Show only the first date */}
+                <td>{order.selected_days ? order.selected_days.join(', ') : 'N/A'}</td>
+                <td>{order.house_number}</td>
+                <td>{order.street_name}</td>
               </tr>
             ))}
           </tbody>
