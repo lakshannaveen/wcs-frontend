@@ -23,15 +23,15 @@ const UpdateOrderPage = () => {
   const handleUpdate = async () => {
     // Capitalize the first letter and make the rest lowercase
     const capitalizedCollectionTime = collectionTime.charAt(0).toUpperCase() + collectionTime.slice(1).toLowerCase();
-
+  
     const validTimes = ['Morning', 'Afternoon', 'Evening'];
-
+  
     // Validate the selected collection time
     if (!validTimes.includes(capitalizedCollectionTime)) {
       alert('Invalid collection time selected.');
       return;
     }
-
+  
     try {
       const response = await fetch(`http://localhost:5002/api/checkout/update-collection-time/${checkoutId}`, {
         method: 'PUT',
@@ -40,19 +40,20 @@ const UpdateOrderPage = () => {
         },
         body: JSON.stringify({ collectionTime: capitalizedCollectionTime }),
       });
-
+  
       const data = await response.json();
-
+  
       if (response.ok) {
-        alert('Collection time updated successfully.');
+        alert('Collection time update successfully. Scheduled for tomorrow.');
       } else {
-        alert(data.message || 'Failed to update collection time.');
+        alert(data.message || 'Failed to schedule collection time update.');
       }
     } catch (err) {
       console.error('Error:', err);
-      alert('An error occurred while updating collection time.');
+      alert('An error occurred while scheduling the collection time update.');
     }
   };
+  
 
   return (
     <div className="update-order-page">
