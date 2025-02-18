@@ -111,7 +111,7 @@ const AdminOrders = () => {
       <div key={type}>
         <h2>{type.charAt(0).toUpperCase() + type.slice(1)} Orders</h2>
         <table className="admin-orders-table">
-          <thead>
+        <thead>
             <tr>
               <th>Checkout ID</th>
               <th>User ID</th>
@@ -121,10 +121,12 @@ const AdminOrders = () => {
               {type === 'monthly' && <th>Selected Dates</th>}
               {type === 'weekly' && <th>Selected Days</th>}
               {type !== 'one-time' && <th>Expiration Date</th>} {/* Only show for non 'one-time' subscriptions */}
+              <th>Created At</th> 
               <th>Actions</th>
               <th>Location</th>
             </tr>
           </thead>
+
           <tbody>
             {activeCheckouts.map((checkout) => (
               <tr key={checkout.checkout_id} style={{ backgroundColor: getRowBackgroundColor(checkout.collection_time) }}>
@@ -136,6 +138,7 @@ const AdminOrders = () => {
                 {type === 'monthly' && <td>{formatSelectedDates(checkout.selected_dates)}</td>}
                 {type === 'weekly' && <td>{formatSelectedDays(checkout.selected_days)}</td>}
                 {type !== 'one-time' && <td>{checkout.expire_date ? new Date(checkout.expire_date).toLocaleDateString() : 'N/A'}</td>}
+                <td>{checkout.created_at}</td> 
                 <td>
                   <button onClick={() => cancelOrder(checkout.checkout_id)} className="cancel-btn">Cancel Order</button>
                 </td>
@@ -152,6 +155,7 @@ const AdminOrders = () => {
               </tr>
             ))}
           </tbody>
+
         </table>
       </div>
     );
@@ -183,6 +187,7 @@ const AdminOrders = () => {
                 <th>Collection Time</th>
                 <th>Subscription Type</th>
                 {filteredCheckout.subscription_type !== 'one-time' && <th>Expiration Date</th>}
+                <th>Created At</th>
                 <th>Actions</th>
                 <th>Location</th>
               </tr>
@@ -198,6 +203,7 @@ const AdminOrders = () => {
                 {filteredCheckout.subscription_type !== 'one-time' && (
                   <td>{filteredCheckout.expire_date ? new Date(filteredCheckout.expire_date).toLocaleDateString() : 'N/A'}</td>
                 )}
+                <td>{filteredCheckout.created_at}</td>
                 <td>
                   <button onClick={() => cancelOrder(filteredCheckout.checkout_id)} className="cancel-btn">
                     Cancel Order
