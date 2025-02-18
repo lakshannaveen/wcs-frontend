@@ -161,10 +161,12 @@ const AdminMap = () => {
                         <td><strong>Subscription Type:</strong></td>
                         <td>{checkout.subscription_type}</td>
                       </tr>
-                      <tr>
-                        <td><strong>Expire Date:</strong></td>
-                        <td>{checkout.expire_date ? new Date(checkout.expire_date).toLocaleDateString('en-GB') : 'N/A'}</td>
-                      </tr>
+                      {checkout.subscription_type !== 'one-time' && (
+                          <tr>
+                            <td><strong>Expire Date:</strong></td>
+                            <td>{checkout.expire_date ? new Date(checkout.expire_date).toLocaleDateString('en-GB') : 'N/A'}</td>
+                          </tr>
+                        )}
                       <tr>
                         <td><strong>House No:</strong></td>
                         <td>{checkout.house_number}</td>
