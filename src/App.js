@@ -32,6 +32,7 @@ import Bill from './pages/Bill';
 import AdminOrders from './components/admin components/AdminOrder';
 import AdminMap from './components/admin components/AdminMap';
 import Update from './pages/Update';
+import StripePayment from './components/payment';
 
 function Layout({ children }) {
   return (
@@ -105,6 +106,12 @@ function App() {
                   path="/orderhistory"
                   element={
                       <OrderHistory/>
+                  }
+                />
+                  <Route
+                  path="/payment"
+                  element={
+                      <StripePayment/>
                   }
                 />
                  <Route
