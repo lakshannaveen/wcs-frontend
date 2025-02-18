@@ -182,7 +182,7 @@ const AdminOrders = () => {
                 <th>Recipient Name</th>
                 <th>Collection Time</th>
                 <th>Subscription Type</th>
-                <th>Expiration Date</th>
+                {filteredCheckout.subscription_type !== 'one-time' && <th>Expiration Date</th>}
                 <th>Actions</th>
                 <th>Location</th>
               </tr>
@@ -195,14 +195,18 @@ const AdminOrders = () => {
                 <td>{filteredCheckout.recipient_firstname} {filteredCheckout.recipient_lastname}</td>
                 <td>{filteredCheckout.collection_time}</td>
                 <td>{filteredCheckout.subscription_type}</td>
-                <td>{filteredCheckout.expire_date ? new Date(filteredCheckout.expire_date).toLocaleDateString() : 'N/A'}</td>
+                {filteredCheckout.subscription_type !== 'one-time' && (
+                  <td>{filteredCheckout.expire_date ? new Date(filteredCheckout.expire_date).toLocaleDateString() : 'N/A'}</td>
+                )}
                 <td>
-                  <button onClick={() => cancelOrder(filteredCheckout.checkout_id)} className="cancel-btn">Cancel Order</button>
+                  <button onClick={() => cancelOrder(filteredCheckout.checkout_id)} className="cancel-btn">
+                    Cancel Order
+                  </button>
                 </td>
                 <td>
                   {filteredCheckout.latitude && filteredCheckout.longitude && (
-                    <button 
-                      onClick={() => openLocationInMap(filteredCheckout.latitude, filteredCheckout.longitude)} 
+                    <button
+                      onClick={() => openLocationInMap(filteredCheckout.latitude, filteredCheckout.longitude)}
                       className="location-btn"
                     >
                       View Location
