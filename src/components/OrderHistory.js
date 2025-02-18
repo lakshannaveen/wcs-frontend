@@ -112,6 +112,10 @@ const OrderHistory = () => {
                     <td>{order.checkout_id}</td>
                   </tr>
                   <tr>
+                    <td><strong>Created At:</strong></td>
+                    <td>{order.created_at ? formatDate(order.created_at) : 'N/A'}</td>
+                  </tr>
+                  <tr>
                     <td><strong>Sender Name:</strong></td>
                     <td>{order.sender_firstname} {order.sender_lastname}</td>
                   </tr>
