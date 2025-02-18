@@ -272,11 +272,11 @@ function Checkoutform() {
             storedCheckoutPageData.checkoutId = checkoutId;
             sessionStorage.setItem('checkoutpagedata', JSON.stringify(storedCheckoutPageData));
   
-            alert("Order placed successfully!");
-  
             if (storedCheckoutPageData.paymentDetails.paymentMethod === "Online") {
+              // Skip "Order placed successfully" alert and directly navigate to payment
               navigate("/payment");
             } else {
+              alert("Order placed successfully!");
               navigate("/bill");
             }
           } else {
@@ -292,7 +292,6 @@ function Checkoutform() {
       alert("Please fix the errors before submitting.");
     }
   };
-  
   
   
   return (
