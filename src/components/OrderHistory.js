@@ -143,7 +143,7 @@ const OrderHistory = () => {
                       </tr>
                       <tr>
                         <td><strong>Expiry Date:</strong></td>
-                        <td>{order.expiry_date ? formatDate(order.expiry_date) : 'N/A'}</td>
+                        <td>{order.expire_date ? formatDate(order.expire_date) : 'N/A'}</td>
                       </tr>
                     </>
                   )}
