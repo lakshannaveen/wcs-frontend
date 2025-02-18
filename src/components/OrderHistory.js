@@ -178,7 +178,7 @@ const OrderHistory = () => {
                 </tbody>
               </table>
               <button
-                className="cancel-btn"
+                className="cancel-bton"
                 onClick={() => handleCancelClick(order)}
                 disabled={order.collected}
               >
@@ -187,7 +187,7 @@ const OrderHistory = () => {
 
               {!order.collected && order.subscription_type !== 'one-time' && (
                 <button
-                  className="update-btn"
+                  className="update-btoon"
                   onClick={() => handleUpdateClick(order.checkout_id)}
                 >
                   {isOrderExpired(order.expiry_date) ? 'Expired' : 'Update Collection Time'}
