@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom'; // Import useNavigate for navigation
+import { useNavigate } from 'react-router-dom';
 import './OrderHistory.css';
 
 const isOrderExpired = (expiryDate) => {
+  if (!expiryDate) return false;
   const now = new Date();
   const expiry = new Date(expiryDate);
   return expiry < now;
@@ -13,7 +14,7 @@ const OrderHistory = () => {
   const [loading, setLoading] = useState(true);
   const [showConfirmation, setShowConfirmation] = useState(false);
   const [orderToCancel, setOrderToCancel] = useState(null);
-  const navigate = useNavigate(); // Initialize the useNavigate hook
+  const navigate = useNavigate();
 
   const getUserIdFromToken = () => {
     const token = document.cookie.split(';').find(cookie => cookie.trim().startsWith('token='));
@@ -57,13 +58,13 @@ const OrderHistory = () => {
     if (orderToCancel) {
       const confirmCancel = window.confirm("You will not receive your money back if the order has been collected at least once.");
       if (!confirmCancel) return;
-      
+
       try {
         const response = await fetch(`http://localhost:5002/api/checkout/cancel/${orderToCancel.checkout_id}`, {
           method: 'DELETE',
         });
         if (response.ok) {
-          setOrders(orders.filter(order => order.checkout_id !== orderToCancel.checkout_id)); 
+          setOrders(orders.filter(order => order.checkout_id !== orderToCancel.checkout_id));
           alert('Order canceled successfully');
         } else {
           alert('Error canceling order');
@@ -83,17 +84,13 @@ const OrderHistory = () => {
   };
 
   const formatDate = (dateString) => {
+    if (!dateString) return 'N/A';
     const date = new Date(dateString);
-    
-    // Adjust the date based on the local time zone
     const localDate = new Date(date.getTime() - date.getTimezoneOffset() * 60000);
-    
-    // Format the date to "YYYY-MM-DD"
     return localDate.toISOString().split('T')[0];
   };
 
   const handleUpdateClick = (checkoutId) => {
-    // Redirect to the update page and pass the checkout_id as a URL parameter
     navigate(`/update/${checkoutId}`);
   };
 
@@ -177,12 +174,12 @@ const OrderHistory = () => {
                 </tbody>
               </table>
               <button
-                  className="cancel-btn"
-                  onClick={() => handleCancelClick(order)}
-                  disabled={order.collected || isOrderExpired(order.expiry_date)}
-                >
-                  {order.collected || isOrderExpired(order.expiry_date) ? 'Expired' : 'Cancel Order'}
-                </button>
+                className="cancel-btn"
+                onClick={() => handleCancelClick(order)}
+                disabled={order.collected}
+              >
+                {order.collected ? 'Collected' : 'Cancel Order'}
+              </button>
 
               {!order.collected && order.subscription_type !== 'one-time' && (
                 <button
