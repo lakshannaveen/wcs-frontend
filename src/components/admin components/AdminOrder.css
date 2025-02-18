@@ -63,8 +63,10 @@
     border-radius: 5px;
     cursor: pointer;
     margin-left: 10px;
+    width: 160px; 
     transition: background-color 0.3s ease;
   }
+  
   .not-found-message {
     color: red;
     font-size: 14px;
