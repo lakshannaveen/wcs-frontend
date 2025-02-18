@@ -23,6 +23,8 @@ function CustomSubscription() {
             <li>On-demand pickups within service hours.</li>
             <li>Ideal for temporary or high-demand situations, valid for 3 months from the order date.</li>
             <li>You can cancel your order at any time.</li>
+            <li>You can change the collection time to your preferred time after placing the order.</li>
+
           </ul>
         </div>
 
@@ -37,6 +39,8 @@ function CustomSubscription() {
             <li>Great for small businesses or residential communities.</li>
             <li>Ideal for those who need consistent weekly service.</li>
             <li>You can cancel your order at any time.</li>
+            <li>You can change the collection time to your preferred time after placing the order.</li>
+
           </ul>
         </div>
 
@@ -50,6 +54,8 @@ function CustomSubscription() {
             <li>Priority customer support.</li>
             <li>Ideal for small waste volumes, providing long-term savings.</li>
             <li>You can cancel your order at any time.</li>
+            <li>You can change the collection time to your preferred time after placing the order.</li>
+
           </ul>
         </div>
 
@@ -69,7 +75,7 @@ function CustomSubscription() {
       </div>
 
       <p className="note">
-        <strong>Important:</strong> All these subscription plans are valid for 3 months only. The pick-up date can be chosen on a day of your choice. <br />
+        <strong>Important:</strong> Daily Weekly Monthly subscription plans are valid for 3 months only. The pick-up date can be chosen on a day of your choice. <br />
         The pick-up time can be scheduled in the <span className="highlight">morning</span>, <span className="highlight">afternoon</span>, or <span className="highlight">evening</span>. You can select your subscription plan at <span className="highlight">map selection</span>. <br />
         Additionally, you can choose your preferred time (<span className="highlight">morning</span>, <span className="highlight">afternoon</span>, or <span className="highlight">evening</span>) for waste collection during <span className="highlight">checkout</span>.
       </p>
