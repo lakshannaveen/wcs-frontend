@@ -167,7 +167,7 @@ const AdminOrders = () => {
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
         />
-        <button className="search-btn" onClick={handleSearch}>Search</button>
+        <button className="search" onClick={handleSearch}>Search</button>
       </div>
   
       {filteredCheckout ? (
