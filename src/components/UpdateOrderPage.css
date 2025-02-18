@@ -70,6 +70,12 @@
   .update-button:active {
     background-color: #1e7e34;
   }
+  .error-message {
+    color: red !important;
+    font-weight: bold;
+    margin-top: 10px;
+    font-size: 12px!important; 
+  }
   
   .important-note {
     font-size: 14px;
