@@ -39,6 +39,63 @@
     padding: 8px;
     text-align: center;
   }
+  .search-bar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin: 20px 0;
+  }
+  
+  .search-bar input {
+    padding: 10px;
+    width: 250px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+  }
+  
+  .search-btn {
+    background-color: blue;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-left: 10px;
+    transition: background-color 0.3s ease;
+  }
+  .not-found-message {
+    color: red;
+    font-size: 14px;
+    font-weight: bold;
+    margin-top: 10px;
+    text-align: center;
+  }
+    
+  .search-btn:hover {
+    background-color: darkblue !important;
+  }
+  
+  @media (max-width: 768px) {
+    .search-bar {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin: 15px 0;
+      width: 100%; 
+    }
+  
+    .search-bar input {
+      width: 80%; 
+      font-size: 14px; 
+    }
+  
+    .search-btn {
+      width: 80%; 
+      font-size: 14px; 
+    }
+  }
   
   .cancel-btn,
   .location-btn {

@@ -3,6 +3,8 @@ import './AdminOrder.css';
 
 const AdminOrders = () => {
   const [checkouts, setCheckouts] = useState([]);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [filteredCheckout, setFilteredCheckout] = useState(null);
   
   useEffect(() => {
     const fetchCheckouts = async () => {
@@ -37,6 +39,16 @@ const AdminOrders = () => {
       alert('Error canceling order');
     }
   };
+  const handleSearch = () => {
+    if (searchQuery.trim() === '') {
+      setFilteredCheckout(null);
+      return;
+    }
+    
+    const result = checkouts.find((checkout) => checkout.checkout_id.toString() === searchQuery.trim());
+    setFilteredCheckout(result || null);
+  };
+
   
   const openLocationInMap = (latitude, longitude) => {
     const googleMapUrl = `https://www.google.com/maps?q=${latitude},${longitude}`;
@@ -148,7 +160,63 @@ const AdminOrders = () => {
   return (
     <div className="admin-orders-container">
       <h1 className="admin-orders-title">Welcome to Admin Orders</h1>
-
+      <div className="search-bar">
+        <input
+          type="text"
+          placeholder="Enter Checkout ID"
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+        />
+        <button className="search-btn" onClick={handleSearch}>Search</button>
+      </div>
+  
+      {filteredCheckout ? (
+        <div>
+          <h2>Search Order Details</h2>
+          <table className="admin-orders-table">
+            <thead>
+              <tr>
+                <th>Checkout ID</th>
+                <th>User ID</th>
+                <th>Sender Name</th>
+                <th>Recipient Name</th>
+                <th>Collection Time</th>
+                <th>Subscription Type</th>
+                <th>Expiration Date</th>
+                <th>Actions</th>
+                <th>Location</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>{filteredCheckout.checkout_id}</td>
+                <td>{filteredCheckout.user_id}</td>
+                <td>{filteredCheckout.sender_firstname} {filteredCheckout.sender_lastname}</td>
+                <td>{filteredCheckout.recipient_firstname} {filteredCheckout.recipient_lastname}</td>
+                <td>{filteredCheckout.collection_time}</td>
+                <td>{filteredCheckout.subscription_type}</td>
+                <td>{filteredCheckout.expire_date ? new Date(filteredCheckout.expire_date).toLocaleDateString() : 'N/A'}</td>
+                <td>
+                  <button onClick={() => cancelOrder(filteredCheckout.checkout_id)} className="cancel-btn">Cancel Order</button>
+                </td>
+                <td>
+                  {filteredCheckout.latitude && filteredCheckout.longitude && (
+                    <button 
+                      onClick={() => openLocationInMap(filteredCheckout.latitude, filteredCheckout.longitude)} 
+                      className="location-btn"
+                    >
+                      View Location
+                    </button>
+                  )}
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      ) : (
+        searchQuery && <p className="not-found-message">No order found with this Checkout ID.</p>
+      )}
+  
       <div className="time-indicator-section">
         <div className="time-indicator">
           <span className="indicator" style={{ backgroundColor: '#d4edda' }}></span>
@@ -163,13 +231,14 @@ const AdminOrders = () => {
           <span>Evening (3PM-6PM)</span>
         </div>
       </div>
-
+  
       {renderSubscriptionTable('daily')}
       {renderSubscriptionTable('weekly')}
       {renderSubscriptionTable('monthly')}
       {renderSubscriptionTable('one-time')}
     </div>
   );
+  
 };
 
 export default AdminOrders;
