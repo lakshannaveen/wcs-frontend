@@ -1,4 +1,4 @@
-/* General styles for the payment container */
+/* Styles specific to the Payment page */
 .payment-container {
     padding: 20px;
     max-width: 500px;
@@ -17,18 +17,18 @@
   }
   
   /* Error message styling */
-  .error-message {
+  .payment-container .error-message {
     color: red;
     margin-bottom: 10px;
     font-size: 14px;
   }
   
   /* Form input container styling */
-  .card-element-container {
+  .payment-container .card-element-container {
     margin-bottom: 20px;
   }
   
-  .card-element-container label {
+  .payment-container .card-element-container label {
     display: block;
     margin-bottom: 8px;
     font-size: 14px;
@@ -36,7 +36,7 @@
   }
   
   /* Stripe CardElement specific styling */
-  .StripeElement {
+  .payment-container .StripeElement {
     padding: 10px;
     border-radius: 4px;
     border: 1px solid #ddd;
@@ -46,16 +46,16 @@
     color: #424770;
   }
   
-  .StripeElement--invalid {
+  .payment-container .StripeElement--invalid {
     border-color: red;
   }
   
-  .StripeElement--focus {
+  .payment-container .StripeElement--focus {
     border-color: #5469d4;
   }
   
   /* Button styling */
-  button {
+  .payment-container button {
     width: 100%;
     padding: 12px;
     font-size: 16px;
@@ -67,12 +67,12 @@
     transition: background-color 0.3s ease;
   }
   
-  button:disabled {
+  .payment-container button:disabled {
     background-color: #b0b0b0;
     cursor: not-allowed;
   }
   
-  button:hover:not(:disabled) {
+  .payment-container button:hover:not(:disabled) {
     background-color: #4056a1;
   }
   
@@ -87,7 +87,7 @@
       font-size: 20px;
     }
   
-    button {
+    .payment-container button {
       padding: 10px;
     }
   }
