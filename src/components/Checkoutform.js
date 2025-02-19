@@ -197,6 +197,7 @@ function Checkoutform() {
     event.preventDefault();
     setHasSubmitted(true);
   
+    // Validate sender and recipient details
     if (!senderDetails.firstName || !senderDetails.lastName || !senderDetails.zipCode || !senderDetails.phone) {
       alert("Please fill in all sender details.");
       return;
@@ -207,24 +208,26 @@ function Checkoutform() {
       return;
     }
   
+    // Validate form before proceeding
     if (validateForm()) {
       const mappagedata = JSON.parse(sessionStorage.getItem('mappagedata'));
   
+      // Check if mappagedata or userId is missing
       if (!mappagedata || !mappagedata.userId) {
         alert("User ID is missing! Please go back and select a location.");
         return;
       }
   
-      const userId = mappagedata.userId;
-      console.log("Extracted User ID:", userId);
-  
+      const userId = mappagedata.userId;  // This is where the userId is assigned
       const price = mappagedata.subscriptionPrice;
   
+      // Check if price is missing
       if (!price) {
         alert("Price is missing! Please go back and select a subscription.");
         return;
       }
   
+      // Prepare checkout data
       const checkoutpagedata = {
         senderDetails,
         recipientDetails,
@@ -237,56 +240,57 @@ function Checkoutform() {
           selectedDays: mappagedata.selectedDays || null,
           price,
         },
-        user_id: mappagedata.userId,
+        user_id: userId,  // Make sure userId is used in the payload
         selected_days: Array.isArray(mappagedata.selectedDays) ? mappagedata.selectedDays : [mappagedata.selectedDays],
         selected_dates: Array.isArray(mappagedata.selectedDates) ? mappagedata.selectedDates : [mappagedata.selectedDates],
       };
   
-      console.log("Final Checkout Data:", checkoutpagedata);
-  
+      // Store checkout data in sessionStorage
       sessionStorage.setItem('checkoutpagedata', JSON.stringify(checkoutpagedata));
   
       alert('Your order is being processed...');
   
       setTimeout(() => {
         const storedCheckoutPageData = JSON.parse(sessionStorage.getItem('checkoutpagedata'));
-        console.log("Sending Checkout Data to Backend:", storedCheckoutPageData);
   
-        fetch("http://localhost:5002/api/checkout/order", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            orderDetails: storedCheckoutPageData.paymentDetails,
-            checkoutDetails: storedCheckoutPageData,
-          }),
-        })
-        .then((response) => response.json())
-        .then((data) => {
-          if (data.message === "Order placed successfully") {
-            const checkoutId = data.checkoutId;  // Extract checkoutId from response
-            sessionStorage.setItem('checkoutId', checkoutId);  // Store it in session storage
+        // Check if the payment method is online
+        if (storedCheckoutPageData.paymentDetails.paymentMethod === "Online") {
+          // Navigate to the payment page for online payments
+          navigate("/payment");
+        } else {
+          // Send data to the backend for non-online payments
+          fetch("http://localhost:5002/api/checkout/order", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              orderDetails: storedCheckoutPageData.paymentDetails,
+              checkoutDetails: storedCheckoutPageData,
+              userId: userId,  // Ensure userId is included in the backend request
+            }),
+          })
+          .then((response) => response.json())
+          .then((data) => {
+            if (data.message === "Order placed successfully") {
+              const checkoutId = data.checkoutId;  // Extract checkoutId from response
+              sessionStorage.setItem('checkoutId', checkoutId);  // Store it in session storage
   
-            // Update checkoutpagedata with checkoutId
-            storedCheckoutPageData.checkoutId = checkoutId;
-            sessionStorage.setItem('checkoutpagedata', JSON.stringify(storedCheckoutPageData));
+              // Update checkoutpagedata with checkoutId
+              storedCheckoutPageData.checkoutId = checkoutId;
+              sessionStorage.setItem('checkoutpagedata', JSON.stringify(storedCheckoutPageData));
   
-            if (storedCheckoutPageData.paymentDetails.paymentMethod === "Online") {
-              // Don't remove session storage data
-              navigate("/payment");
-            } else {
               alert("Order placed successfully!");
               navigate("/bill");
+            } else {
+              alert(data.message || "Failed to place order.");
             }
-          } else {
-            alert(data.message || "Failed to place order.");
-          }
-        })
-        .catch((error) => {
-          console.error("Error placing order:", error);
-          alert("There was an error processing your order. Please try again.");
-        });
+          })
+          .catch((error) => {
+            console.error("Error placing order:", error);
+            alert("There was an error processing your order. Please try again.");
+          });
+        }
       }, 3000);
     } else {
       alert("Please fix the errors before submitting.");
