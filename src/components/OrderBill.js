@@ -50,6 +50,17 @@ const OrderBill = () => {
 
   const finalCheckoutId = checkoutId || "N/A";
 
+  // if missing subscription plan
+  const subscriptionPlan = mapPageData.subscriptionPlan || (() => {
+    switch (mapPageData.subscriptionPrice) {
+      case 200: return "One-Time";
+      case 2000: return "Weekly";
+      case 5000: return "Daily";
+      case 1000: return "Monthly";
+      default: return "Unknown Plan";
+    }
+  })();
+
   return (
     <div className="order-bill">
       <h2>Order Bill</h2>
@@ -80,7 +91,7 @@ const OrderBill = () => {
 
           <tr><td colSpan="2"><strong>Map and Subscription Details</strong></td></tr>
           <tr><td>Location:</td><td>Lat: {mapPageData.latitude}, Long: {mapPageData.longitude}</td></tr>
-          <tr><td>Subscription Plan:</td><td>{mapPageData.subscriptionPlan}</td></tr>
+          <tr><td>Subscription Plan:</td><td>{subscriptionPlan}</td></tr>
           <tr><td>Subscription Price:</td><td>{mapPageData.subscriptionPrice}</td></tr>
           {mapPageData.selectedDates && <tr><td>Selected Dates:</td><td>{mapPageData.selectedDates}</td></tr>}
           {mapPageData.selectedDays && <tr><td>Selected Days:</td><td>{mapPageData.selectedDays}</td></tr>}
