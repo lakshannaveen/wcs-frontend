@@ -267,13 +267,13 @@ function Checkoutform() {
           if (data.message === "Order placed successfully") {
             const checkoutId = data.checkoutId;  // Extract checkoutId from response
             sessionStorage.setItem('checkoutId', checkoutId);  // Store it in session storage
-            
+  
             // Update checkoutpagedata with checkoutId
             storedCheckoutPageData.checkoutId = checkoutId;
             sessionStorage.setItem('checkoutpagedata', JSON.stringify(storedCheckoutPageData));
   
             if (storedCheckoutPageData.paymentDetails.paymentMethod === "Online") {
-              // Skip "Order placed successfully" alert and directly navigate to payment
+              // Don't remove session storage data
               navigate("/payment");
             } else {
               alert("Order placed successfully!");
@@ -292,6 +292,7 @@ function Checkoutform() {
       alert("Please fix the errors before submitting.");
     }
   };
+  
   
   
   return (

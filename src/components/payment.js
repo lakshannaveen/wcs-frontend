@@ -1,7 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { loadStripe } from '@stripe/stripe-js';
 import { Elements, CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
+import { useNavigate } from 'react-router-dom';
 import './payment.css';
+
+// Log the Stripe Publishable Key to verify if it is being loaded
+console.log('Stripe Publishable Key:', process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY);
 
 // Load the Stripe publishable key from the environment variables
 const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY);
@@ -12,18 +16,21 @@ const Payment = () => {
   const [clientSecret, setClientSecret] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const navigate = useNavigate();
 
-  // Fetch the client secret from the backend when the component mounts
+  // Retrieve payment data from sessionStorage (mappagedata)
+  const paymentData = JSON.parse(sessionStorage.getItem('mappagedata'));
+const amountInLKR = paymentData?.subscriptionPrice || 0; // Retrieve subscription price
+
   useEffect(() => {
-    fetch('http://localhost:5002/api/checkout/create-payment-intent', {
+    fetch('http://localhost:5002/api/payment/create-payment-intent', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        // Pass any required data such as amount or currency
-        amount: 5000, // Example: $50.00
-        currency: 'usd',
+        amount: amountInLKR * 100, // Stripe expects amount in cents, so multiply by 100
+        currency: 'lkr', // Currency is now LKR (Sri Lankan Rupees)
       }),
     })
       .then((response) => response.json())
@@ -34,9 +41,8 @@ const Payment = () => {
         setError('Failed to load payment details. Please try again.');
         console.error('Error fetching client secret:', error);
       });
-  }, []);
+  }, [amountInLKR]);
 
-  // Handle form submission
   const handleSubmit = async (event) => {
     event.preventDefault();
     setLoading(true);
@@ -61,8 +67,7 @@ const Payment = () => {
     } else {
       if (paymentIntent.status === 'succeeded') {
         alert('Payment Successful!');
-        // Optionally, navigate to a confirmation page or do something after success
-        // Example: navigate('/confirmation');
+        navigate('/orderreceipt', { state: { orderId: paymentIntent.id, amount: paymentIntent.amount_received / 100 } });
       }
       setLoading(false);
     }
@@ -75,9 +80,9 @@ const Payment = () => {
       <form onSubmit={handleSubmit}>
         <div className="card-element-container">
           <label htmlFor="card-element">Credit Card Information</label>
-          {/* Stripe's CardElement automatically renders the card input fields */}
           <CardElement />
         </div>
+        <p>Amount: LKR {amountInLKR}</p> {/* Display the amount in LKR */}
         <button type="submit" disabled={!stripe || loading}>
           {loading ? 'Processing...' : 'Submit Payment'}
         </button>
