@@ -32,11 +32,7 @@ const CustomPrivacypolicy = () => {
         </p>
       </section>
 
-      <section className="terms-content">
-        <h3>Cookies</h3>
-        <p>We use cookies to enhance your experience on our website. Cookies help us track how you interact with the site, but they do not collect personal data. You can manage or disable cookies through your browser settings.</p>
-      </section>
-
+     
       <section className="terms-content">
         <h3>Data Sharing</h3>
         <p>We do not sell or share your personal information with third parties, except:</p>
