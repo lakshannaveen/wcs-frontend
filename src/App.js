@@ -33,6 +33,7 @@ import AdminOrders from './components/admin components/AdminOrder';
 import AdminMap from './components/admin components/AdminMap';
 import Update from './pages/Update';
 import StripePayment from './components/payment';
+import AdminRegister from './components/admin components/AdminResgister';
 
 function Layout({ children }) {
   return (
@@ -202,6 +203,13 @@ function App() {
               </AdminProtectedRoute>
             }
           />
+          <Route
+            path="/adminregister"
+            element={
+              <AdminProtectedRoute>
+                <AdminRegister />
+              </AdminProtectedRoute>
+            }/>
            <Route
             path="/orders"
             element={
