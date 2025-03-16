@@ -1,54 +1,114 @@
+/* Page Wrapper */
+.admin-page-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  padding: 20px;
+}
+
+/* Admin Registration Box */
 .admin-register-container {
-    width: 100%;
-    max-width: 400px;
-    margin: auto;
-    padding: 20px;
-    background: white;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-  }
-  
-  .admin-register-title {
-    text-align: center;
-    margin-bottom: 20px;
-  }
-  
-  .admin-register-form {
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .admin-register-input {
-    margin-bottom: 10px;
-    margin-top: 10px;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-  }
-  
-  .admin-register-button {
-    padding: 10px;
-    background: red;
-    margin-top: 10px;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    backdrop-filter: blur(5px);
-    transition: all 0.3s ease-in-out;
-  }
-  
-  .admin-register-button:hover {
-    background: darkred;
-  }
-  
-  .admin-register-error {
-    color: red;
-    text-align: center;
-    margin-bottom: 10px;
-  }
-  
+  width: 100%;
+  max-width: 400px;
+  padding: 20px;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.admin-register-title {
+  margin-bottom: 20px;
+}
+
+.admin-register-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.admin-register-input {
+  margin: 10px 0;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.admin-register-button {
+  padding: 10px;
+  background: red;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.admin-register-button:hover {
+  background: darkred;
+}
+
+.admin-register-error {
+  color: red;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+/* Show Admin Login Button */
+.show-admin-login-button {
+  padding: 10px 20px;
+  background: red;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 0.3s, transform 0.2s;
+  font-size: 16px;
+}
+
+.show-admin-login-button:hover {
+  background: darkred;
+  transform: scale(1.05);
+}
+
+.admin-login-history {
+  width: 90%;
+  max-width: 600px;
+  padding: 20px;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  margin-top: 20px;
+}
+
+.admin-login-history-title {
+  margin-bottom: 10px;
+  font-size: 1.2rem;
+  color: #333;
+}
+
+.admin-login-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.admin-login-table th, 
+.admin-login-table td {
+  padding: 10px;
+  border: 1px solid #ddd;
+  text-align: left;
+}
+
+.admin-login-table th {
+  background: #f4f4f4;
+  font-weight: bold;
+}
+
+.admin-login-table tbody tr:nth-child(even) {
+  background: #f9f9f9;
+}
+
+.admin-login-table tbody tr:hover {
+  background: #f1f1f1;
+}
