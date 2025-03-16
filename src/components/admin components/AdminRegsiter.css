@@ -37,6 +37,8 @@
 .admin-register-button {
   padding: 10px;
   background: red;
+  margin-bottom: 10px;
+  margin-top: 20px;
   color: white;
   border: none;
   border-radius: 4px;

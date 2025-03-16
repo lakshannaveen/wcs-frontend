@@ -11,7 +11,17 @@ const AdminRegister = () => {
   useEffect(() => {
     fetch("http://localhost:5002/api/admin/logins")
       .then((response) => response.json())
-      .then((data) => setLogins(data))
+      .then((data) => {
+        const twoWeeksAgo = new Date();
+        twoWeeksAgo.setDate(twoWeeksAgo.getDate() - 14);
+
+        // Filter logins from the last two weeks and sort by newest first
+        const filteredLogins = data
+          .filter((log) => new Date(log.time) >= twoWeeksAgo)
+          .sort((a, b) => new Date(b.time) - new Date(a.time));
+
+        setLogins(filteredLogins);
+      })
       .catch((err) => console.error("Error fetching logins:", err));
   }, []);
 
@@ -94,7 +104,7 @@ const AdminRegister = () => {
       {/* Admin Login History Table (Shown Only If Button is Clicked) */}
       {showLogins && (
         <div className="admin-login-history">
-          <h2 className="admin-login-history-title">Admin Login History</h2>
+          <h2 className="admin-login-history-title">Admin Login History (Last 2 Weeks)</h2>
           <table className="admin-login-table">
             <thead>
               <tr>
@@ -107,12 +117,12 @@ const AdminRegister = () => {
                 logins.map((log, index) => (
                   <tr key={index}>
                     <td>{log.email}</td>
-                    <td>{log.time}</td>
+                    <td>{new Date(log.time).toLocaleString()}</td>
                   </tr>
                 ))
               ) : (
                 <tr>
-                  <td colSpan="2">No logins found.</td>
+                  <td colSpan="2">No logins in the last 2 weeks.</td>
                 </tr>
               )}
             </tbody>
