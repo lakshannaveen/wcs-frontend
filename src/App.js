@@ -34,6 +34,7 @@ import AdminMap from './components/admin components/AdminMap';
 import Update from './pages/Update';
 import StripePayment from './components/payment';
 import AdminRegister from './components/admin components/AdminResgister';
+import Admin from './components/admin components/Admin';
 
 function Layout({ children }) {
   return (
@@ -208,6 +209,13 @@ function App() {
             element={
               <AdminProtectedRoute>
                 <AdminRegister />
+              </AdminProtectedRoute>
+            }/>
+            <Route
+            path="/admin"
+            element={
+              <AdminProtectedRoute>
+                <Admin />
               </AdminProtectedRoute>
             }/>
            <Route

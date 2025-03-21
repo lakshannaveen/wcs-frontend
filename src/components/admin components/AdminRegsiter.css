@@ -114,3 +114,16 @@
 .admin-login-table tbody tr:hover {
   background: #f1f1f1;
 }
+.go-to-admins-button {
+  padding: 10px 20px;
+  background: red;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 0.3s, transform 0.2s;
+  font-size: 16px;}
+
+  .go-to-admins-button:hover {
+    background-color: darkred; 
+  }

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom"; // Import useNavigate for navigation
 import "./AdminRegsiter.css";
 
 const AdminRegister = () => {
@@ -7,6 +8,8 @@ const AdminRegister = () => {
   const [error, setError] = useState("");
   const [logins, setLogins] = useState([]);
   const [showLogins, setShowLogins] = useState(false);
+
+  const navigate = useNavigate(); // Initialize useNavigate for navigation
 
   useEffect(() => {
     fetch("http://localhost:5002/api/admin/logins")
@@ -64,6 +67,11 @@ const AdminRegister = () => {
     } catch (err) {
       setError("Something went wrong. Please try again.");
     }
+  };
+
+  // Function to navigate to admin page using useNavigate
+  const handleGoToAdmins = () => {
+    navigate("/admin"); // Navigate to admin page
   };
 
   return (
@@ -129,6 +137,14 @@ const AdminRegister = () => {
           </table>
         </div>
       )}
+
+      {/* Button to navigate to Admin page */}
+      <button 
+        className="go-to-admins-button" 
+        onClick={handleGoToAdmins}
+      >
+         Admins
+      </button>
     </div>
   );
 };
