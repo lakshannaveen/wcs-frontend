@@ -40,6 +40,8 @@ const Admin = () => {
   return (
     <div className="admin-welcome-container">
       <h1>Admins</h1>
+      {/* Display total number of admins */}
+      <p>Total Admins: {admins.length}</p>
       <table className="admin-table">
         <thead>
           <tr>
