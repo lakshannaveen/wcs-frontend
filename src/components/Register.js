@@ -44,58 +44,49 @@ function CustomRegister() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    // Ensure the user has agreed to the Terms and Conditions
+  
     if (!isChecked) {
       setError('You must agree to the Terms and Conditions and Privacy Policy.');
       return;
     }
-
-    // Validate first name (only letters, no spaces)
+  
     const nameRegex = /^[A-Za-z]+$/;
     if (!nameRegex.test(formData.firstname)) {
       setError('First Name must only contain letters and no spaces');
       return;
     }
-
-    // Validate last name (only letters, no spaces)
+  
     if (!nameRegex.test(formData.lastname)) {
       setError('Last Name must only contain letters and no spaces');
       return;
     }
-
-    // Validate username (only letters, no spaces)
+  
     if (!nameRegex.test(formData.username)) {
       setError('Username must only contain letters and no spaces');
       return;
     }
-
-    // Validate email format
+  
     const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
     if (!emailRegex.test(formData.email)) {
       setError('Please enter a valid email');
       return;
     }
-
-    // Validate password length
+  
     if (formData.createpassword.length < 8) {
       setError('Password must be at least 8 characters long');
       return;
     }
-
-    // Check if passwords match
+  
     if (formData.createpassword !== formData.confirmpassword) {
       setError('Passwords do not match');
       return;
     }
-
-    // If password strength is weak, show an error
+  
     if (passwordStrength < 2) {
       setError('Password is too weak. Please choose a stronger password.');
       return;
     }
-
-    // If no errors, submit the form
+  
     setError('');
     try {
       const response = await fetch('http://localhost:5002/api/users/register', {
@@ -110,22 +101,22 @@ function CustomRegister() {
           email: formData.email,
           createpassword: formData.createpassword,
         }),
-        credentials: 'include', 
+        credentials: 'include',
       });
-      
-
+  
       const data = await response.json();
-
+  
       if (response.ok) {
         setSuccessMessage('Registration successful!');
-        setShowModal(true); // Show success modal
-
-        // Set JWT in cookies after successful registration
-        Cookies.set('token', data.token, { expires: 1 }); // 1 day expiration for the cookie
-
+        setShowModal(true);
+  
+        // Store the token in cookies or localStorage
+        Cookies.set('token', data.token, { expires: 1 }); // Store for 1 day
+        localStorage.setItem('token', data.token); // Store in localStorage too
+  
         setTimeout(() => {
-          navigate('/'); // Redirect to the home page after 2 seconds
-        }, 2000); // Delay for 2 seconds
+          navigate('/'); // Redirect to home page
+        }, 2000);
       } else {
         setError(data.error || 'Registration failed. Please try again.');
       }
@@ -134,7 +125,7 @@ function CustomRegister() {
       setError('Something went wrong. Please try again.');
     }
   };
-
+  
   const getPasswordStrengthColor = () => {
     if (passwordStrength === 0) return 'red';
     return 'green';
