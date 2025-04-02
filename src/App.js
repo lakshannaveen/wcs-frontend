@@ -35,6 +35,7 @@ import Update from './pages/Update';
 import StripePayment from './components/payment';
 import AdminRegister from './components/admin components/AdminResgister';
 import Admin from './components/admin components/Admin';
+import { LanguageProvider } from './contexts/LanguageContext';
 
 function Layout({ children }) {
   return (
@@ -57,193 +58,193 @@ function App() {
 
   return (
     <div className="App">
-      <Router>
-        <Scrolltop />
-        <Routes>
-          {/* Public Route: Accessible without authentication */}
-          <Route
-            path="/"
-            element={
-              <Layout>
-                <CustomHome />
-              </Layout>
-            }
-          />
-
-          {/* Public Routes (Accessible without authentication) */}
-          <Route
-            path="/aboutus"
-            element={
-              <Layout>
-                <Aboutus />
-              </Layout>
-            }
-          />
-          <Route
-            path="/teamsandconditions"
-            element={
-                <Teamsandconditions />
-            }
-          />
-          <Route
-            path="/privacy"
-            element={
-              <Layout>
-                <Privacy />
-              </Layout>
-            }
-          />
-
-          {/* Protected Routes: These will require authentication */}
-          <Route element={<ProtectedRoute isAuthenticated={!!user} />}>
-                <Route
-                  path="/contact"
-                  element={
-                    <Layout>
-                      <Contactus />
-                    </Layout>
-                  }
-                />
-                   <Route
-                  path="/orderhistory"
-                  element={
-                      <OrderHistory/>
-                  }
-                />
-                  <Route
-                  path="/payment"
-                  element={
-                      <StripePayment/>
-                  }
-                />
-                 <Route
-                  path="/update/:checkoutId" 
-                 element={<Update />}
-                  />
-
-                <Route
-                  path="/feedback"
-                  element={
-                    <Layout>
-                      <Feedback />
-                    </Layout>
-                  }
-                />
-                <Route
-                  path="/customprofile"
-                  element={
-                    <Layout>
-                      <Customprofile />
-                    </Layout>
-                  }
-                />
-                <Route
-                  path="/map"
-                  element={
-                    <Layout>
-                      <MapPage />
-                    </Layout>
-                  }
-                />
-                <Route
-                  path="/search"
-                  element={
-                    <Layout>
-                      <Search />
-                    </Layout>
-                  }
-                />
-                <Route
-                  path="/checkout"
-                  element={
-                      <Checkout />
-                  }
-                />
-                 <Route
-                  path="/bill"
-                  element={
-                      <Bill />
-                  }
-                />
-                
-                <Route
-                  path="/changepassword"
-                  element={
-                    // Directly rendering ChangePassword without Layout (no Navbar/Footer)
-                    <ChangePassword />
-                  }
-                />
-              </Route>
-
-
-          {/* Pages without Navbar and Footer (accessible without login) */}
-          <Route path="/login" element={<CustomLogin />} />
-          <Route path="/register" element={<CustomRegister />} />
-          <Route path="/customsubscription" element={<CustomSubscription />} />
-          <Route path="/customguidance" element={<Customguidance />} />
-
-        {/* Hidden Route: Admin Login */}
-        <Route path="/admin-login" element={<AdminLogin />} />
-
-          {/* Admin Protected Routes */}
-          <Route
-            path="/admindashbord"
-            element={
-              <AdminProtectedRoute>
-                <AdminDashboard />
-              </AdminProtectedRoute>
-            }
-          />
-         
-          {/* Admin Route for Contact Inquiries (Accessible only to admin) */}
-          <Route
-            path="/contactinquiries"
-            element={
-              <AdminProtectedRoute>
-                <ContactInquiries />
-              </AdminProtectedRoute>
-            }
-          />
-          <Route
-            path="/adminregister"
-            element={
-              <AdminProtectedRoute>
-                <AdminRegister />
-              </AdminProtectedRoute>
-            }/>
+      <LanguageProvider>
+        <Router>
+          <Scrolltop />
+          <Routes>
+            {/* Public Route: Accessible without authentication */}
             <Route
-            path="/admin"
-            element={
-              <AdminProtectedRoute>
-                <Admin />
-              </AdminProtectedRoute>
-            }/>
-           <Route
-            path="/orders"
-            element={
-              <AdminProtectedRoute>
-                <AdminOrders />
-              </AdminProtectedRoute>
-            }
-          />
+              path="/"
+              element={
+                <Layout>
+                  <CustomHome />
+                </Layout>
+              }
+            />
+
+            {/* Public Routes (Accessible without authentication) */}
             <Route
-            path="/adminmap"
-            element={
-              <AdminProtectedRoute>
-                <AdminMap />
-              </AdminProtectedRoute>
-            }
-          />
+              path="/aboutus"
+              element={
+                <Layout>
+                  <Aboutus />
+                </Layout>
+              }
+            />
             <Route
-            path="/feedbackmessage"
-            element={
-              <AdminProtectedRoute>
-                <FeedbackMessage />
-              </AdminProtectedRoute>
-            }
-          />
-        </Routes>
-      </Router>
+              path="/teamsandconditions"
+              element={
+                  <Teamsandconditions />
+              }
+            />
+            <Route
+              path="/privacy"
+              element={
+                <Layout>
+                  <Privacy />
+                </Layout>
+              }
+            />
+
+            {/* Protected Routes: These will require authentication */}
+            <Route element={<ProtectedRoute isAuthenticated={!!user} />}>
+              <Route
+                path="/contact"
+                element={
+                  <Layout>
+                    <Contactus />
+                  </Layout>
+                }
+              />
+              <Route
+                path="/orderhistory"
+                element={
+                    <OrderHistory/>
+                }
+              />
+              <Route
+                path="/payment"
+                element={
+                    <StripePayment/>
+                }
+              />
+              <Route
+                path="/update/:checkoutId" 
+                element={<Update />}
+              />
+              <Route
+                path="/feedback"
+                element={
+                  <Layout>
+                    <Feedback />
+                  </Layout>
+                }
+              />
+              <Route
+                path="/customprofile"
+                element={
+                  <Layout>
+                    <Customprofile />
+                  </Layout>
+                }
+              />
+              <Route
+                path="/map"
+                element={
+                  <Layout>
+                    <MapPage />
+                  </Layout>
+                }
+              />
+              <Route
+                path="/search"
+                element={
+                  <Layout>
+                    <Search />
+                  </Layout>
+                }
+              />
+              <Route
+                path="/checkout"
+                element={
+                    <Checkout />
+                }
+              />
+              <Route
+                path="/bill"
+                element={
+                    <Bill />
+                }
+              />
+              <Route
+                path="/changepassword"
+                element={
+                  <ChangePassword />
+                }
+              />
+            </Route>
+
+            {/* Pages without Navbar and Footer (accessible without login) */}
+            <Route path="/login" element={<CustomLogin />} />
+            <Route path="/register" element={<CustomRegister />} />
+            <Route path="/customsubscription" element={<CustomSubscription />} />
+            <Route path="/customguidance" element={<Customguidance />} />
+
+            {/* Hidden Route: Admin Login */}
+            <Route path="/admin-login" element={<AdminLogin />} />
+
+            {/* Admin Protected Routes */}
+            <Route
+              path="/admindashbord"
+              element={
+                <AdminProtectedRoute>
+                  <AdminDashboard />
+                </AdminProtectedRoute>
+              }
+            />
+            
+            {/* Admin Route for Contact Inquiries (Accessible only to admin) */}
+            <Route
+              path="/contactinquiries"
+              element={
+                <AdminProtectedRoute>
+                  <ContactInquiries />
+                </AdminProtectedRoute>
+              }
+            />
+            <Route
+              path="/adminregister"
+              element={
+                <AdminProtectedRoute>
+                  <AdminRegister />
+                </AdminProtectedRoute>
+              }
+            />
+            <Route
+              path="/admin"
+              element={
+                <AdminProtectedRoute>
+                  <Admin />
+                </AdminProtectedRoute>
+              }
+            />
+            <Route
+              path="/orders"
+              element={
+                <AdminProtectedRoute>
+                  <AdminOrders />
+                </AdminProtectedRoute>
+              }
+            />
+            <Route
+              path="/adminmap"
+              element={
+                <AdminProtectedRoute>
+                  <AdminMap />
+                </AdminProtectedRoute>
+              }
+            />
+            <Route
+              path="/feedbackmessage"
+              element={
+                <AdminProtectedRoute>
+                  <FeedbackMessage />
+                </AdminProtectedRoute>
+              }
+            />
+          </Routes>
+        </Router>
+      </LanguageProvider>
     </div>
   );
 }

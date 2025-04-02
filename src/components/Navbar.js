@@ -8,26 +8,28 @@ import Offcanvas from "react-bootstrap/Offcanvas";
 import logo from "../images/logo.JPEG";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
-import { Link, useNavigate } from "react-router-dom"; 
+import { Link, useNavigate, useLocation } from "react-router-dom"; 
 import Cookies from "js-cookie"; 
+import { useLanguage } from '../contexts/LanguageContext';
 
 function CustomNavbar() {
   const [showSidebar, setShowSidebar] = useState(false);
-  const [user, setUser] = useState(null); // State to store user data
-  const navigate = useNavigate(); 
+  const [user, setUser] = useState(null);
+  const navigate = useNavigate();
+  const location = useLocation();
+  const { language, toggleLanguage } = useLanguage();
 
-  // Function to fetch user data from the JWT token in cookies
   const fetchUserData = () => {
     const token = Cookies.get("token");
     if (token) {
       try {
         const decodedToken = JSON.parse(atob(token.split(".")[1])); 
-        setUser(decodedToken); // Set user data (username and more) to state
+        setUser(decodedToken);
       } catch (error) {
         console.error("Failed to decode token:", error);
       }
     } else {
-      setUser(null); // No token, set user to null
+      setUser(null);
     }
   };
   
@@ -37,31 +39,27 @@ function CustomNavbar() {
 
   const handleToggleSidebar = () => setShowSidebar(!showSidebar);
 
-  // Function to generate a background color based on the username
   const generateBackgroundColor = (username) => {
-    if (!username) return 'gray'; // Default color 
-    
+    if (!username) return 'gray';
     const hashCode = username.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
     const hue = hashCode % 360; 
-    return `hsl(${hue}, 70%, 50%)`; // Return a color from HSL format
+    return `hsl(${hue}, 70%, 50%)`;
   };
 
-  // Function to create the profile initials
   const getProfileInitials = () => {
     if (!user || !user.username) return ""; 
     return user.username.charAt(0).toUpperCase(); 
   };
 
-  // Function to handle logout and clear the JWT token from cookies
   const handleLogout = () => {
     if (window.confirm("Are you sure you want to log out?")) {
       Cookies.remove("token");
-      sessionStorage.clear(); // Clear session storage 
-      setUser(null); // Set user to null after logout
+      sessionStorage.clear();
+      setUser(null);
       navigate("/");
     }
   };
-  
+
   return (
     <div>
       <Navbar expand="lg" className="navbar">
@@ -90,13 +88,23 @@ function CustomNavbar() {
                   Waste Guidance
                 </NavDropdown.Item>
               </NavDropdown>
+              
+              {/* Language Toggle Button*/}
+              <Nav.Link 
+                onClick={toggleLanguage}
+                className="language-toggle"
+                
+              >
+                {language === 'en' ? 'සිංහල' : 'English'}
+              </Nav.Link>
+
               <Nav.Link onClick={handleToggleSidebar} className="ms-2">
                 <div
                   className="profile-icon"
                   style={{ backgroundColor: user ? generateBackgroundColor(user.username) : 'gray' }}
                 >
                   {user ? (
-                    getProfileInitials() // Show the first letter 
+                    getProfileInitials()
                   ) : (
                     <FontAwesomeIcon icon={faUser} size="lg" /> 
                   )}
@@ -107,7 +115,6 @@ function CustomNavbar() {
         </Container>
       </Navbar>
 
-      {/* Sidebar */}
       <Offcanvas
         show={showSidebar}
         onHide={handleToggleSidebar}
@@ -121,7 +128,6 @@ function CustomNavbar() {
           <Nav className="flex-column">
             {user ? (
               <>
-                {/* Display Edit Profile and Log Out links when user is logged in */}
                 <Nav.Link as={Link} to="/changepassword">
                   Change Password
                 </Nav.Link>
@@ -131,7 +137,6 @@ function CustomNavbar() {
               </>
             ) : (
               <>
-                {/* Show Login and Register links when the user is not logged in */}
                 <Nav.Link as={Link} to="/login">
                   Log In
                 </Nav.Link>
