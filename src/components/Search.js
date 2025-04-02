@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Form, Button, Modal } from 'react-bootstrap';
+import { useTheme } from '../context/ThemeContext';
 import './Search.css';
 
 function Search() {
-  const [location, setLocation] = useState(''); // Store the user's input for home address
-  const [showModal, setShowModal] = useState(false); // Control the modal visibility
-  const [confirmedLocation, setConfirmedLocation] = useState(''); // Store confirmed location
+  const { theme } = useTheme();
+  const [location, setLocation] = useState('');
+  const [showModal, setShowModal] = useState(false);
+  const [confirmedLocation, setConfirmedLocation] = useState('');
   const [addressParts, setAddressParts] = useState({
     streetNumber: '',
     streetName: '',
@@ -15,7 +17,7 @@ function Search() {
   const [showDetailedForm, setShowDetailedForm] = useState(false); 
   const [errorMessage, setErrorMessage] = useState(''); 
   const navigate = useNavigate();
-  const googleApiKey = "YOUR_GOOGLE_API_KEY"; // Replace with your Google API key
+  const googleApiKey = "YOUR_GOOGLE_API_KEY";
 
   const handleSearchClick = () => setShowDetailedForm(true);
 
@@ -33,12 +35,10 @@ function Search() {
         setErrorMessage('');
       } else {
         setErrorMessage('The address you entered is not valid or not found on the map. You can use the "Locate Me" option to automatically get your current location or you can manually set your address.');
-
       }
     }
   };
 
-  // Function to validate the address using Google Geocoding API
   const validateAddress = async (address) => {
     const geocodeUrl = `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(address)}&key=${googleApiKey}`;
     
@@ -71,15 +71,15 @@ function Search() {
       [name]: value,
     });
   };
-//locate me fuction
+
   const handleLocateMe = () => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         (position) => {
           const { latitude, longitude } = position.coords;
           const userLocation = `${latitude},${longitude}`;
-          setConfirmedLocation(userLocation); // Set the location based on geolocation
-          navigate('/map', { state: { location: userLocation } }); // Pass coordinates to the map
+          setConfirmedLocation(userLocation);
+          navigate('/map', { state: { location: userLocation } });
         },
         (error) => {
           console.error(error);
@@ -92,79 +92,109 @@ function Search() {
   };
 
   return (
-    <div className="d-flex flex-column align-items-center mt-4">
-      <div className="search-box p-4 rounded bg-white shadow-lg">
-        <h4 className="text-center">To Start Order Enter Address</h4>
+    <div className={`search-component ${theme}`}>
+      <div className={`search-box ${theme}`}>
+        <h4 className={`search-title ${theme}`}>To Start Order Enter Address</h4>
 
-        {!showDetailedForm && (
-          <div className="input-container d-flex">
+        {!showDetailedForm ? (
+          <div className="input-container">
             <Form.Control
               type="text"
               placeholder="Enter Your Home Address"
-              className="search-input"
+              className={`search-input ${theme}`}
               value={location}
               onChange={(e) => setLocation(e.target.value)}
               onFocus={handleSearchClick}
             />
-            <Button className="search-btn" onClick={handleSearchClick}>
+            <Button 
+              className={`search-btn ${theme}`} 
+              onClick={handleSearchClick}
+            >
               <i className="bi bi-search"></i> Search
             </Button>
           </div>
-        )}
+        ) : (
+          <div className={`address-form-container ${theme}`}>
+            <Form.Group controlId="streetNumber">
+              <Form.Control
+                type="text"
+                placeholder="Street Number (e.g., No 4)"
+                className={`form-input ${theme}`}
+                name="streetNumber"
+                value={addressParts.streetNumber}
+                onChange={handleAddressChange}
+              />
+            </Form.Group>
 
-        {showDetailedForm && (
-          <div className="address-details-form mt-4">
-            <Form.Control
-              type="text"
-              placeholder="Street Number (e.g., No 4)"
-              className="mb-2"
-              name="streetNumber"
-              value={addressParts.streetNumber}
-              onChange={handleAddressChange}
-            />
-            <Form.Control
-              type="text"
-              placeholder="Street Name (e.g., SGA Desilva Road)"
-              className="mb-2"
-              name="streetName"
-              value={addressParts.streetName}
-              onChange={handleAddressChange}
-            />
-            <Form.Control
-              type="text"
-              placeholder="City (e.g., Ambalangoda)"
-              className="mb-2"
-              name="city"
-              value={addressParts.city}
-              onChange={handleAddressChange}
-            />
-            <Button className="submit-btn mt-3" onClick={handleSubmitAddress}>
-               Submit Address
-            </Button>
+            <Form.Group controlId="streetName" className="mt-2">
+              <Form.Control
+                type="text"
+                placeholder="Street Name (e.g., SGA Desilva Road)"
+                className={`form-input ${theme}`}
+                name="streetName"
+                value={addressParts.streetName}
+                onChange={handleAddressChange}
+              />
+            </Form.Group>
 
-            <Button className="mt-3 locate-btn ms-3" onClick={handleLocateMe}>
-              Locate Me
-            </Button>
+            <Form.Group controlId="city" className="mt-2">
+              <Form.Control
+                type="text"
+                placeholder="City (e.g., Ambalangoda)"
+                className={`form-input ${theme}`}
+                name="city"
+                value={addressParts.city}
+                onChange={handleAddressChange}
+              />
+            </Form.Group>
 
+            <div className="form-buttons mt-3">
+              <Button 
+                className={`submit-btn ${theme}`}
+                onClick={handleSubmitAddress}
+              >
+                Submit Address
+              </Button>
+              <Button 
+                className={`locate-btn ${theme}`}
+                onClick={handleLocateMe}
+              >
+                Locate Me
+              </Button>
+            </div>
           </div>
         )}
 
-        {errorMessage && <div className="alert alert-danger mt-3">{errorMessage}</div>}
+        {errorMessage && (
+          <div className={`error-message ${theme}`}>
+            {errorMessage}
+          </div>
+        )}
       </div>
 
-      <Modal show={showModal} onHide={handleClose} dialogClassName="responsive-modal">
-        <Modal.Header>
+      <Modal 
+        show={showModal} 
+        onHide={handleClose} 
+        className={`address-modal ${theme}`}
+      >
+        <Modal.Header className={`modal-header ${theme}`}>
           <Modal.Title>Confirm Your Address</Modal.Title>
         </Modal.Header>
-        <Modal.Body>
+        <Modal.Body className={`modal-body ${theme}`}>
           <p>Please confirm that the following is your correct home address:</p>
           <h5>{confirmedLocation}</h5>
         </Modal.Body>
-        <Modal.Footer>
-          <Button className="btn-secondary" variant="secondary" onClick={handleClose}>
+        <Modal.Footer className={`modal-footer ${theme}`}>
+          <Button 
+            className={`cancel-btn ${theme}`}
+            onClick={handleClose}
+          >
             Cancel
           </Button>
-          <Button className="confirm-btn" onClick={handleConfirm}>
+          <Button 
+            className={`confirm-btn ${theme}`}
+            onClick={handleConfirm}
+          >
             Confirm
           </Button>
         </Modal.Footer>

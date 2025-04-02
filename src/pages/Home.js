@@ -1,11 +1,10 @@
 import React from 'react';
+import { useTheme } from '../context/ThemeContext';
 import Carousel from 'react-bootstrap/Carousel';
 import carosle1 from '../images/carosle1.jpg';
 import carosle2 from '../images/carosle2.jpg';
 import carosle3 from '../images/carosle3.jpg';
-
 import './Home.css';
-// card import
 import Card from 'react-bootstrap/Card';
 import { Row, Col } from 'react-bootstrap';
 import card1 from '../images/card1.jpeg';
@@ -15,10 +14,12 @@ import Search from '../components/Search';
 import { Link } from 'react-router-dom';
 
 function CustomHome() {
+  const { theme } = useTheme();
+
   return (
-    <div>
+    <div className={`home-container ${theme}`}>
       {/* carousel section */}
-      <Carousel>
+      <Carousel className={`home-carousel ${theme}`}>
         <Carousel.Item>
           <img className='d-block w-100' src={carosle1} alt='First slide' />
         </Carousel.Item>
@@ -35,24 +36,24 @@ function CustomHome() {
       </div>
 
       {/* card section */}
-      <Row className='custom-card-group'>
+      <Row className={`custom-card-group ${theme}`}>
         <Col md={3} className="d-flex justify-content-center">
           <Link to='/customsubscription' className='card-link'>
-            <Card className='custom-card'>
+            <Card className={`custom-card ${theme}`}>
               <Card.Img variant="top" src={card1} alt='subscription' />
             </Card>
           </Link>
         </Col>
         <Col md={3} className="d-flex justify-content-center">
           <Link to='/customguidance' className='card-link'>
-            <Card className='custom-card'>
+            <Card className={`custom-card ${theme}`}>
               <Card.Img variant="top" src={card2} alt='offers' />
             </Card>
           </Link>
         </Col>
         <Col md={3} className="d-flex justify-content-center">
           <Link to='/aboutus' className='card-link'>
-            <Card className='custom-card'>
+            <Card className={`custom-card ${theme}`}>
               <Card.Img variant="top" src={card3} alt='example' />
             </Card>
           </Link>
@@ -60,7 +61,7 @@ function CustomHome() {
       </Row>
 
       {/* commitment section */}
-      <section className='commitment-section'>
+      <section className={`commitment-section ${theme}`}>
         <div className='container'>
           <h2>
             Our Waste Collection Services are 100% Committed to Your Community!

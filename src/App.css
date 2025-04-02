@@ -1,3 +1,238 @@
-.App {
-  text-align: center;
+/* Drawer Styles */
+.drawer {
+  position: fixed;
+  top: 0;
+  left: -300px;
+  width: 280px;
+  height: 100vh;
+  background-color: var(--primary);
+  transition: left 0.3s ease;
+  z-index: 1050;
+  box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+}
+
+.drawer.open {
+  left: 0;
+}
+
+.drawer-header {
+  padding: 1rem;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.close-btn {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: white;
+}
+
+.drawer-content {
+  padding: 1rem;
+}
+
+.drawer-nav ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.drawer-nav li {
+  padding: 0.75rem 0;
+}
+
+.drawer-nav a {
+  color: white;
+  text-decoration: none;
+  font-size: 1.1rem;
+  display: block;
+  padding: 0.5rem 0;
+  transition: color 0.2s;
+}
+
+.drawer-nav a:hover {
+  color: #e0e0e0;
+}
+
+/* Theme Toggle Styles */
+.theme-toggle-section {
+  margin-top: 2rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  color: white;
+  padding: 1rem 0;
+}
+
+.theme-switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+}
+
+.theme-switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  transition: .4s;
+  border-radius: 34px;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  transition: .4s;
+  border-radius: 50%;
+}
+
+input:checked + .slider {
+  background-color: #2196F3;
+}
+
+input:checked + .slider:before {
+  transform: translateX(26px);
+}
+
+/* Navbar Toggle Button */
+.drawer-toggle {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 1.5rem;
+  margin-right: 1rem;
+  cursor: pointer;
+  padding: 0.5rem;
+  transition: opacity 0.2s;
+}
+
+.drawer-toggle:hover {
+  opacity: 0.8;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .drawer {
+    width: 250px;
+  }
+  
+  .theme-toggle-section {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+/* Existing Navbar styles (keep your original styles) */
+.navbar {
+  background-color: var(--primary);
+}
+
+.nav-dropdown-menu {
+  box-sizing: border-box;
+  color: white;
+  background-color: var(--primary);
+}
+
+.navbar .dropdown-menu {
+  background-color: var(--primary) !important;
+  border: none; 
+}
+
+.navbar .dropdown-item:hover {
+  background-color: var(--primary) !important;
+  color: rgb(8, 8, 130) !important;
+}
+
+.navbar .nav-link,
+.navbar .dropdown-toggle {
+  color: white !important; 
+}
+
+.nav-link:hover,
+.dropdown-toggle:hover {
+  color: rgb(8, 8, 130)!important;
+}
+
+.navbar-toggler {
+  border: none; 
+  background-color: transparent;
+  outline: none; 
+}
+
+.navbar-toggler:focus {
+  outline: none; 
+  box-shadow: 0 0 0 0.2rem white; 
+}
+
+.navbar-toggler-icon {
+  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3E%3Cpath stroke='rgba(255, 255, 255, 1)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+  background-color: transparent; 
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+}
+
+.offcanvas-custom {
+  background-color: var(--primary);
+  color: white; 
+}
+
+.offcanvas-custom .logout-link {
+  color: red;
+}
+
+.offcanvas-custom .nav-link {
+  color: white; 
+}
+
+.offcanvas-custom .btn-close {
+  border: 2px solid black; 
+  padding: 4px;
+}
+
+.profile-icon {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background-color: gray;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 14px;
+  font-weight: bold;
+  margin-left: 10px;
+}
+
+.navbar .navbar-nav {
+  align-items: center;
+}
+
+.navbar .navbar-collapse {
+  align-items: center;
+}
+
+@media (max-width: 768px) {
+  .profile-icon {
+    width: 25px;
+    height: 25px;
+    font-size: 12px;
+  }
 }

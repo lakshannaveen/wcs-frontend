@@ -1,209 +1,337 @@
+/* Base Styles */
+.search-component {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding: 20px;
+  transition: all 0.3s ease;
+}
+
+/* Enhanced Search Box - High Visibility */
 .search-box {
-  max-width: 500px;
-  background-color: white;
-  border-radius: 15px;
-  box-shadow: 0 4px 8px black;
-  padding: 20px; 
+  width: 100%;
+  max-width: 600px;
+  padding: 25px;
+  border-radius: 10px;
+  transition: all 0.3s ease;
+  border-style: solid;
+  border-width: 2px;
 }
 
-.search-box h4 {
+.search-box.light {
+  background-color: #ffffff;
+  border-color: #28a745; /* Visible light gray border */
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2); /* Strong shadow */
+}
+
+.search-box.dark {
+  background-color: #2a2a2a;
+  border-color: #666; /* Visible dark gray border */
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5); /* Very visible shadow */
+}
+
+/* Title */
+.search-title {
   font-size: 1.5rem;
-  margin-bottom: 1rem;
+  margin-bottom: 20px;
+  text-align: center;
+  transition: color 0.3s ease;
 }
 
+.search-title.light {
+  color: #333333;
+}
+
+.search-title.dark {
+  color: #ffffff;
+}
+
+/* Input Container */
 .input-container {
   display: flex;
-  align-items: center; 
-  gap: 10px; 
-  margin-top: 1rem;
+  gap: 10px;
 }
 
+/* Enhanced Input Fields */
 .search-input {
-  flex: 1; 
-  border-radius: 5px; 
-  padding: 10px; 
-  font-size: 16px; 
-  box-sizing: border-box; 
-}
-
-.search-btn {
-  border: none;
-  background-color: #2E7D32;
-  color: white;
-  border-radius: 5px; 
-  padding: 10px 15px; 
+  flex: 1;
+  padding: 12px;
+  border-radius: 6px;
   font-size: 16px;
+  transition: all 0.3s ease;
+  border-width: 2px;
+  border-style: solid;
 }
 
-.search-btn:hover {
-  background-color: rgb(76, 175, 80) !important;
-  cursor: pointer;
+.search-input.light {
+  background-color: #f8f9fa;
+  border-color: #ced4da;
+  color: #495057;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1) inset;
 }
 
+.search-input.dark {
+  background-color: #3a3a3a;
+  border-color: #555;
+  color: #ffffff;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3) inset;
+}
+
+/* Placeholder Visibility */
+.search-input.light::placeholder {
+  color: #6c757d;
+  opacity: 1;
+}
+
+.search-input.dark::placeholder {
+  color: #ffffff;
+  opacity: 0.8;
+}
+
+/* Buttons */
+.search-btn,
 .submit-btn,
+.locate-btn,
 .confirm-btn {
-  border: none;
-  background-color:#2E7D32 ;
-  color: white;
-  border-radius: 5px; 
-  padding: 10px 15px;
+  padding: 12px 20px;
+  border-radius: 6px;
   font-size: 16px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  border: none;
 }
 
+.search-btn.light,
+.submit-btn.light,
+.confirm-btn.light {
+  background-color: #28a745;
+  color: white;
+}
+
+.search-btn.dark,
+.submit-btn.dark,
+.confirm-btn.dark {
+  background-color: #34ce57;
+  color: white;
+}
+
+.locate-btn.light {
+  background-color: transparent;
+  border: 1px solid #28a745;
+  color: #28a745;
+}
+
+.locate-btn.dark {
+  background-color: transparent;
+  border: 1px solid #34ce57;
+  color: #34ce57;
+}
+
+.search-btn:hover,
 .submit-btn:hover,
 .confirm-btn:hover {
-  background-color:rgb(76, 175, 80)  !important; 
-  cursor: pointer;
-}
-.modal-header {
-  background-color: #2E7D32; 
-  color: white; 
-  border-bottom: none;
-}
-.modal-footer .btn {
-  width: 100px; 
-  height: 40px;
-}
-
-.modal-footer .btn-secondary {
-  background-color: white; 
-  color: black; 
-}
-
-.modal-footer .btn-secondary:hover {
-  background-color: lightgray; 
-  color: black;
-  border-color: black;
-}
-
-.modal-footer .confirm-btn:hover {
-  background-color:black; 
-}
-.locate-btn {
-  border: none;
-  background-color: #2E7D32;
-  color: white;
-  border-radius: 5px;
-  padding: 10px 15px;
-  font-size: 16px;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .locate-btn:hover {
-  background-color: rgb(76, 175, 80) !important; 
-  cursor: pointer;
+  background-color: rgba(40, 167, 69, 0.1);
 }
 
-/* for responsive */
+/* Address Form */
+.address-form-container {
+  width: 100%;
+}
+
+.form-input {
+  width: 100%;
+  padding: 12px;
+  border-radius: 6px;
+  font-size: 16px;
+  transition: all 0.3s ease;
+  border-width: 2px;
+  border-style: solid;
+}
+
+.form-input.light {
+  background-color: #f8f9fa;
+  border-color: #ced4da;
+  color: #495057;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1) inset;
+}
+
+.form-input.dark {
+  background-color: #3a3a3a;
+  border-color: #555;
+  color: #ffffff;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3) inset;
+}
+
+.form-input.light::placeholder {
+  color: #6c757d;
+  opacity: 1;
+}
+
+.form-input.dark::placeholder {
+  color: #ffffff;
+  opacity: 0.8;
+}
+
+.form-input:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(40, 167, 69, 0.5);
+}
+
+.form-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+/* Error Message */
+.error-message {
+  padding: 12px;
+  margin-top: 15px;
+  border-radius: 6px;
+  font-size: 14px;
+  transition: all 0.3s ease;
+}
+
+.error-message.light {
+  background-color: #f8d7da;
+  color: #721c24;
+  border: 1px solid #f5c6cb;
+}
+
+.error-message.dark {
+  background-color: #4a2327;
+  color: #f8d7da;
+  border: 1px solid #8b3e46;
+}
+
+/* Modal */
+.address-modal .modal-content {
+  border-radius: 10px;
+  transition: all 0.3s ease;
+  border: none;
+}
+
+.address-modal.light .modal-content {
+  background-color: #ffffff;
+  color: #212529;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+}
+
+.address-modal.dark .modal-content {
+  background-color: #2a2a2a;
+  color: #f8f9fa;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5);
+}
+
+.modal-header {
+  border-bottom: none;
+  padding: 20px;
+}
+
+.modal-header.light {
+  background-color: #f8f9fa;
+}
+
+.modal-header.dark {
+  background-color: #343a40;
+  color: white;
+}
+
+.modal-body {
+  padding: 20px;
+}
+
+.modal-footer {
+  border-top: none;
+  padding: 15px 20px;
+}
+
+.cancel-btn {
+  background-color: transparent;
+  transition: all 0.3s ease;
+}
+
+.cancel-btn.light {
+  color: #6c757d;
+  border: 1px solid #6c757d;
+}
+
+.cancel-btn.dark {
+  color: #adb5bd;
+  border: 1px solid #adb5bd;
+}
+
+.cancel-btn:hover {
+  background-color: rgba(108, 117, 125, 0.1);
+}
+
+/* Focus Glow Effects */
+.search-box.light:focus-within {
+  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.3), 
+              0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.search-box.dark:focus-within {
+  box-shadow: 0 0 0 3px rgba(40, 167, 69, 0.5), 
+              0 5px 15px rgba(0, 0, 0, 0.5);
+}
+
+/* Responsive */
 @media (max-width: 768px) {
   .search-box {
-    max-width: 90%; 
-    padding: 15px;
-    margin-left: auto;
-    margin-right: auto;
-    box-shadow: 0 2px 4px black; 
+    padding: 20px;
+    border-width: 1.5px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
   }
-
-  .search-box h4 {
-    font-size: 1.25rem;
+  
+  .search-box.dark {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
   }
-
+  
   .input-container {
     flex-direction: column;
   }
-
-  .search-input,
-  .search-btn {
-    width: 100%; 
-    margin-bottom: 10px;
+  
+  .form-buttons {
+    flex-direction: column;
   }
-
+  
   .search-btn,
-  .search-input {
-    font-size: 14px;
-    padding: 8px;
-  }
-
   .submit-btn,
-  .confirm-btn,
   .locate-btn {
-    font-size: 14px;
-    padding: 8px 12px;
-  }
-
-  .modal-content {
-    padding: 15px;
-  }
-
-  .modal-body p {
-    font-size: 14px;
-  }
-
-  .modal-body h5 {
-    font-size: 16px;
-  }
-
-  .modal-footer button {
-    font-size: 14px;
-    padding: 8px 12px;
-  }
-
-  .responsive-modal .modal-dialog {
-    max-width: 95%;
-    margin: 10px auto;
+    width: 100%;
   }
 }
 
 @media (max-width: 576px) {
+  .search-title {
+    font-size: 1.3rem;
+  }
+  
   .search-box {
-    margin: 0 15px; 
+    border-width: 1px;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .search-box.dark {
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.3);
+  }
+  
+  .search-input,
+  .form-input {
     padding: 10px;
-    box-shadow: 0 2px 4px black;
+    font-size: 14px;
   }
-
-  .address-details-form {
-    margin: 0 15px; 
-  }
-
-  .search-box h4 {
-    font-size: 1.25rem;
-  }
-
+  
   .search-btn,
-  .search-input {
-    font-size: 14px;
-    padding: 8px;
-  }
-
   .submit-btn,
+  .locate-btn,
   .confirm-btn {
+    padding: 10px 15px;
     font-size: 14px;
-    padding: 8px 12px;
-  }
-
-  .locate-btn {
-    font-size: 14px;
-    padding: 8px 12px;
-  }
-
-  .modal-content {
-    padding: 15px;
-  }
-
-  .modal-body p {
-    font-size: 14px;
-  }
-
-  .modal-body h5 {
-    font-size: 16px;
-  }
-
-  .modal-footer button {
-    font-size: 14px;
-    padding: 8px 12px;
-  }
-
-  .responsive-modal .modal-dialog {
-    max-width: 95%;
-    margin: 10px auto;
   }
 }
