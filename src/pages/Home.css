@@ -1,27 +1,64 @@
-/*carousle style*/
-.Carousel.Item{
-  height: 400px ;
+/* Base styles */
+.home-container {
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.home-container.light {
+  background-color: #ffffff;
+  color: #333333;
+}
+
+.home-container.dark {
+  background-color: #121212;
+  color: #ffffff;
+}
+
+/* Carousel styles */
+.home-carousel {
+  margin-bottom: 2rem;
+}
+
+.home-carousel.light .carousel-indicators button {
+  background-color: #333;
+}
+
+.home-carousel.dark .carousel-indicators button {
+  background-color: #fff;
+}
+
+.Carousel.Item {
+  height: 400px;
   display: flex;
   align-items: center;
   justify-content: center;
 }
-.Carousel.Item img{
-   height: 100%;
-    width: 100%;
-    object-fit: cover;
-}
-@media (max-width: 768px) {
-  .carousel-item {
-    height: 300px;
-  }
+
+.Carousel.Item img {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
 }
 
-@media (max-width: 576px) {
-  .carousel-item {
-    height: 200px;
-  }
+/* Card styles */
+.custom-card-group {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  margin: 0 auto;
+  padding-top: 50px;
+  gap: 15px;
+  padding-left: 15px;
+  padding-right: 15px;
 }
-/*card style*/
+
+.custom-card-group.light {
+  background-color: #ffffff;
+}
+
+.custom-card-group.dark {
+  background-color: #121212;
+}
+
 .card-link {
   text-decoration: none;
   color: inherit;
@@ -29,7 +66,7 @@
 
 .custom-card {
   height: auto;
-  margin: 5px; 
+  margin: 5px;
   width: 100%;
   max-width: 300px;
   border: none;
@@ -37,10 +74,21 @@
   flex-direction: column;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
-.custom-card:hover {
-  transform: scale(1.05); 
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); 
+
+.custom-card.light {
+  background-color: #f8f9fa;
 }
+
+.custom-card.dark {
+  background-color: #1e1e1e;
+  color: #ffffff;
+}
+
+.custom-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
 .custom-card img {
   height: auto;
   width: 100%;
@@ -48,80 +96,101 @@
   display: block;
 }
 
-.custom-card-group {
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  margin: 0 auto;
-  padding-top: 50px;
-  gap: 15px; 
-  padding-left: 15px; 
-  padding-right: 15px; 
+/* Commitment section - Fixed text color in dark mode */
+.commitment-section {
+  text-align: center;
+  padding: 50px 15px;
+  margin-bottom: 0;
 }
 
-/*commitment style*/
-.commitment-section {
-    text-align: center;
-    margin-bottom: 50px;
-    padding-top: 50px;
+.commitment-section.light {
+  background-color: #f8f9fa;
+  color: #333333; /* Dark text in light mode */
+}
+
+.commitment-section.dark {
+  background-color: #1e1e1e;
+  color: #ffffff; /* White text in dark mode */
+}
+
+.commitment-section h2 {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  color: inherit; /* Inherits from parent */
+}
+
+.commitment-section p {
+  font-size: 18px;
+  margin-bottom: 10px;
+  color: inherit; /* Inherits from parent */
+}
+
+.commitment-section .highlight {
+  color: #28a745; /* Keeps green color */
+  font-weight: bold;
+  margin-bottom: 30px;
+}
+
+.order-now-btn {
+  background-color: #2E7D32;
+  color: white;
+  border: none;
+  padding: 15px 30px;
+  font-size: 18px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  margin-top: 20px;
+}
+
+.order-now-btn:hover {
+  background-color: rgb(76, 175, 80);
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  .carousel-item {
+    height: 300px;
   }
+  
+  .commitment-section {
+    padding: 30px 15px;
+  }
+  
   .commitment-section h2 {
-    font-size: 24px;
-    font-weight: bold;
-    margin-bottom: 20px;
-    color: blac;
+    font-size: 20px;
   }
   
   .commitment-section p {
-    font-size: 18px;
-    margin-bottom: 10px;
+    font-size: 16px;
   }
   
-  .commitment-section .highlight {
-    color: #28a745; 
-    font-weight: bold;
-    margin-bottom: 30px;
-  }
   .order-now-btn {
-    background-color: #2E7D32; 
-    color: white;
-    border: none;
-    padding: 15px 30px;
-    font-size: 18px;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s;
+    padding: 10px 20px;
+    font-size: 16px;
   }
-  .order-now-btn:hover {
-    background-color: rgb(76, 175, 80);
-  }
-  @media (max-width: 768px) /*for responsive*/
-  {
-    .commitment-section{
-        margin-bottom: 20px;
-        padding-top: 20px;
-    }
-    .commitment-section h2 {
-      font-size: 20px;
-    }
-    .commitment-section p {
-      font-size: 16px;
-    }
-    .order-now-btn {
-      padding: 10px 20px;
-      font-size: 16px;
-    }
+}
+
+@media (max-width: 576px) {
+  .carousel-item {
+    height: 200px;
   }
   
-  @media (max-width: 480px) {
-    .commitment-section h2 {
-      font-size: 18px;
-    }
-    .commitment-section p {
-      font-size: 14px;
-    }
-    .order-now-btn {
-      padding: 8px 16px;
-      font-size: 14px;
-    }
+  .commitment-section {
+    padding: 25px 15px;
   }
+  
+  .commitment-section h2 {
+    font-size: 18px;
+  }
+  
+  .commitment-section p {
+    font-size: 14px;
+  }
+  
+  .order-now-btn {
+    padding: 8px 16px;
+    font-size: 14px;
+  }
+}

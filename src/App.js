@@ -1,6 +1,7 @@
+import { useState } from 'react';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import CustomSNavbar from './components/Navbar';
+import CustomNavbar from './components/Navbar';
 import CustomFooter from './components/Footer';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import CustomHome from './pages/Home';
@@ -35,11 +36,13 @@ import Update from './pages/Update';
 import StripePayment from './components/payment';
 import AdminRegister from './components/admin components/AdminResgister';
 import Admin from './components/admin components/Admin';
+import { ThemeProvider } from './context/ThemeContext';
+import Drawer from './components/Drawer';
 
-function Layout({ children }) {
+function Layout({ children, toggleDrawer }) {
   return (
     <>
-      <CustomSNavbar />
+      <CustomNavbar toggleDrawer={toggleDrawer} />
       <VoiceNavigation />
       {children}
       <CustomFooter />
@@ -49,202 +52,204 @@ function Layout({ children }) {
 
 function App() {
   const { user, loading } = useAuth();
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+
+  const toggleDrawer = () => {
+    setIsDrawerOpen(!isDrawerOpen);
+  };
 
   if (loading) {
-    // Show a loading spinner or placeholder while session is being verified
-    return <div>Loading...</div>;
+    return <div className="loading-spinner">Loading...</div>;
   }
 
   return (
-    <div className="App">
-      <Router>
-        <Scrolltop />
-        <Routes>
-          {/* Public Route: Accessible without authentication */}
-          <Route
-            path="/"
-            element={
-              <Layout>
-                <CustomHome />
-              </Layout>
-            }
+    <ThemeProvider>
+      <div className="App">
+        <Router>
+          <Scrolltop />
+          <Drawer 
+            isOpen={isDrawerOpen} 
+            onClose={() => setIsDrawerOpen(false)} 
           />
+          <Routes>
+            {/* Public Route: Accessible without authentication */}
+            <Route
+              path="/"
+              element={
+                <Layout toggleDrawer={toggleDrawer}>
+                  <CustomHome />
+                </Layout>
+              }
+            />
 
-          {/* Public Routes (Accessible without authentication) */}
-          <Route
-            path="/aboutus"
-            element={
-              <Layout>
-                <Aboutus />
-              </Layout>
-            }
-          />
-          <Route
-            path="/teamsandconditions"
-            element={
+            {/* Public Routes (Accessible without authentication) */}
+            <Route
+              path="/aboutus"
+              element={
+                <Layout toggleDrawer={toggleDrawer}>
+                  <Aboutus />
+                </Layout>
+              }
+            />
+            <Route
+              path="/teamsandconditions"
+              element={
                 <Teamsandconditions />
-            }
-          />
-          <Route
-            path="/privacy"
-            element={
-              <Layout>
-                <Privacy />
-              </Layout>
-            }
-          />
-
-          {/* Protected Routes: These will require authentication */}
-          <Route element={<ProtectedRoute isAuthenticated={!!user} />}>
-                <Route
-                  path="/contact"
-                  element={
-                    <Layout>
-                      <Contactus />
-                    </Layout>
-                  }
-                />
-                   <Route
-                  path="/orderhistory"
-                  element={
-                      <OrderHistory/>
-                  }
-                />
-                  <Route
-                  path="/payment"
-                  element={
-                      <StripePayment/>
-                  }
-                />
-                 <Route
-                  path="/update/:checkoutId" 
-                 element={<Update />}
-                  />
-
-                <Route
-                  path="/feedback"
-                  element={
-                    <Layout>
-                      <Feedback />
-                    </Layout>
-                  }
-                />
-                <Route
-                  path="/customprofile"
-                  element={
-                    <Layout>
-                      <Customprofile />
-                    </Layout>
-                  }
-                />
-                <Route
-                  path="/map"
-                  element={
-                    <Layout>
-                      <MapPage />
-                    </Layout>
-                  }
-                />
-                <Route
-                  path="/search"
-                  element={
-                    <Layout>
-                      <Search />
-                    </Layout>
-                  }
-                />
-                <Route
-                  path="/checkout"
-                  element={
-                      <Checkout />
-                  }
-                />
-                 <Route
-                  path="/bill"
-                  element={
-                      <Bill />
-                  }
-                />
-                
-                <Route
-                  path="/changepassword"
-                  element={
-                    // Directly rendering ChangePassword without Layout (no Navbar/Footer)
-                    <ChangePassword />
-                  }
-                />
-              </Route>
-
-
-          {/* Pages without Navbar and Footer (accessible without login) */}
-          <Route path="/login" element={<CustomLogin />} />
-          <Route path="/register" element={<CustomRegister />} />
-          <Route path="/customsubscription" element={<CustomSubscription />} />
-          <Route path="/customguidance" element={<Customguidance />} />
-
-        {/* Hidden Route: Admin Login */}
-        <Route path="/admin-login" element={<AdminLogin />} />
-
-          {/* Admin Protected Routes */}
-          <Route
-            path="/admindashbord"
-            element={
-              <AdminProtectedRoute>
-                <AdminDashboard />
-              </AdminProtectedRoute>
-            }
-          />
-         
-          {/* Admin Route for Contact Inquiries (Accessible only to admin) */}
-          <Route
-            path="/contactinquiries"
-            element={
-              <AdminProtectedRoute>
-                <ContactInquiries />
-              </AdminProtectedRoute>
-            }
-          />
-          <Route
-            path="/adminregister"
-            element={
-              <AdminProtectedRoute>
-                <AdminRegister />
-              </AdminProtectedRoute>
-            }/>
+              }
+            />
             <Route
-            path="/admin"
-            element={
-              <AdminProtectedRoute>
-                <Admin />
-              </AdminProtectedRoute>
-            }/>
-           <Route
-            path="/orders"
-            element={
-              <AdminProtectedRoute>
-                <AdminOrders />
-              </AdminProtectedRoute>
-            }
-          />
+              path="/privacy"
+              element={
+                <Layout toggleDrawer={toggleDrawer}>
+                  <Privacy />
+                </Layout>
+              }
+            />
+
+            {/* Protected Routes */}
+            <Route element={<ProtectedRoute isAuthenticated={!!user} />}>
+              <Route
+                path="/contact"
+                element={
+                  <Layout toggleDrawer={toggleDrawer}>
+                    <Contactus />
+                  </Layout>
+                }
+              />
+              <Route
+                path="/orderhistory"
+                element={
+                  <OrderHistory/>
+                }
+              />
+              <Route
+                path="/payment"
+                element={
+                  <StripePayment/>
+                }
+              />
+              <Route
+                path="/update/:checkoutId" 
+                element={<Update />}
+              />
+              <Route
+                path="/feedback"
+                element={
+                  <Layout toggleDrawer={toggleDrawer}>
+                    <Feedback />
+                  </Layout>
+                }
+              />
+              <Route
+                path="/customprofile"
+                element={
+                  <Layout toggleDrawer={toggleDrawer}>
+                    <Customprofile />
+                  </Layout>
+                }
+              />
+              <Route
+                path="/map"
+                element={
+                  <Layout toggleDrawer={toggleDrawer}>
+                    <MapPage />
+                  </Layout>
+                }
+              />
+              <Route
+                path="/search"
+                element={
+                  <Layout toggleDrawer={toggleDrawer}>
+                    <Search />
+                  </Layout>
+                }
+              />
+              <Route
+                path="/checkout"
+                element={
+                  <Checkout />
+                }
+              />
+              <Route
+                path="/bill"
+                element={
+                  <Bill />
+                }
+              />
+              <Route
+                path="/changepassword"
+                element={
+                  <ChangePassword />
+                }
+              />
+            </Route>
+
+            {/* Pages without Navbar and Footer */}
+            <Route path="/login" element={<CustomLogin />} />
+            <Route path="/register" element={<CustomRegister />} />
+            <Route path="/customsubscription" element={<CustomSubscription />} />
+            <Route path="/customguidance" element={<Customguidance />} />
+
+            {/* Admin Routes */}
+            <Route path="/admin-login" element={<AdminLogin />} />
             <Route
-            path="/adminmap"
-            element={
-              <AdminProtectedRoute>
-                <AdminMap />
-              </AdminProtectedRoute>
-            }
-          />
+              path="/admindashbord"
+              element={
+                <AdminProtectedRoute>
+                  <AdminDashboard />
+                </AdminProtectedRoute>
+              }
+            />
             <Route
-            path="/feedbackmessage"
-            element={
-              <AdminProtectedRoute>
-                <FeedbackMessage />
-              </AdminProtectedRoute>
-            }
-          />
-        </Routes>
-      </Router>
-    </div>
+              path="/contactinquiries"
+              element={
+                <AdminProtectedRoute>
+                  <ContactInquiries />
+                </AdminProtectedRoute>
+              }
+            />
+            <Route
+              path="/adminregister"
+              element={
+                <AdminProtectedRoute>
+                  <AdminRegister />
+                </AdminProtectedRoute>
+              }/>
+            <Route
+              path="/admin"
+              element={
+                <AdminProtectedRoute>
+                  <Admin />
+                </AdminProtectedRoute>
+              }/>
+            <Route
+              path="/orders"
+              element={
+                <AdminProtectedRoute>
+                  <AdminOrders />
+                </AdminProtectedRoute>
+              }
+            />
+            <Route
+              path="/adminmap"
+              element={
+                <AdminProtectedRoute>
+                  <AdminMap />
+                </AdminProtectedRoute>
+              }
+            />
+            <Route
+              path="/feedbackmessage"
+              element={
+                <AdminProtectedRoute>
+                  <FeedbackMessage />
+                </AdminProtectedRoute>
+              }
+            />
+          </Routes>
+        </Router>
+      </div>
+    </ThemeProvider>
   );
 }
 

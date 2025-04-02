@@ -5,9 +5,63 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+/* Theme Variables */
+:root {
+  --primary-light: rgb(76, 175, 80);
+  --primary-dark: #2E7D32;
+  --bg-light: #ffffff;
+  --bg-dark: #121212;
+  --text-light: #333333;
+  --text-dark: #ffffff;
+  --sidebar-light: #f5f5f5;
+  --sidebar-dark: #1e1e1e;
+}
+
+[data-theme="light"] {
+  --primary: var(--primary-light);
+  --bg-color: var(--bg-light);
+  --text-color: var(--text-light);
+  --sidebar-bg: var(--sidebar-light);
+}
+
+[data-theme="dark"] {
+  --primary: var(--primary-dark);
+  --bg-color: var(--bg-dark);
+  --text-color: var(--text-dark);
+  --sidebar-bg: var(--sidebar-dark);
+}
+
+body {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+}
+
+/* Dark mode specific styles */
+[data-theme="dark"] .navbar {
+  background-color: var(--primary-dark) !important;
+}
+
+[data-theme="dark"] .offcanvas-custom {
+  background-color: var(--sidebar-dark) !important;
+  color: white;
+}
+
+[data-theme="dark"] a {
+  color: #bb86fc;
+}
+
+.loading-spinner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  font-size: 1.5rem;
 }
