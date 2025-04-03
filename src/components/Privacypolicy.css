@@ -1,43 +1,158 @@
-.terms-container {
-  max-width: 800px;
-  margin: 20px auto;
-  background-color: white;
+/* Full page styles */
+.privacy-page {
+  min-height: 100vh;
   padding: 20px;
-  border: 1px solid #ddd;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.privacy-page.light {
+  background-color: #f8f9fa;
+  color: #212529;
+}
+
+.privacy-page.dark {
+  background-color: #121212;
+  color: #f8f9fa;
+}
+
+/* Container styles */
+.privacy-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem;
   border-radius: 8px;
-  box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.15), 0px -4px 8px rgba(0, 0, 0, 0.1); /* Top and Bottom shadow */
+  transition: all 0.3s ease;
 }
 
-.terms-content {
-  text-align: left;
+.privacy-container.light {
+  background-color: #ffffff;
+  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
 }
 
-.terms-content h3 {
-  margin-top: 20px;
-  font-weight: bold;
+.privacy-container.dark {
+  background-color: #1e1e1e;
+  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.3);
 }
 
-.terms-content p,
-.terms-content ul {
-  font-size: 1rem;
-  margin-bottom: 15px;
+/* Content wrapper */
+.privacy-content-wrapper {
+  padding: 1rem;
 }
 
-.terms-content ul {
-  padding-left: 20px;
-  list-style-type: disc;
+/* Header styles */
+h1 {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  color: inherit;
 }
 
-.terms-content li {
-  margin-bottom: 10px;
+.last-updated {
+  text-align: center;
+  margin-bottom: 2rem;
+  font-style: italic;
+  opacity: 0.8;
 }
 
-@media (max-width: 600px) {
-  .terms-container {
+/* Section styles - UPDATED FOR WHITE HEADINGS IN DARK MODE */
+.privacy-section {
+  margin-bottom: 2.5rem;
+}
+
+.privacy-section h2 {
+  margin-bottom: 1rem;
+  font-size: 1.3rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid;
+}
+
+/* Light mode styles */
+.privacy-page.light .privacy-section h2 {
+  border-color: #dee2e6;
+  color: #212529; /* Dark text in light mode */
+}
+
+/* Dark mode styles - headings stay white */
+.privacy-page.dark .privacy-section h2 {
+  border-color: #495057;
+  color: #ffffff !important; /* Force white in dark mode */
+}
+
+.privacy-section p {
+  margin-bottom: 1rem;
+  line-height: 1.6;
+}
+
+.privacy-section ul {
+  padding-left: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.privacy-section li {
+  margin-bottom: 0.5rem;
+  line-height: 1.5;
+}
+
+/* Link styles */
+.contact-info {
+  margin-top: 3rem;
+  padding-top: 1rem;
+  text-align: center;
+  border-top: 1px solid;
+}
+
+.privacy-page.light .contact-info {
+  border-color: #dee2e6;
+}
+
+.privacy-page.dark .contact-info {
+  border-color: #495057;
+}
+
+.contact-info a {
+  font-weight: 500;
+  transition: color 0.2s ease;
+}
+
+.privacy-page.light .contact-info a {
+  color: #2c7be5;
+}
+
+.privacy-page.dark .contact-info a {
+  color: #6ea8fe;
+}
+
+.contact-info a:hover {
+  text-decoration: underline;
+  opacity: 0.8;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  .privacy-container {
     max-width: 90%;
+    padding: 1.5rem;
+  }
+  
+  .privacy-page {
     padding: 15px;
-    border: 1px solid #ddd;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1), 0px -3px 6px rgba(0, 0, 0, 0.08);
-    border-radius: 8px;
+  }
+}
+
+@media (max-width: 576px) {
+  .privacy-container {
+    padding: 1.25rem;
+  }
+  
+  h1 {
+    font-size: 1.75rem;
+  }
+  
+  .privacy-section h2 {
+    font-size: 1.2rem;
+  }
+  
+  .privacy-section p,
+  .privacy-section ul {
+    font-size: 0.95rem;
   }
 }

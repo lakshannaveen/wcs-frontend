@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import './About.css';
 import { Container, Row, Col, Card } from 'react-bootstrap';
+import { useTheme } from '../context/ThemeContext'; // Import theme context
 
 const CustomAbout = () => {
   const [feedbackData, setFeedbackData] = useState([]);
   const [loading, setLoading] = useState(true);
+  const { theme } = useTheme(); // Get current theme
 
   useEffect(() => {
     const fetchFeedback = async () => {
@@ -12,7 +14,7 @@ const CustomAbout = () => {
         const response = await fetch('http://localhost:5002/api/feedback/feedback');
         if (response.ok) {
           const data = await response.json();
-          setFeedbackData(data.feedbacks.slice(-3).reverse()); // Get the latest 3 feedbacks
+          setFeedbackData(data.feedbacks.slice(-3).reverse());
         } else {
           console.error('Failed to fetch feedback data');
         }
@@ -27,10 +29,10 @@ const CustomAbout = () => {
   }, []);
 
   return (
-    <div>
+    <div className={`about-page ${theme}`}>
       <Container>
-        <section className="about-us-container">
-          <div className="about-us-content">
+        <section className={`about-us-container ${theme}`}>
+          <div className={`about-us-content ${theme}`}>
             <h2>About Us</h2>
             <p>
               WCS (Waste Collection System) is committed to providing efficient and sustainable waste collection and management services, with a vision to drive a "Green Future" for our communities. Our mission is to make it easy for individuals and businesses to responsibly dispose of waste, promoting a cleaner and greener environment.
@@ -44,12 +46,13 @@ const CustomAbout = () => {
             <p>
               Join WCS today, and become part of the Green Future movement. Let's work together to create a cleaner, more sustainable world. For inquiries or service requests, reach out to our customer service hotline at 0912234567.
             </p>
+            {/* Rest of your about content */}
           </div>
         </section>
-        <hr />
+        <hr className={`divider ${theme}`} />
 
         {/* Customer Feedback Section */}
-        <Container className="review-section my-5">
+        <Container className={`review-section ${theme} my-5`}>
           <h4 className="text-center">OUR CUSTOMERS SPEAK FOR US</h4>
           {loading ? (
             <p>Loading feedback...</p>
@@ -57,8 +60,8 @@ const CustomAbout = () => {
             <Row>
               {feedbackData.map((feedback, index) => (
                 <Col md={4} key={index} className="mb-4">
-                  <Card className="review-card">
-                    <Card.Header className="text-white name-header">
+                  <Card className={`review-card ${theme}`}>
+                    <Card.Header className={`name-header ${theme}`}>
                       {feedback.first_name} {feedback.last_name}
                     </Card.Header>
                     <Card.Body>

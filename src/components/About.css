@@ -1,82 +1,188 @@
+/* About.css - Complete Dark Mode Support */
 
+/* Base Page Styles */
+.about-page {
+  transition: all 0.3s ease;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: inherit; /* Inherits from theme */
+}
+
+.about-page.light {
+  background-color: #f8f9fa;
+  color: #333333;
+}
+
+.about-page.dark {
+  background-color: #121212;
+  color: #ffffff;
+}
+
+/* About Us Section */
 .about-us-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 40px 20px;
-   
-  }
-  
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px 20px;
+  flex-grow: 1;
+  background-color: inherit;
+}
+
+.about-us-content {
+  max-width: 800px;
+  padding: 30px;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.about-us-content.light {
+  background-color: white;
+  box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.15);
+  color: #333333;
+}
+
+.about-us-content.dark {
+  background-color: #1e1e1e;
+  box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.3);
+  color: #ffffff;
+}
+
+/* Headings - Fixed for Dark Mode */
+.about-us-content h2,
+.review-section h4 {
+  text-align: center;
+  font-weight: bold;
+  transition: color 0.3s ease;
+}
+
+.about-us-content.light h2,
+.review-section.light h4 {
+  color: #333333;
+}
+
+.about-us-content.dark h2,
+.review-section.dark h4 {
+  color: #ffffff !important;
+}
+
+.about-us-content h2 {
+  margin-bottom: 25px;
+  font-size: 2rem;
+}
+
+.about-us-content p {
+  font-size: 16px;
+  line-height: 1.6;
+  margin-bottom: 15px;
+  color: inherit;
+}
+
+/* Customer Reviews Section */
+.review-section {
+  padding: 0px 0;
+  background-color: inherit;
+  transition: all 0.3s ease;
+}
+
+.review-section h4 {
+  margin-bottom: 20px;
+  font-size: 1.5rem;
+}
+
+.review-card {
+  min-height: 220px;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.review-card.light {
+  background-color: white;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  color: #333333;
+}
+
+.review-card.dark {
+  background-color: #1e1e1e;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+  color: #ffffff;
+}
+
+.name-header {
+  font-size: 1.1rem;
+  font-weight: bold;
+  padding: 12px 15px;
+  border-radius: 8px 8px 0 0 !important;
+}
+
+.name-header.light {
+  background-color: rgb(76, 175, 80);
+  color: white;
+}
+
+.name-header.dark {
+  background-color: #2E7D32;
+  color: white;
+}
+
+.review-card .card-body {
+  padding: 20px;
+  font-size: 14px;
+  color: inherit;
+}
+
+/* Responsive Design */
+@media (max-width: 992px) {
   .about-us-content {
-    max-width: 800px;
-    background-color: white;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.15), 0px -4px 8px rgba(0, 0, 0, 0.1);
-    
+    padding: 25px;
+  }
+}
+
+@media (max-width: 768px) {
+  .about-us-container {
+    padding: 30px 15px;
   }
   
   .about-us-content h2 {
-    text-align: center;
-    font-weight: bold;
+    font-size: 1.8rem;
     margin-bottom: 20px;
-   
   }
   
-  .about-us-content p {
-    font-size: 16px;
-    line-height: 1.6;
-    margin-bottom: 15px;
-    text-align: left;
-
-  }
-  .name-header{
-    background-color: rgb(76, 175, 80);
-  }
-  .review-section h4{
-    margin-bottom: 40px;
-  }
-  .review-section {
-    background-color: white;
-    padding: 20px 0;
+  .review-section h4 {
+    margin-bottom: 30px;
+    font-size: 1.3rem;
   }
   
   .review-card {
     min-height: 200px;
-    box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.15), 0px -4px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+  }
+}
+
+@media (max-width: 576px) {
+  .about-us-container {
+    padding: 20px 10px;
   }
   
-  .review-card .card-header {
-    font-size: 16px;
-    font-weight: bold;
+  .about-us-content {
+    padding: 20px;
   }
   
-  .review-card .card-body {
-    font-size: 14px;
-    color: black;
-  }
-  @media (max-width: 768px) {
-    .about-us-content {
-        padding: 15px;
-      }
-    .review-card {
-        min-height: 200px;
-        padding: 15px;
-        margin: 8px;
-        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.15), 0px -2px 6px rgba(0, 0, 0, 0.1); /* slightly lighter shadow */
-        font-size:14px;
-    }
+  .about-us-content h2 {
+    font-size: 1.5rem;
   }
   
-  @media (max-width: 480px) {
-      .about-us-container {
-        padding: 20px 10px;
-      }
-    .review-card {
-        min-height: 180px;
-        padding: 10px;
-        margin: 6px;
-        box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.15), 0px -1px 4px rgba(0, 0, 0, 0.1); /* even lighter shadow */
-        font-size: 12px;
-      }
+  .review-section h4 {
+    margin-bottom: 25px;
+    font-size: 1.2rem;
   }
+  
+  .review-card {
+    min-height: 180px;
+  }
+  
+  .name-header {
+    padding: 10px 12px;
+    font-size: 1rem;
+  }
+}
