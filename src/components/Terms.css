@@ -1,156 +1,239 @@
-/* Full page styles */
 .terms-page {
-    min-height: 100vh;
-    padding: 20px;
-    transition: background-color 0.3s ease, color 0.3s ease;
-  }
-  
-  .terms-page.light {
-    background-color: #f8f9fa;
-    color: #212529;
-  }
-  
-  .terms-page.dark {
-    background-color: #121212;
-    color: #f8f9fa;
-  }
-  
-  /* Container styles */
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  margin: 0;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.terms-page.light {
+  background-color: #f8f9fa;
+  color: #212529;
+}
+
+.terms-page.dark {
+  background-color: #121212;
+  color: #f8f9fa;
+}
+
+.terms-main-content {
+  flex: 1;
+  padding: 20px;
+  padding-top: 0;
+}
+
+.terms-container {
+  max-width: 800px;
+  margin: 60px auto 40px;
+  padding: 2rem;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.terms-container.light {
+  background-color: #ffffff;
+  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+}
+
+.terms-container.dark {
+  background-color: #1e1e1e;
+  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.3);
+}
+
+.terms-content-wrapper {
+  padding: 1rem;
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  color: inherit;
+}
+
+.last-updated {
+  text-align: center;
+  margin-bottom: 2rem;
+  font-style: italic;
+  opacity: 0.8;
+}
+
+.terms-section {
+  margin-bottom: 2.5rem;
+}
+
+.terms-section h2 {
+  margin-bottom: 1rem;
+  font-size: 1.3rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid;
+}
+
+.terms-page.light .terms-section h2 {
+  border-color: #dee2e6;
+  color: #212529;
+}
+
+.terms-page.dark .terms-section h2 {
+  border-color: #495057;
+  color: #ffffff !important;
+}
+
+.terms-section p {
+  margin-bottom: 1rem;
+  line-height: 1.6;
+}
+
+.terms-section ul {
+  padding-left: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.terms-section li {
+  margin-bottom: 0.5rem;
+  line-height: 1.5;
+}
+
+.contact-info {
+  margin-top: 3rem;
+  padding-top: 1rem;
+  text-align: center;
+  border-top: 1px solid;
+}
+
+.terms-page.light .contact-info {
+  border-color: #dee2e6;
+}
+
+.terms-page.dark .contact-info {
+  border-color: #495057;
+}
+
+.contact-info a {
+  font-weight: 500;
+  transition: color 0.2s ease;
+}
+
+.terms-page.light .contact-info a {
+  color: #2c7be5;
+}
+
+.terms-page.dark .contact-info a {
+  color: #6ea8fe;
+}
+
+.contact-info a:hover {
+  text-decoration: underline;
+  opacity: 0.8;
+}
+
+.footer {
+  padding: 2rem 1rem;
+  transition: all 0.3s ease;
+  margin-top: auto;
+}
+
+.footer.light {
+  background-color: #f8f9fa;
+  color: #212529;
+  border-top: 1px solid #dee2e6;
+}
+
+.footer.dark {
+  background-color: #1a1a1a;
+  color: #e0e0e0;
+  border-top: 1px solid #333;
+}
+
+.footer-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+  padding: 0 1rem;
+}
+
+.footer-section {
+  margin-bottom: 1.5rem;
+}
+
+.footer-section h3 {
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+  color: inherit;
+}
+
+.footer-section ul {
+  list-style: none;
+  padding: 0;
+}
+
+.footer-section li {
+  margin-bottom: 0.5rem;
+}
+
+.footer-section a {
+  color: inherit;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.terms-page.light .footer-section a:hover {
+  color: #2c7be5;
+}
+
+.terms-page.dark .footer-section a:hover {
+  color: #6ea8fe;
+}
+
+.footer-bottom {
+  text-align: center;
+  padding-top: 1.5rem;
+  margin-top: 1.5rem;
+  border-top: 1px solid;
+}
+
+.terms-page.light .footer-bottom {
+  border-color: #dee2e6;
+}
+
+.terms-page.dark .footer-bottom {
+  border-color: #333;
+}
+
+@media (max-width: 768px) {
   .terms-container {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 2rem;
-    border-radius: 8px;
-    transition: all 0.3s ease;
+    max-width: 90%;
+    padding: 1.5rem;
+    margin: 50px auto 30px;
   }
   
-  .terms-container.light {
-    background-color: #ffffff;
-    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+  .terms-main-content {
+    padding: 15px;
+  }
+
+  .footer-content {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 576px) {
+  .terms-container {
+    padding: 1.25rem;
+    margin: 50px auto 20px;
   }
   
-  .terms-container.dark {
-    background-color: #1e1e1e;
-    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.3);
-  }
-  
-  /* Content wrapper */
-  .terms-content {
-    padding: 1rem;
-  }
-  
-  /* Header styles */
   h1 {
-    text-align: center;
-    margin-bottom: 1.5rem;
-    color: inherit;
-  }
-  
-  .last-updated {
-    text-align: center;
-    margin-bottom: 2rem;
-    font-style: italic;
-    opacity: 0.8;
-  }
-  
-  /* Section styles */
-  .terms-section {
-    margin-bottom: 2.5rem;
+    font-size: 1.75rem;
   }
   
   .terms-section h2 {
-    margin-bottom: 1rem;
-    font-size: 1.3rem;
-    padding-bottom: 0.5rem;
-    border-bottom: 1px solid;
+    font-size: 1.2rem;
   }
   
-  .terms-page.light .terms-section h2 {
-    border-color: #dee2e6;
-    color: #212529;
-  }
-  
-  .terms-page.dark .terms-section h2 {
-    border-color: #495057;
-    color: #ffffff;
-  }
-  
-  .terms-section p {
-    margin-bottom: 1rem;
-    line-height: 1.6;
-  }
-  
+  .terms-section p,
   .terms-section ul {
-    padding-left: 1.5rem;
-    margin-bottom: 1rem;
+    font-size: 0.95rem;
   }
-  
-  .terms-section li {
-    margin-bottom: 0.5rem;
-    line-height: 1.5;
-  }
-  
-  /* Link styles */
-  .contact-info {
-    margin-top: 3rem;
-    padding-top: 1rem;
-    text-align: center;
-    border-top: 1px solid;
-  }
-  
-  .terms-page.light .contact-info {
-    border-color: #dee2e6;
-  }
-  
-  .terms-page.dark .contact-info {
-    border-color: #495057;
-  }
-  
-  .contact-info a {
-    font-weight: 500;
-    transition: color 0.2s ease;
-  }
-  
-  .terms-page.light .contact-info a {
-    color: #2c7be5;
-  }
-  
-  .terms-page.dark .contact-info a {
-    color: #6ea8fe;
-  }
-  
-  .contact-info a:hover {
-    text-decoration: underline;
-    opacity: 0.8;
-  }
-  
-  /* Responsive styles */
-  @media (max-width: 768px) {
-    .terms-container {
-      max-width: 90%;
-      padding: 1.5rem;
-    }
-    
-    .terms-page {
-      padding: 15px;
-    }
-  }
-  
-  @media (max-width: 576px) {
-    .terms-container {
-      padding: 1.25rem;
-    }
-    
-    h1 {
-      font-size: 1.75rem;
-    }
-    
-    .terms-section h2 {
-      font-size: 1.2rem;
-    }
-    
-    .terms-section p,
-    .terms-section ul {
-      font-size: 0.95rem;
-    }
-  }
+}

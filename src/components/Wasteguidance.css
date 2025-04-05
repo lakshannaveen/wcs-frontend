@@ -1,5 +1,68 @@
+body, html {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+}
+
+.waste-guidance-page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.waste-guidance-page.dark {
+  background-color: #121212;
+  color: #e0e0e0;
+}
+
 .container {
   max-width: 1200px;
+  width: 100%;
+  flex: 1;
+  padding: 20px;
+  margin: 0 auto;
+}
+
+.container.dark {
+  background-color: #121212;
+}
+
+h2 {
+  font-weight: bold;
+  margin-top: 0;
+  padding-top: 10px;
+}
+
+h2.dark {
+  color: #ffffff;
+}
+
+.card.dark {
+  background-color: #2d2d2d;
+  color: #e0e0e0;
+  border: 1px solid #444;
+}
+
+.card-title.dark {
+  color: #ffffff;
+}
+
+.card-text.dark {
+  color: #b0b0b0;
+}
+
+.card-text.dark strong {
+  color: #ffffff;
+}
+
+.text-danger.dark {
+  color: #ff6b6b !important;
+}
+
+.alert-warning.dark {
+  background-color: #332d00;
+  border-color: #665800;
+  color: #e0e0e0;
 }
 
 .card {
@@ -10,6 +73,10 @@
 .card:hover {
   transform: scale(1.05);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.card.dark:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
 }
 
 .card-title {
@@ -49,8 +116,4 @@
   background-color: #fff3cd;
   color: #856404;
   text-align: center;
-}
-
-h2 {
-  font-weight: bold;
 }

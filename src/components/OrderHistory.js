@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useTheme } from '../context/ThemeContext';
 import './OrderHistory.css';
 
 const isOrderExpired = (expiryDate) => {
@@ -10,6 +11,7 @@ const isOrderExpired = (expiryDate) => {
 };
 
 const OrderHistory = () => {
+  const { theme } = useTheme();
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
   const [showConfirmation, setShowConfirmation] = useState(false);
@@ -99,12 +101,12 @@ const OrderHistory = () => {
   }
 
   return (
-    <div className="order-history">
+    <div className={`order-history ${theme}`}>
       <h1>Order History</h1>
       {orders.length > 0 ? (
         <div className="order-list">
           {orders.map(order => (
-            <div key={order.checkout_id} className="order-card">
+            <div key={order.checkout_id} className={`order-card ${theme}`}>
               <table className="order-table">
                 <tbody>
                   <tr>
@@ -202,7 +204,7 @@ const OrderHistory = () => {
 
       {showConfirmation && (
         <div className="confirmation-overlay">
-          <div className="confirmation-box">
+          <div className={`confirmation-box ${theme}`}>
             <p>Are you sure you want to cancel this order?</p>
             <button className="confirm-btn" onClick={cancelOrder}>Yes</button>
             <button className="no-btn" onClick={cancelCancellation}>No</button>

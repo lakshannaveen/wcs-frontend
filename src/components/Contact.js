@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
+import { useTheme } from '../context/ThemeContext';
 import { FaFacebookF, FaYoutube, FaInstagram, FaTiktok } from 'react-icons/fa';
 import './Contact.css';
 import { Form, Button, Row, Col } from 'react-bootstrap';
 
 const CustomContact = () => {
+  const { theme } = useTheme();
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
@@ -12,7 +14,7 @@ const CustomContact = () => {
     message: '',
   });
   const [errors, setErrors] = useState({});
-  const [validated, setValidated] = useState(false); 
+  const [validated, setValidated] = useState(false);
   const [successMessage, setSuccessMessage] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
 
@@ -68,14 +70,14 @@ const CustomContact = () => {
         console.error('Error submitting form:', error);
         setErrorMessage('An error occurred while submitting the form. Please try again later.');
       }
-      setValidated(true); 
+      setValidated(true);
     }
-    setValidated(true); 
+    setValidated(true);
   };
 
   return (
-    <div className='contactus'>
-      <div className='left-section'>
+    <div className={`contactus ${theme}`}>
+      <div className={`left-section ${theme}`}>
         <h2 className='heading-contact'>Contact Information</h2>
         <p>Feel Free to Contact us via</p>
         <p><strong>Email:</strong> wastecollectionsystem.lk@gmail.com</p>
@@ -83,23 +85,23 @@ const CustomContact = () => {
         <h3>Find Us on Social Media</h3>
         <div className="social-icons">
           <a href="https://www.facebook.com/profile.php?id=61567165493241&mibextid=ZbWKwL" target="_blank" rel="noopener noreferrer">
-            <FaFacebookF size={30} color="#FFFFFF" />
+            <FaFacebookF size={30} className="social-icon" />
           </a>
           <a href="https://youtube.com/@wcs-x3?si=lRB3Qz9z4pqeObtO" target="_blank" rel="noopener noreferrer">
-            <FaYoutube size={30} color="#FFFFFF" />
+            <FaYoutube size={30} className="social-icon" />
           </a>
           <a href="https://www.instagram.com/wcs_08/profilecard/?igsh=MWpmbHh1NTcxb3ZqOA==" target="_blank" rel="noopener noreferrer">
-            <FaInstagram size={30} color="#FFFFFF" />
+            <FaInstagram size={30} className="social-icon" />
           </a>
           <a href="https://tiktok.com/@WCS_08" target="_blank" rel="noopener noreferrer">
-            <FaTiktok size={30} color="#FFFFFF" />
+            <FaTiktok size={30} className="social-icon" />
           </a>
         </div>
         <p className='business-para'>Business Hours: Monday - Friday: 9 AM - 5 PM</p>
       </div>
       
-      <div className="right-section">
-        <h2>Ask Anything</h2>
+      <div className={`right-section ${theme}`}>
+        <h2 className="ask-anything-title">Ask Anything</h2>
         <Form onSubmit={handleSubmit} noValidate validated={validated}>
           <Row className="mb-3">
             <Form.Group as={Col} controlId="formFirstName">
@@ -111,7 +113,7 @@ const CustomContact = () => {
                   placeholder="First Name"
                   value={formData.firstName}
                   onChange={handleChange}
-                  isInvalid={!!errors.firstName} 
+                  isInvalid={!!errors.firstName}
                 />
                 <Form.Control.Feedback type="invalid">
                   {errors.firstName}
@@ -128,7 +130,7 @@ const CustomContact = () => {
                   placeholder="Last Name"
                   value={formData.lastName}
                   onChange={handleChange}
-                  isInvalid={!!errors.lastName} 
+                  isInvalid={!!errors.lastName}
                 />
                 <Form.Control.Feedback type="invalid">
                   {errors.lastName}
@@ -147,7 +149,7 @@ const CustomContact = () => {
                   placeholder="Email"
                   value={formData.email}
                   onChange={handleChange}
-                  isInvalid={!!errors.email} 
+                  isInvalid={!!errors.email}
                 />
                 <Form.Control.Feedback type="invalid">
                   {errors.email}
@@ -164,7 +166,7 @@ const CustomContact = () => {
                   placeholder="Phone Number"
                   value={formData.phone}
                   onChange={handleChange}
-                  isInvalid={!!errors.phone} 
+                  isInvalid={!!errors.phone}
                 />
                 <Form.Control.Feedback type="invalid">
                   {errors.phone}
@@ -182,21 +184,21 @@ const CustomContact = () => {
                 placeholder="Write your inquiry here..."
                 value={formData.message}
                 onChange={handleChange}
-                isInvalid={!!errors.message} 
+                isInvalid={!!errors.message}
               />
               <Form.Control.Feedback type="invalid">
                 {errors.message}
               </Form.Control.Feedback>
             </div>
           </Form.Group>
+          <div className="submit-button-container">
+          <Button variant="success" type="submit">Submit</Button>
+          </div>
 
-          <Button variant="success" type="submit">
-            Submit
-          </Button>
         </Form>
 
-        {successMessage && <p className="success-message">{successMessage}</p>}
-        {errorMessage && <p className="error-message">{errorMessage}</p>}
+        {successMessage && <p className={`success-message ${theme}`}>{successMessage}</p>}
+        {errorMessage && <p className={`error-message ${theme}`}>{errorMessage}</p>}
       </div>
     </div>
   );

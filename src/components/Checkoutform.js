@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import './Checkoutform.css';
+import { useTheme } from '../context/ThemeContext';
 import { useNavigate } from 'react-router-dom';
-
+import './Checkoutform.css';
 
 function Checkoutform() {
+  const { theme } = useTheme();
   const navigate = useNavigate();
   const [formErrors, setFormErrors] = useState({
     email: '',
@@ -38,12 +39,10 @@ function Checkoutform() {
   });
 
   const [isRecipientSame, setIsRecipientSame] = useState(false); // Track if sender and recipient are the same
-
   const [paymentDetails, setPaymentDetails] = useState({
     paymentMethod: '',
     agreedToTerms: false
   });
-
 
   const handleSenderChange = (e) => {
     const { name, value } = e.target;
@@ -65,7 +64,6 @@ function Checkoutform() {
 
   const handleCheckboxChange = () => {
     setIsRecipientSame(!isRecipientSame);
-
     // Auto-fill recipient details if checkbox is checked
     if (!isRecipientSame) {
       setRecipientDetails({
@@ -150,7 +148,6 @@ function Checkoutform() {
 
       if (!recipientFirstName) errors.recipient.firstName = 'Recipient First Name is required.';
       if (!recipientLastName) errors.recipient.lastName = 'Recipient Last Name is required.';
-
       // Validate recipient zip code (numeric, max 6 digits)
       if (!recipientZipCode || !zipCodeRegex.test(recipientZipCode)) {
         errors.recipient.zipCode = 'Please enter a valid recipient zip code (up to 6 digits).';
@@ -168,6 +165,7 @@ function Checkoutform() {
       errors.paymentMethod = 'Please select a payment method.';
     }
      // Waste collection time validation
+
     if (!wasteCollectionTime) {
       setTimeError('You must select a waste collection time.');
       return false;
@@ -196,7 +194,6 @@ function Checkoutform() {
   const handleSubmit = (event) => {
     event.preventDefault();
     setHasSubmitted(true);
-  
     // Validate sender and recipient details
     if (!senderDetails.firstName || !senderDetails.lastName || !senderDetails.zipCode || !senderDetails.phone) {
       alert("Please fill in all sender details.");
@@ -207,11 +204,10 @@ function Checkoutform() {
       alert("Please fill in all recipient details.");
       return;
     }
-  
+
     // Validate form before proceeding
     if (validateForm()) {
       const mappagedata = JSON.parse(sessionStorage.getItem('mappagedata'));
-  
       // Check if mappagedata or userId is missing
       if (!mappagedata || !mappagedata.userId) {
         alert("User ID is missing! Please go back and select a location.");
@@ -221,13 +217,11 @@ function Checkoutform() {
       const userId = mappagedata.userId;  // This is where the userId is assigned
       const price = mappagedata.subscriptionPrice;
   
-      // Check if price is missing
       if (!price) {
         alert("Price is missing! Please go back and select a subscription.");
         return;
       }
   
-      // Prepare checkout data
       const checkoutpagedata = {
         senderDetails,
         recipientDetails,
@@ -245,7 +239,6 @@ function Checkoutform() {
         selected_dates: Array.isArray(mappagedata.selectedDates) ? mappagedata.selectedDates : [mappagedata.selectedDates],
       };
   
-      // Store checkout data in sessionStorage
       sessionStorage.setItem('checkoutpagedata', JSON.stringify(checkoutpagedata));
   
       alert('Your order is being processed...');
@@ -253,12 +246,9 @@ function Checkoutform() {
       setTimeout(() => {
         const storedCheckoutPageData = JSON.parse(sessionStorage.getItem('checkoutpagedata'));
   
-        // Check if the payment method is online
         if (storedCheckoutPageData.paymentDetails.paymentMethod === "Online") {
-          // Navigate to the payment page for online payments
           navigate("/payment");
         } else {
-          // Send data to the backend for non-online payments
           fetch("http://localhost:5002/api/checkout/order", {
             method: "POST",
             headers: {
@@ -273,13 +263,10 @@ function Checkoutform() {
           .then((response) => response.json())
           .then((data) => {
             if (data.message === "Order placed successfully") {
-              const checkoutId = data.checkoutId;  // Extract checkoutId from response
-              sessionStorage.setItem('checkoutId', checkoutId);  // Store it in session storage
-  
-              // Update checkoutpagedata with checkoutId
+              const checkoutId = data.checkoutId;
+              sessionStorage.setItem('checkoutId', checkoutId);
               storedCheckoutPageData.checkoutId = checkoutId;
               sessionStorage.setItem('checkoutpagedata', JSON.stringify(storedCheckoutPageData));
-  
               alert("Order placed successfully!");
               navigate("/bill");
             } else {
@@ -297,17 +284,14 @@ function Checkoutform() {
     }
   };
   
-  
-  
   return (
-    <div className="checkout-container">
-      <h2 className="checkout-header">CHECKOUT</h2>
-      <div className="checkout-forms">
-        <div className="form-section">
+    <div className={`checkout-page ${theme}`}>
+    <div className={`checkout-container ${theme}`}>
+      <h2 className={`checkout-header ${theme}`}>CHECKOUT</h2>
+      <div className={`checkout-forms ${theme}`}>
           <h3>Sender Details</h3>
-          <form className="sender-form" onSubmit={handleSubmit}>
-            {/* Sender details form */}
-            <div className="input-group">
+          <form className={`sender-form ${theme}`} onSubmit={handleSubmit}>
+            <div className={`input-group ${theme}`}>
               <label>First Name*</label>
               <input
                 type="text"
@@ -318,7 +302,7 @@ function Checkoutform() {
               />
               {hasSubmitted && formErrors.firstName && <p className="error">{formErrors.firstName}</p>}
             </div>
-            <div className="input-group">
+            <div className={`input-group ${theme}`}>
               <label>Last Name*</label>
               <input
                 type="text"
@@ -329,7 +313,7 @@ function Checkoutform() {
               />
               {hasSubmitted && formErrors.lastName && <p className="error">{formErrors.lastName}</p>}
             </div>
-            <div className="input-group">
+            <div className={`input-group ${theme}`}>
               <label>Zip Code*</label>
               <input
                 type="text"
@@ -340,7 +324,7 @@ function Checkoutform() {
               />
               {hasSubmitted && formErrors.zipCode && <p className="error">{formErrors.zipCode}</p>}
             </div>
-            <div className="input-group">
+            <div className={`input-group ${theme}`}>
               <label>Phone Number*</label>
               <input
                 type="tel"
@@ -351,7 +335,7 @@ function Checkoutform() {
               />
               {hasSubmitted && formErrors.phone && <p className="error">{formErrors.phone}</p>}
             </div>
-            <div className="input-group">
+            <div className={`input-group ${theme}`}>
               <label>Email*</label>
               <input
                 type="email"
@@ -363,22 +347,23 @@ function Checkoutform() {
               {hasSubmitted && formErrors.email && <p className="error">{formErrors.email}</p>}
             </div>
 
-            {/*waste collection time */}
+            <div className={`input-group ${theme}`}>
+              <label className={`timelable ${theme}`}>Waste Collection Time*</label>
+              <select 
+                name="wasteCollectionTime" 
+                value={wasteCollectionTime} 
+                onChange={handleTimeChange} 
+                className={`time-dropdown ${theme}`}
+              >
+                <option value="">Select a time</option>
+                <option value="Morning">Morning (9AM-12PM)</option>
+                <option value="Afternoon">Afternoon (12PM-3PM)</option>
+                <option value="Evening">Evening (3PM-6PM)</option>
+              </select>
+              {hasSubmitted && timeError && <p className="error">{timeError}</p>}
+            </div>
 
-                    <div className="input-group">
-        <label className="timelable">Waste Collection Time*</label>
-        <select name="wasteCollectionTime" value={wasteCollectionTime} onChange={handleTimeChange} className="time-dropdown">
-          <option value="">Select a time</option>
-          <option value="Morning">Morning (9AM-12PM)</option>
-          <option value="Afternoon">Afternoon (12PM-3PM)</option>
-          <option value="Evening">Evening (3PM-6PM)</option>
-        </select>
-        {hasSubmitted && timeError && <p className="error">{timeError}</p>}
-      </div>
-
-
-            {/* Recipient Same As Sender Checkbox */}
-            <div className="checkbox-group">
+            <div className={`checkbox-group ${theme}`}>
               <label>
                 <input
                   type="checkbox"
@@ -390,9 +375,9 @@ function Checkoutform() {
           </form>
         </div>
 
-        <div className="form-section">
+        <div className={`form-section ${theme}`}>
           <h3>Recipient Details</h3>
-          <div className="input-group">
+          <div className={`input-group ${theme}`}>
             <label>First Name*</label>
             <input
               type="text"
@@ -404,7 +389,7 @@ function Checkoutform() {
             />
             {hasSubmitted && formErrors.recipient.firstName && <p className="error">{formErrors.recipient.firstName}</p>}
           </div>
-          <div className="input-group">
+          <div className={`input-group ${theme}`}>
             <label>Last Name*</label>
             <input
               type="text"
@@ -416,7 +401,7 @@ function Checkoutform() {
             />
             {hasSubmitted && formErrors.recipient.lastName && <p className="error">{formErrors.recipient.lastName}</p>}
           </div>
-          <div className="input-group">
+          <div className={`input-group ${theme}`}>
             <label>Zip Code*</label>
             <input
               type="text"
@@ -428,7 +413,7 @@ function Checkoutform() {
             />
             {hasSubmitted && formErrors.recipient.zipCode && <p className="error">{formErrors.recipient.zipCode}</p>}
           </div>
-          <div className="input-group">
+          <div className={`input-group ${theme}`}>
             <label>Phone Number*</label>
             <input
               type="tel"
@@ -442,9 +427,9 @@ function Checkoutform() {
           </div>
         </div>
 
-        <div className="form-section">
+        <div className={`form-section ${theme}`}>
           <h3>Payment Details</h3>
-          <div className="radio-group">
+          <div className={`radio-group ${theme}`}>
             <label>
               <input
                 type="radio"
@@ -466,33 +451,29 @@ function Checkoutform() {
             {hasSubmitted && formErrors.paymentMethod && <p className="error">{formErrors.paymentMethod}</p>}
           </div>
 
-          <div className="checkbox-group">
-         <label>
-        <input
-          type="checkbox"
-          checked={paymentDetails.agreedToTerms}
-          onChange={handleTermsChange}
-        />  
-        I agree to the  
-        <a href="/teamsandconditions" target="_blank" rel="noopener noreferrer"> terms and conditions</a>
-      </label>
-      {hasSubmitted && formErrors.terms && <p className="error">{formErrors.terms}</p>}
-    </div>
+          <div className={`checkbox-group ${theme}`}>
+            <label>
+              <input
+                type="checkbox"
+                checked={paymentDetails.agreedToTerms}
+                onChange={handleTermsChange}
+              />  
+              I agree to the  
+              <a href="/teamsandconditions" target="_blank" rel="noopener noreferrer"> terms and conditions</a>
+            </label>
+            {hasSubmitted && formErrors.terms && <p className="error">{formErrors.terms}</p>}
+          </div>
 
+          <div className={`important-note ${theme}`}>
+            <strong>Important:</strong><p className={`guidelines-text ${theme}`}> Waste disposal guidelines are essential for proper waste management.</p>
+            <a href="/customguidance" className="check-waste-guidance" target="_blank" rel="noopener noreferrer">
+              Click here for more information on waste disposal
+            </a>
+          </div>
 
-          {/*waste guidance note */}
-          <div className="important-note">
-        <strong>Important:</strong> Waste disposal guidelines are essential for proper waste management.  
-        <br />
-        <a href="/customguidance" className="check-waste-guidance" target="_blank" rel="noopener noreferrer">
-          Click here for more information on waste disposal
-        </a>
-      </div>
-
-      <button type="submit" className="place-order-button" onClick={handleSubmit}>
-  Place Order - LKR {price}
-</button>
-
+          <button type="submit" className="place-order-button" onClick={handleSubmit}>
+            Place Order - LKR {price}
+          </button>
         </div>
       </div>
     </div>

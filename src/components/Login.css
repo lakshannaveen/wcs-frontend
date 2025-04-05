@@ -1,3 +1,48 @@
+.logform.dark {
+  background-color: #121212;
+}
+
+.loginForm.dark {
+  background-color: #1e1e1e;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.loginForm.dark h1 {
+  color: #ffffff;
+}
+
+.loginForm.dark .Box label {
+  color: #e0e0e0;
+}
+
+.loginForm.dark .Box input {
+  background-color: #2d2d2d;
+  border-color: #444;
+  color: #e0e0e0;
+}
+
+.loginForm.dark .Box input:focus {
+  border-color: #28a745;
+}
+
+.loginForm.dark .register label {
+  color: #e0e0e0;
+}
+
+.loginForm.dark .register a {
+  color: #6ea8fe;
+}
+
+.modal-content.dark {
+  background-color: #1e1e1e;
+  color: #e0e0e0;
+}
+
+.modal-content.dark h2 {
+  color: #ffffff;
+}
+
+
 .logform {
   display: flex;
   justify-content: center;
@@ -107,8 +152,8 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 1000; 
-
+  z-index: 1000;
+}
 
 .modal-content {
   background-color: #ffffff;
@@ -140,7 +185,7 @@
 .modal-content button:hover {
   background-color: #218838;
 }
-}
+
 @media (max-width: 768px) {
   .loginForm {
     padding: 20px;

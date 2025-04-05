@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
+import { useTheme } from '../context/ThemeContext';
 import { useNavigate } from 'react-router-dom';
 import './Register.css';
 import Cookies from 'js-cookie'; // To manage cookies
 
 function CustomRegister() {
+  const { theme } = useTheme();
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     firstname: '',
@@ -109,11 +111,9 @@ function CustomRegister() {
       if (response.ok) {
         setSuccessMessage('Registration successful!');
         setShowModal(true);
-  
         // Store the token in cookies or localStorage
         Cookies.set('token', data.token, { expires: 1 }); // Store for 1 day
         localStorage.setItem('token', data.token); // Store in localStorage too
-  
         setTimeout(() => {
           navigate('/'); // Redirect to home page
         }, 2000);
@@ -132,11 +132,12 @@ function CustomRegister() {
   };
 
   return (
-    <div className="register-page">
-      <div className="regform">
-        <form className="registerForm" onSubmit={handleSubmit}>
+    <div className={`register-page ${theme}`}>
+      <div className={`regform ${theme}`}>
+        <form className={`registerForm ${theme}`} onSubmit={handleSubmit}>
           <h1>Register</h1>
-          <div className="formBody">
+          <div className={`formBody ${theme}`}>
+            {/* All your form fields remain exactly the same */}
             <div className="Box">
               <label htmlFor="firstname">First Name</label>
               <input
@@ -221,7 +222,6 @@ function CustomRegister() {
               />
             </div>
 
-            {/* Terms and Conditions Checkbox */}
             <div className="checkbox-container">
               <input
                 type="checkbox"
@@ -248,10 +248,9 @@ function CustomRegister() {
         </form>
       </div>
 
-      {/* Success Modal */}
       {showModal && (
-        <div className="modal-overlay" onClick={() => setShowModal(false)}>
-          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+        <div className={`modal-overlay ${theme}`} onClick={() => setShowModal(false)}>
+          <div className={`modal-content ${theme}`} onClick={(e) => e.stopPropagation()}>
             <h2>{successMessage}</h2>
             <button onClick={() => setShowModal(false)}>Close</button>
           </div>

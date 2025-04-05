@@ -30,7 +30,7 @@ function CustomFooter() {
                     </Col>
                     <Col md={3} className="footer-section">
                       <h5 className='title-text'>Policy</h5>
-                        <Link to="/teamsandconditions" className="footer-link">Teams and Conditions</Link><br></br>
+                        <Link to="/teamsandconditions" className="footer-link">Terms and Conditions</Link><br></br>
                         <Link to="/privacy" className="footer-link">Privacy Policy</Link>
                     </Col >
                     <Col md={3} className="footer-section">

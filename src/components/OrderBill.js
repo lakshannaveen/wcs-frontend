@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
+import { useTheme } from '../context/ThemeContext';
 import "./OrderBill.css";
 
 const OrderBill = () => {
+  const { theme } = useTheme();
   const [checkoutData, setCheckoutData] = useState(null);
 
   useEffect(() => {
@@ -50,7 +52,6 @@ const OrderBill = () => {
 
   const finalCheckoutId = checkoutId || "N/A";
 
-  // if missing subscription plan
   const subscriptionPlan = mapPageData.subscriptionPlan || (() => {
     switch (mapPageData.subscriptionPrice) {
       case 200: return "One-Time";
@@ -62,7 +63,7 @@ const OrderBill = () => {
   })();
 
   return (
-    <div className="order-bill">
+    <div className={`order-bill ${theme}`}>
       <h2>Order Bill</h2>
       <table className="bill-table">
         <thead>
