@@ -1,20 +1,59 @@
-/* General container for the checkout form */
+/* Checkout Form Styles */
 .checkout-container {
   width: 100%;
   max-width: 900px;
   margin: 20px auto;
-  padding: 30px 20px;  
-  background-color: #f4f4f4;
+  padding: 30px 20px;
   border-radius: 8px;
   box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.1), 
-              0 4px 8px rgba(0, 0, 0, 0.1);  
+              0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.checkout-page {
+  background-color: #f8f9fa;
+  color: #000;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.checkout-page.dark {
+  background-color: #121212;
+  color: #fff;
+}
+
+.guidelines-text {
+  color: #333;
+}
+
+.guidelines-text.dark {
+  color: #000000;
+}
+
+.checkout-container.light {
+  background-color: #f4f4f4;
+}
+
+.checkout-container.dark {
+  background-color: #1e1e1e;
+  color: #e0e0e0;
 }
 
 .checkout-header {
   text-align: center;
   font-size: 28px;
   margin-bottom: 20px;
+  transition: color 0.3s ease;
+}
+
+.checkout-header.light {
   color: #333;
+}
+
+.checkout-header.dark {
+  color: #ffffff;
 }
 
 .checkout-forms {
@@ -23,22 +62,37 @@
   gap: 20px;
 }
 
-/* Section for sender and recipient details */
 .form-section {
-  background-color: white;
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  
+  transition: all 0.3s ease;
+  margin-top: 20px;
+}
+
+.form-section.light {
+  background-color: white;
+}
+
+.form-section.dark {
+  background-color: #2d2d2d;
+  color: #e0e0e0;
 }
 
 .form-section h3 {
   font-size: 20px;
-  color: #333;
   margin-bottom: 20px;
+  transition: color 0.3s ease;
 }
 
-/* Input fields */
+.form-section.light h3 {
+  color: #333;
+}
+
+.form-section.dark h3 {
+  color: #ffffff;
+}
+
 .input-group {
   margin-bottom: 15px;
 }
@@ -48,59 +102,75 @@
   font-weight: bold;
   margin-bottom: 5px;
   text-align: left;
+  transition: color 0.3s ease;
+}
+
+.input-group.light label {
   color: #555;
+}
+
+.input-group.dark label {
+  color: #e0e0e0;
 }
 
 .input-group input {
   width: 100%;
   padding: 10px;
   font-size: 16px;
-  border: 1px solid #ddd;
   border-radius: 4px;
   box-sizing: border-box;
+  transition: all 0.3s ease;
 }
 
-.input-with-kg {
-  display: flex;
-  align-items: center;
+.input-group.light input {
+  border: 1px solid #ddd;
+  background-color: white;
+  color: #333;
 }
 
-.input-with-kg input {
-  width: 80%;
-  margin-right: 10px;
+.input-group.dark input {
+  border: 1px solid #444;
+  background-color: #3d3d3d;
+  color: #e0e0e0;
 }
 
-.input-with-kg span {
-  font-size: 16px;
-}
-
-/* Error messages */
 .error {
   color: red;
   font-size: 14px;
   margin-top: 5px;
 }
 
-/* Radio button and checkbox groups */
 .checkbox-group {
   display: flex;
   align-items: center;
-  flex-direction:column;
+  flex-direction: column;
   gap: 5px;
+  transition: color 0.3s ease;
 }
+
+.checkbox-group.dark {
+  color: #e0e0e0;
+}
+
 .time-radio-group {
   display: flex;
-  gap: 20px; 
-  flex-direction: row; 
-  margin-bottom:20px;
+  gap: 20px;
+  flex-direction: row;
+  margin-bottom: 20px;
 }
 
 .time-radio-group label {
   display: flex;
   align-items: center;
 }
-.timelable{
-  margin-right:20px;
+
+.timelable {
+  margin-right: 20px;
+  transition: color 0.3s ease;
+}
+
+.timelable.dark {
+  color: #e0e0e0;
 }
 
 .checkbox-group input[type="checkbox"] {
@@ -109,20 +179,23 @@
 
 .checkbox-group label {
   font-size: 16px;
-  color: #555;
-  margin-bottom:20px;
-  margin-top:20px;
+  margin-bottom: 20px;
+  margin-top: 20px;
 }
 
 .radio-group label {
-  margin-right: 15px; /* Adds space between radio buttons */
+  margin-right: 15px;
+  transition: color 0.3s ease;
 }
 
-/* Submit Button */
-.submit-button {
+.radio-group.dark label {
+  color: #e0e0e0;
+}
+
+.place-order-button {
   width: 100%;
   padding: 12px;
-  background-color: #28a745; /* Green color */
+  background-color: #28a745;
   border: none;
   color: white;
   font-size: 18px;
@@ -130,21 +203,49 @@
   cursor: pointer;
   border-radius: 4px;
   box-sizing: border-box;
+  transition: background-color 0.3s ease;
 }
 
-.submit-button:hover {
-  background-color: #218838; /* Darker green */
+.place-order-button:hover {
+  background-color: #218838;
 }
+
 .wasteamoutlable {
-  margin-right: 20px; /*add space to right*/
+  margin-right: 20px;
 }
 
+.important-note {
+  margin: 15px 0;
+  transition: color 0.3s ease;
+}
 
-/* Responsive Design */
+.important-note.dark {
+  color: #e0e0e0;
+}
+
+/* Updated link styles to be blue in both themes */
+.important-note a {
+  color: #007bff;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.important-note a:hover {
+  text-decoration: underline;
+  color: #0056b3;
+}
+
+.important-note.dark a {
+  color: #007bff;
+}
+
+.important-note.dark a:hover {
+  color: #0056b3;
+}
+
 @media (max-width: 768px) {
   .checkout-container {
     padding: 30px 15px;
-     /* Slightly reduced padding on smaller screens */
   }
 
   .checkout-header {
@@ -164,15 +265,14 @@
     transform: scale(1.2);
   }
 
-  .submit-button {
+  .place-order-button {
     font-size: 16px;
   }
 }
 
-/* Mobile devices */
 @media (max-width: 480px) {
   .checkout-container {
-    padding: 20px 10px; /* Further reduced padding for mobile */
+    padding: 20px 10px;
   }
 
   .checkout-header {
@@ -188,7 +288,7 @@
     padding: 8px;
   }
 
-  .submit-button {
+  .place-order-button {
     font-size: 16px;
   }
 }

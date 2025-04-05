@@ -7,7 +7,11 @@
   padding: 0 20px;
 }
 
-.register-page .regform {
+.register-page.dark {
+  background-color: #121212;
+}
+
+.regform {
   background-color: #ffffff;
   border-radius: 10px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
@@ -17,24 +21,68 @@
   margin: 40px auto;
 }
 
-.register-page .registerForm h1 {
+.regform.dark {
+  background-color: #1e1e1e;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.registerForm.dark {
+  color: #e0e0e0;
+}
+
+.registerForm.dark .Box label {
+  color: #e0e0e0;
+}
+
+.registerForm.dark .Box input {
+  background-color: #2d2d2d;
+  border-color: #444;
+  color: #e0e0e0;
+}
+
+.registerForm.dark .Box input:focus {
+  border-color: #28a745;
+}
+
+.registerForm.dark .checkbox-container label {
+  color: #e0e0e0;
+}
+
+.registerForm.dark .login-link p {
+  color: #e0e0 0 0 0 0.3
+}
+
+.registerForm.dark .login-link a {
+  color: #6ea8fe;
+}
+
+.modal-overlay.dark {
+  background-color: rgba(0, 0, 0, 0.7);
+}
+
+.modal-content.dark {
+  background-color: #1e1e1e;
+  color: #e0e0e0;
+}
+
+.registerForm h1 {
   font-size: 1.8rem;
   margin-bottom: 20px;
   text-align: center;
 }
 
-.register-page .formBody {
+.formBody {
   display: flex;
   flex-direction: column;
   gap: 15px;
 }
 
-.register-page .Box {
+.Box {
   display: flex;
   flex-direction: column;
 }
 
-.register-page .Box label {
+.Box label {
   margin-bottom: 5px;
   font-weight: 500;
   font-size: 1rem;
@@ -42,8 +90,8 @@
   text-align: left;
 }
 
-.register-page .Box input,
-.register-page .Box select {
+.Box input,
+.Box select {
   padding: 10px;
   border: 1px solid #ced4da;
   border-radius: 5px;
@@ -52,22 +100,22 @@
   transition: border-color 0.2s ease-in-out;
 }
 
-.register-page .Box input:focus,
-.register-page .Box select:focus {
+.Box input:focus,
+.Box select:focus {
   border-color: #28a745;
 }
 
-.register-page .checkbox-container {
+.checkbox-container {
   display: flex;
   align-items: center;
   margin-top: 10px;
 }
 
-.register-page .checkbox-container input {
+.checkbox-container input {
   margin-right: 10px;
 }
 
-.register-page button {
+.button {
   background-color: #28a745;
   color: #ffffff;
   padding: 10px;
@@ -80,44 +128,44 @@
   transition: background-color 0.3s ease-in-out;
 }
 
-.register-page button:hover {
+.button:hover {
   background-color: #218838;
 }
 
-.register-page .password-strength {
+.password-strength {
   display: flex;
   align-items: center;
   gap: 10px;
   margin-top: 5px;
 }
 
-.register-page .password-strength-bar {
+.password-strength-bar {
   height: 5px;
   width: 0;
   transition: width 0.3s ease-in-out;
   flex-grow: 1;
 }
 
-.register-page .strength-text {
+.strength-text {
   font-size: 1rem;
   font-weight: 500;
 }
 
-.register-page .strength-text.red {
+.strength-text.red {
   color: #dc3545;
 }
 
-.register-page .strength-text.green {
+.strength-text.green {
   color: #28a745;
 }
 
-.register-page .error {
+.error {
   color: red;
   font-size: 1rem;
   margin-top: 10px;
 }
 
-.register-page .success {
+.success {
   color: green;
   font-size: 1rem;
   margin-top: 10px;
@@ -173,11 +221,11 @@
 }
 
 @media (max-width: 768px) {
-  .register-page .registerForm {
+  .registerForm {
     padding: 15px;
   }
 
-  .register-page .registerForm h1 {
+  .registerForm h1 {
     font-size: 1.6rem;
   }
 }

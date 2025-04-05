@@ -1,94 +1,119 @@
-/* Styles specific to the Payment page */
 .payment-container {
-    padding: 20px;
-    max-width: 500px;
-    margin: 50px auto;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    background-color: #f9f9f9;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  max-width: 500px;
+  margin: 50px auto;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.payment-container h2 {
+  text-align: center;
+  color: #333;
+  margin-bottom: 20px;
+  font-size: 24px;
+}
+
+.payment-container .error-message {
+  color: red;
+  margin-bottom: 10px;
+  font-size: 14px;
+}
+
+.payment-container .card-element-container {
+  margin-bottom: 20px;
+}
+
+.payment-container .card-element-container label {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 14px;
+  color: #333;
+}
+
+.payment-container .StripeElement {
+  padding: 10px;
+  border-radius: 4px;
+  border: 1px solid #ddd;
+  font-size: 16px;
+  width: 100%;
+  background-color: #fff;
+  color: #424770;
+}
+
+.payment-container .StripeElement--invalid {
+  border-color: red;
+}
+
+.payment-container .StripeElement--focus {
+  border-color: #5469d4;
+}
+
+.payment-container button {
+  width: 100%;
+  padding: 12px;
+  font-size: 16px;
+  background-color: #5469d4;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.payment-container button:disabled {
+  background-color: #b0b0b0;
+  cursor: not-allowed;
+}
+
+.payment-container button:hover:not(:disabled) {
+  background-color: #4056a1;
+}
+
+.payment-container.dark-mode {
+  background-color: #2f2f2f;
+  color: #ffffff;
+  border-color: #444;
+}
+
+.payment-container.dark-mode h2 {
+  color: #ffffff;
+}
+
+.payment-container.dark-mode .StripeElement {
+  background-color: #444;
+  color: #ffffff;
+  border: 1px solid #666;
+}
+
+.payment-container.dark-mode .StripeElement--invalid {
+  border-color: #ff4d4d;
+}
+
+.payment-container.dark-mode button {
+  background-color: #3461a7;
+}
+
+.payment-container.dark-mode button:hover {
+  background-color: #2a4e89;
+}
+
+.payment-container.dark-mode .error-message {
+  color: #ff4d4d;
+}
+
+@media (max-width: 600px) {
+  .payment-container {
+    padding: 15px;
+    max-width: 100%;
   }
-  
+
   .payment-container h2 {
-    text-align: center;
-    color: #333;
-    margin-bottom: 20px;
-    font-size: 24px;
+    font-size: 20px;
   }
-  
-  /* Error message styling */
-  .payment-container .error-message {
-    color: red;
-    margin-bottom: 10px;
-    font-size: 14px;
-  }
-  
-  /* Form input container styling */
-  .payment-container .card-element-container {
-    margin-bottom: 20px;
-  }
-  
-  .payment-container .card-element-container label {
-    display: block;
-    margin-bottom: 8px;
-    font-size: 14px;
-    color: #333;
-  }
-  
-  /* Stripe CardElement specific styling */
-  .payment-container .StripeElement {
-    padding: 10px;
-    border-radius: 4px;
-    border: 1px solid #ddd;
-    font-size: 16px;
-    width: 100%;
-    background-color: #fff;
-    color: #424770;
-  }
-  
-  .payment-container .StripeElement--invalid {
-    border-color: red;
-  }
-  
-  .payment-container .StripeElement--focus {
-    border-color: #5469d4;
-  }
-  
-  /* Button styling */
+
   .payment-container button {
-    width: 100%;
-    padding: 12px;
-    font-size: 16px;
-    background-color: #5469d4;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
+    padding: 10px;
   }
-  
-  .payment-container button:disabled {
-    background-color: #b0b0b0;
-    cursor: not-allowed;
-  }
-  
-  .payment-container button:hover:not(:disabled) {
-    background-color: #4056a1;
-  }
-  
-  /* Responsive design for small screens */
-  @media (max-width: 600px) {
-    .payment-container {
-      padding: 15px;
-      max-width: 100%;
-    }
-  
-    .payment-container h2 {
-      font-size: 20px;
-    }
-  
-    .payment-container button {
-      padding: 10px;
-    }
-  }
-  
+}

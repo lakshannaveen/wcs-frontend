@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom'; 
+import { useNavigate } from 'react-router-dom';
+import { useTheme } from '../context/ThemeContext';
 import './Login.css';
 
 function CustomLogin() {
+  const { theme } = useTheme();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState({ username: '', password: '' });
@@ -27,7 +29,6 @@ function CustomLogin() {
       setErrorMessage(errors);
       return;
     }
-
     // If validation passes, clear the error messages
     setErrorMessage({});
     setLoading(true);
@@ -40,16 +41,11 @@ function CustomLogin() {
         body: JSON.stringify({ username, password }),
       });
       
-
       const result = await response.json();
       
       if (response.ok) {
-        // Successful login
         setSuccessMessage('Login successful!');
-        setShowModal(true); // Show the success modal
-
-      
-
+        setShowModal(true);
         setTimeout(() => {
           navigate('/'); // Redirect to home page after 2 seconds
         }, 2000); // Delay for 2 seconds
@@ -68,8 +64,8 @@ function CustomLogin() {
   const closeModal = () => setShowModal(false); // Close modal handler
 
   return (
-    <div className="logform">
-      <form className="loginForm" onSubmit={handleSubmit}>
+    <div className={`logform ${theme}`}>
+      <form className={`loginForm ${theme}`} onSubmit={handleSubmit}>
         <h1>Login</h1>
         <div className="formBody">
           {/* Error messages */}
@@ -112,11 +108,10 @@ function CustomLogin() {
           </div>
         </div>
       </form>
-
       {/* Modal for success message */}
       {showModal && (
         <div className="modal-overlay" onClick={closeModal}>
-          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+          <div className={`modal-content ${theme}`} onClick={(e) => e.stopPropagation()}>
             <h2>{successMessage}</h2>
             <button onClick={closeModal}>Close</button>
           </div>

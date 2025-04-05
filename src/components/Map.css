@@ -1,3 +1,13 @@
+/* Map Page Styles */
+.map-page {
+  min-height: 100vh;
+  padding: 20px 0;
+}
+
+.map-page.dark {
+  background-color: #121212;
+}
+
 .map-container {
   margin: 40px auto;
   padding: 15px;
@@ -8,16 +18,27 @@
   box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.15);
 }
 
+.map-container.dark {
+  background-color: #1e1e1e;
+  border-color: #444;
+  box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.3);
+}
+
 .map-container h3 {
   font-size: 20px;
   margin-bottom: 15px;
   text-align: center;
 }
 
+.map-container.dark h3 {
+  color: #ffffff;
+}
+
 .map-container .leaflet-container {
   border-radius: 8px;
 }
 
+/* Address Form */
 .address-details-form {
   margin-top: 20px;
   padding: 15px;
@@ -25,6 +46,12 @@
   border: 1px solid #ddd;
   border-radius: 8px;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.map-container.dark .address-details-form {
+  background-color: #2d2d2d;
+  border-color: #444;
+  color: #e0e0e0;
 }
 
 .address-details-form input {
@@ -37,11 +64,18 @@
   transition: border-color 0.3s ease;
 }
 
+.map-container.dark .address-details-form input {
+  background-color: #3d3d3d;
+  border-color: #555;
+  color: #ffffff;
+}
+
 .address-details-form input:focus {
-  border-color: black; 
+  border-color: black;
   outline: none;
 }
 
+/* Important Note */
 .important-note {
   margin-top: 15px;
   margin-bottom: 15px;
@@ -54,10 +88,37 @@
   line-height: 1.5;
 }
 
+.map-container.dark .important-note {
+  background-color: #332d00;
+  border-color: #665800;
+  color: #e0e0e0;
+}
+
 .important-note strong {
   font-weight: bold;
 }
 
+/* Links in Important Note */
+.important-note a {
+  color: #007bff;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.important-note a:hover {
+  text-decoration: underline;
+  color: #0056b3;
+}
+
+.map-container.dark .important-note a {
+  color: #007bff;
+}
+
+.map-container.dark .important-note a:hover {
+  color: #0056b3;
+}
+
+/* Form Elements */
 .house-number-input {
   margin-bottom: 15px;
 }
@@ -66,8 +127,9 @@
   margin-bottom: 15px;
 }
 
+/* Buttons */
 .btn-primary {
-  background-color: #2E7D32; 
+  background-color: #2E7D32;
   color: white;
   font-size: 16px;
   padding: 10px 20px;
@@ -75,23 +137,32 @@
   border-radius: 4px;
   cursor: pointer;
   transition: background-color 0.3s ease;
-  margin-top: 20px; /* Space above the button */
-  margin-bottom: 20px; /* Space below the button */
+  margin-top: 20px;
+  margin-bottom: 20px;
+  display: block; /* Add this */
+  margin-left: auto; /* Add this */
+  margin-right: auto; /* Add this */
+  width: fit-content; /* Add this */
 }
 
 .btn-primary:hover {
-  background-color: rgb(76, 175, 80) !important; 
+  background-color: rgb(76, 175, 80) !important;
 }
+
+/* Alerts */
 .custom-alert {
   color: red;
-  background: none; 
-  border: none; 
-  box-shadow: none; 
-  padding: 0; 
+  background: none;
+  border: none;
+  box-shadow: none;
+  padding: 0;
 }
 
+.map-container.dark .custom-alert {
+  color: #ff6b6b;
+}
 
-/* Responsive design for small screens */
+/* Responsive Styles */
 @media (max-width: 768px) {
   .map-container {
     margin: 20px 10px;
