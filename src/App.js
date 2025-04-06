@@ -4,7 +4,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import CustomNavbar from './components/Navbar';
 import CustomFooter from './components/Footer';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import CustomHome from './pages/Home';
+import CustomHome from './components/Home';
 import Aboutus from './pages/Aboutus';
 import Contactus from './pages/Contactus';
 import Feedback from './pages/Feedback';
