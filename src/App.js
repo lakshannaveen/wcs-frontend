@@ -37,7 +37,7 @@ import StripePayment from './components/payment';
 import AdminRegister from './components/admin components/AdminResgister';
 import Admin from './components/admin components/Admin';
 import { ThemeProvider } from './context/ThemeContext';
-import Drawer from './components/Drawer';
+
 
 function Layout({ children, toggleDrawer }) {
   return (
@@ -67,10 +67,7 @@ function App() {
       <div className="App">
         <Router>
           <Scrolltop />
-          <Drawer 
-            isOpen={isDrawerOpen} 
-            onClose={() => setIsDrawerOpen(false)} 
-          />
+          
           <Routes>
             {/* Public Route: Accessible without authentication */}
             <Route

@@ -12,11 +12,11 @@ import { Link, useNavigate } from "react-router-dom";
 import Cookies from "js-cookie"; 
 import { useTheme } from '../context/ThemeContext';
 
-function CustomNavbar({ toggleDrawer }) {
+function CustomNavbar() {
   const [showSidebar, setShowSidebar] = useState(false);
   const [user, setUser] = useState(null);
   const navigate = useNavigate(); 
-  const { theme } = useTheme();
+  const { theme, toggleTheme } = useTheme();
 
   const fetchUserData = () => {
     const token = Cookies.get("token");
@@ -63,13 +63,6 @@ function CustomNavbar({ toggleDrawer }) {
     <div className={`navbar-container ${theme}`}>
       <Navbar expand="lg" className={`navbar ${theme}`}>
         <Container>
-          <button 
-            className="drawer-toggle" 
-            onClick={toggleDrawer}
-            aria-label="Toggle menu"
-          >
-            ☰
-          </button>
           <Navbar.Brand as={Link} to="/">
             <img
               src={logo}
@@ -119,7 +112,7 @@ function CustomNavbar({ toggleDrawer }) {
         className={`offcanvas-custom ${theme}`}
       >
         <Offcanvas.Header closeButton>
-          <Offcanvas.Title>Profile</Offcanvas.Title>
+          <Offcanvas.Title>Options</Offcanvas.Title>
         </Offcanvas.Header>
         <Offcanvas.Body>
           <Nav className="flex-column">
@@ -142,6 +135,17 @@ function CustomNavbar({ toggleDrawer }) {
                 </Nav.Link>
               </>
             )}
+            <div className="theme-toggle-section">
+              <label className="theme-switch">
+                <input 
+                  type="checkbox" 
+                  checked={theme === 'dark'} 
+                  onChange={toggleTheme} 
+                />
+                <span className="slider round"></span>
+              </label>
+              <span>Dark Mode</span>
+            </div>
           </Nav>
         </Offcanvas.Body>
       </Offcanvas>
