@@ -13,7 +13,7 @@ const Drawer = ({ isOpen, onClose }) => {
           <ul>
             <li><a href="/">Home</a></li>
             <li><a href="/aboutus">About Us</a></li>
-            <li><a href="/contactus">Contact</a></li>
+            <li><a href="/contact">Contact</a></li>
           </ul>
         </nav>
         <div className="theme-toggle-section">
