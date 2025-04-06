@@ -14,7 +14,13 @@ import card3 from '../images/card3.jpeg';
 import Search from '../components/Search';
 import { Link } from 'react-router-dom';
 
+
+//import language change function
+import { useLanguage } from '../contexts/LanguageContext';
 function CustomHome() {
+
+    const { language } = useLanguage();
+
   return (
     <div>
       {/* carousel section */}
@@ -62,11 +68,11 @@ function CustomHome() {
       {/* commitment section */}
       <section className='commitment-section'>
         <div className='container'>
-          <h2>
-            Our Waste Collection Services are 100% Committed to Your Community!
+          <h2>{language === 'en' 
+            ? 'Our Waste Collection Services are 100% Committed to Your Community! ' : 'අපගේ අපද්‍රව්‍ය එකතු කිරීමේ සේවාවන් ඔබේ ප්‍රජාවට 100% කැපවී ඇත!'}
           </h2>
-          <p>Eco-Friendly, Reliable, and Tailored Just for You!</p>
-          <p className='highlight'>Together, We're Building a Cleaner Tomorrow!</p>
+          <p>{language === 'en' ? 'Eco-Friendly, Reliable, and Tailored Just for You!' : 'පරිසර හිතකාමී, විශ්වාසදායක සහ ඔබ වෙනුවෙන්ම සකස් කර ඇත!'} </p>
+          <p className='highlight'> {language === 'en' ?" Together, We're Building a Cleaner Tomorrow! ":'එක්ව, අපි පිරිසිදු හෙට දවසක් ගොඩනඟමු!'} </p>
           <Link to="/orderhistory">
             <button className='order-now-btn'>Order History</button>
           </Link>
