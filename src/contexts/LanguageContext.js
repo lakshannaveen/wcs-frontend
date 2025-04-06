@@ -1,4 +1,3 @@
-// LanguageContext.js
 import React, { createContext, useState, useContext } from 'react';
 
 const LanguageContext = createContext();
