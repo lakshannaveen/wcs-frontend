@@ -65,6 +65,15 @@
   padding: 4px;
 }
 
+.offcanvas-custom .btn-close {
+  filter: invert(1) grayscale(100%) brightness(200%);
+  opacity: 1;
+}
+
+.offcanvas-custom .btn-close:hover {
+  opacity: 0.75;
+}
+
 .profile-icon {
   width: 30px;
   height: 30px;
