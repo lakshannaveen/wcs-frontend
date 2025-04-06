@@ -106,6 +106,7 @@
 .locate-btn {
   padding: 10px 15px; 
   margin: 0; 
+  background-color: #28a745!important;
   flex: 1; 
   min-width: 120px; 
 }
@@ -128,7 +129,7 @@
 
 .search-btn.dark,
 .submit-btn.dark,
-.confirm-btn.dark {
+.confirm-btn.darks {
   background-color: #34ce57;
   color: white;
 }
