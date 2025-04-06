@@ -14,22 +14,22 @@ import { useLanguage } from '../contexts/LanguageContext';
 
 function CustomNavbar() {
   const [showSidebar, setShowSidebar] = useState(false);
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState(null);//State to store user data
   const navigate = useNavigate();
-  const location = useLocation();
   const { language, toggleLanguage } = useLanguage();
 
+  //function to fetch user data from the JWT token in cookies
   const fetchUserData = () => {
     const token = Cookies.get("token");
     if (token) {
       try {
         const decodedToken = JSON.parse(atob(token.split(".")[1])); 
-        setUser(decodedToken);
+        setUser(decodedToken);//set userdata (user name and more) to state
       } catch (error) {
         console.error("Failed to decode token:", error);
       }
     } else {
-      setUser(null);
+      setUser(null); //no token , set user to null 
     }
   };
   
@@ -38,24 +38,26 @@ function CustomNavbar() {
   }, []);
 
   const handleToggleSidebar = () => setShowSidebar(!showSidebar);
-
+  //Function to generate a background color based on user name
   const generateBackgroundColor = (username) => {
-    if (!username) return 'gray';
+    if (!username) return 'gray';// derfault color
     const hashCode = username.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
     const hue = hashCode % 360; 
-    return `hsl(${hue}, 70%, 50%)`;
+    return `hsl(${hue}, 70%, 50%)`;//return a color from HSL fromat
   };
 
+  //Functuion to create profile initials 
   const getProfileInitials = () => {
     if (!user || !user.username) return ""; 
     return user.username.charAt(0).toUpperCase(); 
   };
 
+  //Function to handle logout and clear the JWT tokens form cookies
   const handleLogout = () => {
     if (window.confirm("Are you sure you want to log out?")) {
       Cookies.remove("token");
-      sessionStorage.clear();
-      setUser(null);
+      sessionStorage.clear(); //clear session storage 
+      setUser(null); // set user to null after logout 
       navigate("/");
     }
   };
