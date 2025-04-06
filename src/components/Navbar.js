@@ -8,7 +8,7 @@ import Offcanvas from "react-bootstrap/Offcanvas";
 import logo from "../images/logo.JPEG";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
-import { Link, useNavigate, useLocation } from "react-router-dom"; 
+import { Link, useNavigate} from "react-router-dom"; 
 import Cookies from "js-cookie"; 
 import { useLanguage } from '../contexts/LanguageContext';
 
