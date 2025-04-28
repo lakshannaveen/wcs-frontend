@@ -37,11 +37,17 @@ function CustomRegister() {
 
   const calculatePasswordStrength = (password) => {
     if (password.length < 8) return 0;
-    let strength = 0;
-    if (/[a-z]/.test(password) && /[A-Z]/.test(password)) strength += 1; // Check for mixed case
-    if (/\d/.test(password)) strength += 1; // Check for numbers
-    if (/[!@#$%^&*(),.?":{}|<>]/.test(password)) strength += 1; // Check for special characters
-    return strength;
+    
+    const hasLowercase = /[a-z]/.test(password);
+    const hasUppercase = /[A-Z]/.test(password);
+    const hasNumber = /\d/.test(password);
+    const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(password);
+    
+    // Only return 1 (strong) if all conditions are met
+    if (hasLowercase && hasUppercase && hasNumber && hasSpecialChar) {
+      return 1;
+    }
+    return 0;
   };
 
   const handleSubmit = async (e) => {
@@ -84,8 +90,8 @@ function CustomRegister() {
       return;
     }
   
-    if (passwordStrength < 2) {
-      setError('Password is too weak. Please choose a stronger password.');
+    if (passwordStrength < 1) {
+      setError('Password must contain at least 1 uppercase, 1 lowercase, 1 number, and 1 special character');
       return;
     }
   
@@ -127,8 +133,7 @@ function CustomRegister() {
   };
   
   const getPasswordStrengthColor = () => {
-    if (passwordStrength === 0) return 'red';
-    return 'green';
+    return passwordStrength === 1 ? 'green' : 'red';
   };
 
   return (
@@ -200,12 +205,12 @@ function CustomRegister() {
                 <div
                   className="password-strength-bar"
                   style={{
-                    width: `${(passwordStrength / 3) * 100}%`,
+                    width: `${passwordStrength * 100}%`,
                     backgroundColor: getPasswordStrengthColor(),
                   }}
                 />
                 <span className={`strength-text ${getPasswordStrengthColor()}`}>
-                  {passwordStrength === 0 ? 'Weak' : 'Strong'}
+                  {passwordStrength === 1 ? 'Strong' : 'Weak'}
                 </span>
               </div>
             </div>
