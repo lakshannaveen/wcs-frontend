@@ -11,12 +11,17 @@ import { faUser } from "@fortawesome/free-solid-svg-icons";
 import { Link, useNavigate } from "react-router-dom"; 
 import Cookies from "js-cookie"; 
 import { useTheme } from '../context/ThemeContext';
+import { useLanguage } from '../context/LanguageContext';
+import { translations } from '../config/languages';
 
 function CustomNavbar() {
   const [showSidebar, setShowSidebar] = useState(false);
   const [user, setUser] = useState(null);
   const navigate = useNavigate(); 
   const { theme, toggleTheme } = useTheme();
+  const { language, changeLanguage } = useLanguage();
+  
+  const t = translations[language].navbar;
 
   const fetchUserData = () => {
     const token = Cookies.get("token");
@@ -76,15 +81,27 @@ function CustomNavbar() {
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="ms-auto">
               <Nav.Link as={Link} to="/" activeClassName="active-link">
-                Home
+                {t.home}
               </Nav.Link>
-              <NavDropdown title="Guidance" id="basic-nav-dropdown">
+              <NavDropdown title={t.guidance} id="basic-nav-dropdown">
                 <NavDropdown.Item as={Link} to="/customsubscription" className="nav-dropdown-menu">
-                  Subscription Plans
+                  {t.subscriptionPlans}
                 </NavDropdown.Item>
                 <div className="dropdown-divider" />
                 <NavDropdown.Item as={Link} to="/customguidance" className="nav-dropdown-menu">
-                  Waste Guidance
+                  {t.wasteGuidance}
+                </NavDropdown.Item>
+              </NavDropdown>
+              <NavDropdown 
+                title={language === 'en' ? t.english : t.sinhala} 
+                id="language-dropdown"
+                className="language-dropdown"
+              >
+                <NavDropdown.Item onClick={() => changeLanguage('en')}>
+                  {t.english}
+                </NavDropdown.Item>
+                <NavDropdown.Item onClick={() => changeLanguage('si')}>
+                  {t.sinhala}
                 </NavDropdown.Item>
               </NavDropdown>
               <Nav.Link onClick={handleToggleSidebar} className="ms-2">

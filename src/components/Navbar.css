@@ -140,6 +140,44 @@
   transition: .4s;
   border-radius: 50%;
 }
+/* Language Dropdown Styles */
+.language-dropdown .dropdown-toggle {
+  display: flex;
+  align-items: center;
+  padding: 8px 12px;
+}
+
+.language-dropdown .dropdown-menu {
+  min-width: 120px;
+}
+
+.language-dropdown .dropdown-item {
+  display: flex;
+  align-items: center;
+  padding: 8px 12px;
+}
+
+/* For RTL languages like Sinhala */
+[dir="rtl"] .language-dropdown .dropdown-item {
+  text-align: right;
+}
+
+/* Adjust navbar items alignment */
+.navbar .navbar-nav {
+  align-items: center;
+  gap: 10px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 992px) {
+  .language-dropdown {
+    margin-top: 10px;
+  }
+  
+  .navbar .navbar-nav {
+    gap: 5px;
+  }
+}
 
 input:checked + .slider {
   background-color: #2196F3;

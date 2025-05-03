@@ -37,7 +37,7 @@ import StripePayment from './components/payment';
 import AdminRegister from './components/admin components/AdminResgister';
 import Admin from './components/admin components/Admin';
 import { ThemeProvider } from './context/ThemeContext';
-
+import { LanguageProvider } from './context/LanguageContext';
 
 function Layout({ children, toggleDrawer }) {
   return (
@@ -64,188 +64,190 @@ function App() {
 
   return (
     <ThemeProvider>
-      <div className="App">
-        <Router>
-          <Scrolltop />
-          
-          <Routes>
-            {/* Public Route: Accessible without authentication */}
-            <Route
-              path="/"
-              element={
-                <Layout toggleDrawer={toggleDrawer}>
-                  <CustomHome />
-                </Layout>
-              }
-            />
+      <LanguageProvider>
+        <div className="App">
+          <Router>
+            <Scrolltop />
+            
+            <Routes>
+              {/* Public Route: Accessible without authentication */}
+              <Route
+                path="/"
+                element={
+                  <Layout toggleDrawer={toggleDrawer}>
+                    <CustomHome />
+                  </Layout>
+                }
+              />
 
-            {/* Public Routes (Accessible without authentication) */}
-            <Route
-              path="/aboutus"
-              element={
-                <Layout toggleDrawer={toggleDrawer}>
-                  <Aboutus />
-                </Layout>
-              }
-            />
-            <Route
-              path="/teamsandconditions"
-              element={
-                <Teamsandconditions />
-              }
-            />
-            <Route
-              path="/privacy"
-              element={
-                <Layout toggleDrawer={toggleDrawer}>
-                  <Privacy />
-                </Layout>
-              }
-            />
+              {/* Public Routes (Accessible without authentication) */}
+              <Route
+                path="/aboutus"
+                element={
+                  <Layout toggleDrawer={toggleDrawer}>
+                    <Aboutus />
+                  </Layout>
+                }
+              />
+              <Route
+                path="/teamsandconditions"
+                element={
+                  <Teamsandconditions />
+                }
+              />
+              <Route
+                path="/privacy"
+                element={
+                  <Layout toggleDrawer={toggleDrawer}>
+                    <Privacy />
+                  </Layout>
+                }
+              />
 
-            {/* Protected Routes */}
-            <Route element={<ProtectedRoute isAuthenticated={!!user} />}>
-              <Route
-                path="/contact"
-                element={
-                  <Layout toggleDrawer={toggleDrawer}>
-                    <Contactus />
-                  </Layout>
-                }
-              />
-              <Route
-                path="/orderhistory"
-                element={
-                  <OrderHistory/>
-                }
-              />
-              <Route
-                path="/payment"
-                element={
-                  <StripePayment/>
-                }
-              />
-              <Route
-                path="/update/:checkoutId" 
-                element={<Update />}
-              />
-              <Route
-                path="/feedback"
-                element={
-                  <Layout toggleDrawer={toggleDrawer}>
-                    <Feedback />
-                  </Layout>
-                }
-              />
-              <Route
-                path="/customprofile"
-                element={
-                  <Layout toggleDrawer={toggleDrawer}>
-                    <Customprofile />
-                  </Layout>
-                }
-              />
-              <Route
-                path="/map"
-                element={
-                  <Layout toggleDrawer={toggleDrawer}>
-                    <MapPage />
-                  </Layout>
-                }
-              />
-              <Route
-                path="/search"
-                element={
-                  <Layout toggleDrawer={toggleDrawer}>
-                    <Search />
-                  </Layout>
-                }
-              />
-              <Route
-                path="/checkout"
-                element={
-                  <Checkout />
-                }
-              />
-              <Route
-                path="/bill"
-                element={
-                  <Bill />
-                }
-              />
-              <Route
-                path="/changepassword"
-                element={
-                  <ChangePassword />
-                }
-              />
-            </Route>
+              {/* Protected Routes */}
+              <Route element={<ProtectedRoute isAuthenticated={!!user} />}>
+                <Route
+                  path="/contact"
+                  element={
+                    <Layout toggleDrawer={toggleDrawer}>
+                      <Contactus />
+                    </Layout>
+                  }
+                />
+                <Route
+                  path="/orderhistory"
+                  element={
+                    <OrderHistory/>
+                  }
+                />
+                <Route
+                  path="/payment"
+                  element={
+                    <StripePayment/>
+                  }
+                />
+                <Route
+                  path="/update/:checkoutId" 
+                  element={<Update />}
+                />
+                <Route
+                  path="/feedback"
+                  element={
+                    <Layout toggleDrawer={toggleDrawer}>
+                      <Feedback />
+                    </Layout>
+                  }
+                />
+                <Route
+                  path="/customprofile"
+                  element={
+                    <Layout toggleDrawer={toggleDrawer}>
+                      <Customprofile />
+                    </Layout>
+                  }
+                />
+                <Route
+                  path="/map"
+                  element={
+                    <Layout toggleDrawer={toggleDrawer}>
+                      <MapPage />
+                    </Layout>
+                  }
+                />
+                <Route
+                  path="/search"
+                  element={
+                    <Layout toggleDrawer={toggleDrawer}>
+                      <Search />
+                    </Layout>
+                  }
+                />
+                <Route
+                  path="/checkout"
+                  element={
+                    <Checkout />
+                  }
+                />
+                <Route
+                  path="/bill"
+                  element={
+                    <Bill />
+                  }
+                />
+                <Route
+                  path="/changepassword"
+                  element={
+                    <ChangePassword />
+                  }
+                />
+              </Route>
 
-            {/* Pages without Navbar and Footer */}
-            <Route path="/login" element={<CustomLogin />} />
-            <Route path="/register" element={<CustomRegister />} />
-            <Route path="/customsubscription" element={<CustomSubscription />} />
-            <Route path="/customguidance" element={<Customguidance />} />
+              {/* Pages without Navbar and Footer */}
+              <Route path="/login" element={<CustomLogin />} />
+              <Route path="/register" element={<CustomRegister />} />
+              <Route path="/customsubscription" element={<CustomSubscription />} />
+              <Route path="/customguidance" element={<Customguidance />} />
 
-            {/* Admin Routes */}
-            <Route path="/admin-login" element={<AdminLogin />} />
-            <Route
-              path="/admindashbord"
-              element={
-                <AdminProtectedRoute>
-                  <AdminDashboard />
-                </AdminProtectedRoute>
-              }
-            />
-            <Route
-              path="/contactinquiries"
-              element={
-                <AdminProtectedRoute>
-                  <ContactInquiries />
-                </AdminProtectedRoute>
-              }
-            />
-            <Route
-              path="/adminregister"
-              element={
-                <AdminProtectedRoute>
-                  <AdminRegister />
-                </AdminProtectedRoute>
-              }/>
-            <Route
-              path="/admin"
-              element={
-                <AdminProtectedRoute>
-                  <Admin />
-                </AdminProtectedRoute>
-              }/>
-            <Route
-              path="/orders"
-              element={
-                <AdminProtectedRoute>
-                  <AdminOrders />
-                </AdminProtectedRoute>
-              }
-            />
-            <Route
-              path="/adminmap"
-              element={
-                <AdminProtectedRoute>
-                  <AdminMap />
-                </AdminProtectedRoute>
-              }
-            />
-            <Route
-              path="/feedbackmessage"
-              element={
-                <AdminProtectedRoute>
-                  <FeedbackMessage />
-                </AdminProtectedRoute>
-              }
-            />
-          </Routes>
-        </Router>
-      </div>
+              {/* Admin Routes */}
+              <Route path="/admin-login" element={<AdminLogin />} />
+              <Route
+                path="/admindashbord"
+                element={
+                  <AdminProtectedRoute>
+                    <AdminDashboard />
+                  </AdminProtectedRoute>
+                }
+              />
+              <Route
+                path="/contactinquiries"
+                element={
+                  <AdminProtectedRoute>
+                    <ContactInquiries />
+                  </AdminProtectedRoute>
+                }
+              />
+              <Route
+                path="/adminregister"
+                element={
+                  <AdminProtectedRoute>
+                    <AdminRegister />
+                  </AdminProtectedRoute>
+                }/>
+              <Route
+                path="/admin"
+                element={
+                  <AdminProtectedRoute>
+                    <Admin />
+                  </AdminProtectedRoute>
+                }/>
+              <Route
+                path="/orders"
+                element={
+                  <AdminProtectedRoute>
+                    <AdminOrders />
+                  </AdminProtectedRoute>
+                }
+              />
+              <Route
+                path="/adminmap"
+                element={
+                  <AdminProtectedRoute>
+                    <AdminMap />
+                  </AdminProtectedRoute>
+                }
+              />
+              <Route
+                path="/feedbackmessage"
+                element={
+                  <AdminProtectedRoute>
+                    <FeedbackMessage />
+                  </AdminProtectedRoute>
+                }
+              />
+            </Routes>
+          </Router>
+        </div>
+      </LanguageProvider>
     </ThemeProvider>
   );
 }
