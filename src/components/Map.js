@@ -6,6 +6,8 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import './Map.css';
 import Cookies from 'js-cookie';
 import { jwtDecode } from 'jwt-decode';  // Corrected import
+import { useLanguage } from '../contexts/LanguageContext';
+import translations from '../translations/mapTranslations';
 
 // Custom waste bin icon for map
 const wasteBinIcon = new L.Icon({
@@ -14,6 +16,8 @@ const wasteBinIcon = new L.Icon({
 });
 
 const Map = () => {
+  const { language } = useLanguage();
+  const t = translations[language];
   const [coordinates, setCoordinates] = useState([7.8731, 80.7718]); // Center of Sri Lanka
   const [selectedPosition, setSelectedPosition] = useState([7.8731, 80.7718]); // Default position is the same
   const [address, setAddress] = useState(''); // Address of the selected position
@@ -58,10 +62,10 @@ const Map = () => {
         `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}&addressdetails=1`
       );
       const data = await response.json();
-      setAddress(data.display_name || 'Address not found');
+      setAddress(data.display_name || t.addressNotFound);
     } catch (error) {
       console.error('Error fetching address:', error);
-      setAddress('Unable to fetch address');
+      setAddress(t.addressFetchError);
     }
   };
 
@@ -127,8 +131,8 @@ const Map = () => {
     <div className="map-container">
       <h3>
         {selectedPosition
-          ? `Selected Location: ${address || 'Fetching address...'}` 
-          : 'Select a location on the map'}
+          ? `${t.selectedLocationPrefix}${address || t.fetchingAddress}`
+          : t.selectLocation}
       </h3>
 
       <MapContainer center={coordinates} zoom={7} style={{ height: '500px', width: '100%' }}>
@@ -138,46 +142,67 @@ const Map = () => {
         />
         <LocationSelector />
         <Marker position={selectedPosition} icon={wasteBinIcon}>
-          <Popup>{address || 'Loading address...'}</Popup>
+          <Popup>{address || t.loadingAddress}</Popup>
         </Marker>
       </MapContainer>
       
       <div className="important-note">
-        <strong>Important:</strong> Please note that when changing the location on our map, your address will be automatically adjusted based on the new map location selected, ensuring a smooth and hassle-free experience.
+        <strong>{t.note.important}</strong> {t.note.text}
         <br />
         <a href="/customsubscription" className="check-subscription" target="_blank" rel="noopener noreferrer">
-          Check Subscription Plans
+          {t.links.checkSubscription}
         </a> |
         <a href="/customguidance" className="check-waste-guidance" target="_blank" rel="noopener noreferrer">
-          Check How to Dispose of Your Waste
+          {t.links.checkWasteGuidance}
         </a>
       </div>
 
       {!isLocationConfirmed ? (
         <div className="address-details-form mt-3">
-          <input type="text" placeholder="House Number (e.g., No 4)" value={houseNo} onChange={(e) => setHouseNo(e.target.value)} className="house-number-input mb-2" />
-          <input type="text" placeholder="Street Name (e.g., Dewata road)" value={streetName} onChange={(e) => setStreetName(e.target.value)} className="street-name-input mb-2" />
-          <div className="subscription-plan-selection mb-2">
-            <select value={subscriptionPlan} onChange={(e) => setSubscriptionPlan(e.target.value)} className="form-select">
-              <option value="">Select Subscription Plan</option>
-              <option value="daily">Daily</option>
-              <option value="weekly">Weekly</option>
-              <option value="monthly">Monthly</option>
-              <option value="one-time">One Time</option>
-            </select>
-          </div>
+        <input
+          type="text"
+          placeholder={t.placeholders.houseNumber}
+          value={houseNo}
+          onChange={(e) => setHouseNo(e.target.value)}
+          className="house-number-input mb-2"
+        />
+        <input
+          type="text"
+          placeholder={t.placeholders.streetName}
+          value={streetName}
+          onChange={(e) => setStreetName(e.target.value)}
+          className="street-name-input mb-2"
+        />
+        <div className="subscription-plan-selection mb-2">
+          <select
+            value={subscriptionPlan}
+            onChange={(e) => setSubscriptionPlan(e.target.value)}
+            className="form-select"
+          >
+            <option value="">{t.placeholders.selectPlan}</option>
+            <option value="daily">{t.plans.daily}</option>
+            <option value="weekly">{t.plans.weekly}</option>
+            <option value="monthly">{t.plans.monthly}</option>
+            <option value="one-time">{t.plans.oneTime}</option>
+          </select>
+        </div>
 
           {subscriptionPlan === 'weekly' && (
             <div className="weekly-plan">
-              <select value={selectedWeekday} onChange={(e) => setSelectedWeekday(e.target.value)} className="form-select">
-                <option value="">Select Weekday</option>
-                <option value="monday">Monday</option>
-                <option value="tuesday">Tuesday</option>
-                <option value="wednesday">Wednesday</option>
-                <option value="thursday">Thursday</option>
-                <option value="friday">Friday</option>
-              </select>
-            </div>
+            <select
+              value={selectedWeekday}
+              onChange={(e) => setSelectedWeekday(e.target.value)}
+              className="form-select"
+            >
+              <option value="">{t.placeholders.selectWeekday}</option>
+              <option value="monday">{t.weekdays.monday}</option>
+              <option value="tuesday">{t.weekdays.tuesday}</option>
+              <option value="wednesday">{t.weekdays.wednesday}</option>
+              <option value="thursday">{t.weekdays.thursday}</option>
+              <option value="friday">{t.weekdays.friday}</option>
+            </select>
+          </div>
+        
           )}
 
           {subscriptionPlan === 'monthly' && (
@@ -188,11 +213,11 @@ const Map = () => {
 
           {showWarning && (
             <div className="alert custom-alert">
-              Please provide correct location on map, house number, street name, and subscription plan.
+              {t.warning}
             </div>
           )}
 
-          <button onClick={handleConfirm} className="btn btn-primary">Confirm and Checkout</button>
+          <button onClick={handleConfirm} className="btn btn-primary">{t.buttons.confirm}</button>
         </div>
       ) : null}
     </div>
