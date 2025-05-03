@@ -1,13 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import './About.css';
 import { Container, Row, Col, Card } from 'react-bootstrap';
-import { useTheme } from '../context/ThemeContext'; // Import theme context
+import { useTheme } from '../context/ThemeContext';
+import { useLanguage } from '../context/LanguageContext';
+import { translations } from '../config/languages';
 
 
 const CustomAbout = () => {
   const [feedbackData, setFeedbackData] = useState([]);
   const [loading, setLoading] = useState(true);
-  const { theme } = useTheme(); // Get current theme
+  const { theme } = useTheme();
+  const { language } = useLanguage();
+  const t = translations[language].aboutUs;
 
   useEffect(() => {
     const fetchFeedback = async () => {
@@ -34,29 +38,19 @@ const CustomAbout = () => {
       <Container>
         <section className={`about-us-container ${theme}`}>
           <div className={`about-us-content ${theme}`}>
-            <h2>About Us</h2>
-            <p>
-              WCS (Waste Collection System) is committed to providing efficient and sustainable waste collection and management services, with a vision to drive a "Green Future" for our communities. Our mission is to make it easy for individuals and businesses to responsibly dispose of waste, promoting a cleaner and greener environment.
-            </p>
-            <p>
-              Established in 2024, WCS has quickly become a trusted partner in waste management across various regions. Through our "Green Future" initiative, our dedicated team ensures that waste from homes, restaurants, and businesses is collected, sorted, and responsibly recycled or disposed of. Our primary focus is to reduce landfill waste and promote sustainable practices by offering a range of service plans tailored to our customers' diverse needs.
-            </p>
-            <p>
-              Our services include daily, weekly, and monthly collection plans, catering to households, businesses, and industrial clients. With a fleet of modern vehicles and a dedicated team, we are committed to timely and efficient waste collection services. By prioritizing sustainability, WCS is driving towards a Green Future where waste is minimized, and recycling becomes second nature.
-            </p>
-            <p>
-              Join WCS today, and become part of the Green Future movement. Let's work together to create a cleaner, more sustainable world. For inquiries or service requests, reach out to our customer service hotline at 0912234567.
-            </p>
-            {/* Rest of your about content */}
+            <h2>{t.title}</h2>
+            {t.content.map((paragraph, index) => (
+              <p key={index}>{paragraph}</p>
+            ))}
           </div>
         </section>
         <hr className={`divider ${theme}`} />
 
         {/* Customer Feedback Section */}
         <Container className={`review-section ${theme} my-5`}>
-          <h4 className="text-center">OUR CUSTOMERS SPEAK FOR US</h4>
+          <h4 className="text-center">{t.feedbackTitle}</h4>
           {loading ? (
-            <p>Loading feedback...</p>
+            <p>{t.loadingText}</p>
           ) : (
             <Row>
               {feedbackData.map((feedback, index) => (
