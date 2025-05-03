@@ -2,8 +2,15 @@ import React, { useState } from 'react';
 import { FaFacebookF, FaYoutube, FaInstagram, FaTiktok } from 'react-icons/fa';
 import './Contact.css';
 import { Form, Button, Row, Col } from 'react-bootstrap';
+import { useLanguage } from '../contexts/LanguageContext';
+import { contactTranslations } from '../translations/contactTranslations';
 
 const CustomContact = () => {
+  //for the translations
+  const { language } = useLanguage();
+  const t = contactTranslations[language];
+
+
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
@@ -18,11 +25,11 @@ const CustomContact = () => {
 
   const validate = () => {
     let tempErrors = {};
-    if (!formData.firstName) tempErrors.firstName = "First Name is required";
-    if (!formData.lastName) tempErrors.lastName = "Last Name is required";
-    if (!formData.email || !/\S+@\S+\.\S+/.test(formData.email)) tempErrors.email = "Valid Email is required";
-    if (!formData.phone || formData.phone.length !== 10) tempErrors.phone = "Valid Phone Number is required (10 digits)";
-    if (!formData.message) tempErrors.message = "Message cannot be empty";
+    if (!formData.firstName) tempErrors.firstName = t.errors.firstName;//errors with translations
+    if (!formData.lastName) tempErrors.lastName = t.errors.lastName;
+    if (!formData.email || !/\S+@\S+\.\S+/.test(formData.email)) tempErrors.email = t.errors.email;
+    if (!formData.phone || formData.phone.length !== 10) tempErrors.phone = t.errors.phone;
+    if (!formData.message) tempErrors.message = t.errors.message;
     setErrors(tempErrors);
     return Object.keys(tempErrors).length === 0;
   };
@@ -52,7 +59,7 @@ const CustomContact = () => {
 
         if (response.ok) {
           const data = await response.json();
-          setSuccessMessage(data.message || 'Contact saved successfully!');
+          setSuccessMessage(data.message || t.success.default);
           setFormData({
             firstName: '',
             lastName: '',
@@ -62,11 +69,11 @@ const CustomContact = () => {
           });
         } else {
           const errorData = await response.json();
-          setErrorMessage(errorData.error || 'Failed to save contact.');
+          setErrorMessage(errorData.error || t.error.submitErorr);
         }
       } catch (error) {
         console.error('Error submitting form:', error);
-        setErrorMessage('An error occurred while submitting the form. Please try again later.');
+        setErrorMessage(t.errors.serverError);
       }
       setValidated(true); 
     }
@@ -76,11 +83,11 @@ const CustomContact = () => {
   return (
     <div className='contactus'>
       <div className='left-section'>
-        <h2 className='heading-contact'>Contact Information</h2>
-        <p>Feel Free to Contact us via</p>
-        <p><strong>Email:</strong> wastecollectionsystem.lk@gmail.com</p>
-        <p><strong>Phone:</strong> 0912234567</p>
-        <h3>Find Us on Social Media</h3>
+           <h2 className='heading-contact'>{t.contactInfo.title}</h2>
+        <p>{t.contactInfo.subtitle}</p>
+        <p><strong>{t.contactInfo.emailLabel}:</strong> {t.contactInfo.email}</p>
+        <p><strong>{t.contactInfo.phoneLabel}:</strong> {t.contactInfo.phone}</p>
+        <h3>{t.socialMedia.title}</h3>
         <div className="social-icons">
           <a href="https://www.facebook.com/profile.php?id=61567165493241&mibextid=ZbWKwL" target="_blank" rel="noopener noreferrer">
             <FaFacebookF size={30} color="#FFFFFF" />
@@ -95,20 +102,20 @@ const CustomContact = () => {
             <FaTiktok size={30} color="#FFFFFF" />
           </a>
         </div>
-        <p className='business-para'>Business Hours: Monday - Friday: 9 AM - 5 PM</p>
+        <p className='business-para'>{t.businessHours}</p>
       </div>
       
       <div className="right-section">
-        <h2>Ask Anything</h2>
+        <h2>{t.form.title}</h2>
         <Form onSubmit={handleSubmit} noValidate validated={validated}>
           <Row className="mb-3">
             <Form.Group as={Col} controlId="formFirstName">
               <div className="form-label-wrapper">
-                <Form.Label>First Name *</Form.Label>
+                <Form.Label>{t.form.labels.firstName}</Form.Label>
                 <Form.Control
                   type="text"
                   name="firstName"
-                  placeholder="First Name"
+                  placeholder={t.form.placeholders.firstName}
                   value={formData.firstName}
                   onChange={handleChange}
                   isInvalid={!!errors.firstName} 
@@ -121,11 +128,11 @@ const CustomContact = () => {
 
             <Form.Group as={Col} controlId="formLastName">
               <div className="form-label-wrapper">
-                <Form.Label>Last Name *</Form.Label>
+                <Form.Label>{t.form.labels.lastName}</Form.Label>
                 <Form.Control
                   type="text"
                   name="lastName"
-                  placeholder="Last Name"
+                  placeholder={t.form.placeholders.lastName}
                   value={formData.lastName}
                   onChange={handleChange}
                   isInvalid={!!errors.lastName} 
@@ -140,11 +147,11 @@ const CustomContact = () => {
           <Row className="mb-3">
             <Form.Group as={Col} controlId="formEmail">
               <div className="form-label-wrapper">
-                <Form.Label>Email *</Form.Label>
+                <Form.Label>{t.form.labels.email}</Form.Label>
                 <Form.Control
                   type="email"
                   name="email"
-                  placeholder="Email"
+                  placeholder={t.form.placeholders.email}
                   value={formData.email}
                   onChange={handleChange}
                   isInvalid={!!errors.email} 
@@ -157,11 +164,11 @@ const CustomContact = () => {
 
             <Form.Group as={Col} controlId="formPhone">
               <div className="form-label-wrapper">
-                <Form.Label>Phone Number *</Form.Label>
+                <Form.Label>{t.form.labels.phone}</Form.Label>
                 <Form.Control
                   type="tel"
                   name="phone"
-                  placeholder="Phone Number"
+                  placeholder={t.form.placeholders.phone}
                   value={formData.phone}
                   onChange={handleChange}
                   isInvalid={!!errors.phone} 
@@ -175,11 +182,11 @@ const CustomContact = () => {
 
           <Form.Group controlId="formMessage" className="mb-3">
             <div className="form-label-wrapper">
-              <Form.Label>Message</Form.Label>
+              <Form.Label>{t.form.labels.message}</Form.Label>
               <Form.Control
                 as="textarea"
                 name="message"
-                placeholder="Write your inquiry here..."
+                placeholder={t.form.placeholders.message}
                 value={formData.message}
                 onChange={handleChange}
                 isInvalid={!!errors.message} 
@@ -191,7 +198,7 @@ const CustomContact = () => {
           </Form.Group>
 
           <Button variant="success" type="submit">
-            Submit
+          {t.form.submitButton}
           </Button>
         </Form>
 
