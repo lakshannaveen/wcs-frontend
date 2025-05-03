@@ -2,12 +2,15 @@ import React, { useState } from 'react';
 import './Checkoutform.css';
 import { useNavigate } from 'react-router-dom';
 import { useLanguage } from '../contexts/LanguageContext';
+import { translations } from '../translations/checkoutTranslations';
 
 
 
 function Checkoutform() {
   const navigate = useNavigate();
-  const { language } = useLanguage();
+  const { language, toggleLanguage } = useLanguage();
+  const t = translations[language];
+
   const [formErrors, setFormErrors] = useState({
     email: '',
     phone: '',
@@ -301,208 +304,140 @@ function Checkoutform() {
   };
   
   
-  
   return (
-      <div className="checkout-container">
-      <h2 className="checkout-header">{language === 'en' ? 'CHECKOUT' : 'ගෙවීම'}</h2>
-      <div className="checkout-forms">
-        <div className="form-section">
-          <h3>{language === 'en' ? 'Sender Details' : 'යවන්නාගේ විස්තර'}</h3>
-          <form className="sender-form" onSubmit={handleSubmit}>
-            {/* Sender details form */}
-            <div className="input-group">
-              <label>{language === 'en' ? 'First Name*' : 'මුල් නම*'}</label>
-              <input
-                type="text"
-                name="firstName"
-                value={senderDetails.firstName}
-                placeholder={language === 'en' ? 'First Name*' : 'යවන්නාගේ මුල් නම*'}
-                onChange={handleSenderChange}
-              />
-              {hasSubmitted && formErrors.firstName && <p className="error">{formErrors.firstName}</p>}
-            </div>
-            <div className="input-group">
-              <label>{language === 'en' ? 'Last Name*' : 'අවසන් නම*'}</label>
-              <input
-                type="text"
-                name="lastName"
-                value={senderDetails.lastName}
-                placeholder={language === 'en' ? 'Last Name*' : 'යවන්නාගේ අවසන් නම*'}
-                onChange={handleSenderChange}
-              />
-              {hasSubmitted && formErrors.lastName && <p className="error">{formErrors.lastName}</p>}
-            </div>
-            <div className="input-group">
-              <label>{language === 'en' ? 'Zip Code*' : 'තැපැල් කේතය*'}</label>
-              <input
-                type="text"
-                name="zipCode"
-                value={senderDetails.zipCode}
-               placeholder={language === 'en' ? 'Zip Code' : 'තැපැල් කේතය'}
-                onChange={handleSenderChange}
-              />
-              {hasSubmitted && formErrors.zipCode && <p className="error">{formErrors.zipCode}</p>}
-            </div>
-            <div className="input-group">
-              <label>    {language === 'en' ? 'Phone Number*' : 'දුරකථන අංකය*'}</label>
-              <input
-                type="tel"
-                name="phone"
-                value={senderDetails.phone}
-                placeholder={language === 'en' ? 'Phone Number' : ' යවන්නාගේ දුරකථන අංකය'}
-                onChange={handleSenderChange}
-              />
-              {hasSubmitted && formErrors.phone && <p className="error">{formErrors.phone}</p>}
-            </div>
-            <div className="input-group">
-              <label> {language === 'en' ? 'Email*' : 'විද්‍යුත් තැපෑල*'} </label>
-              <input
-                type="email"
-                name="email"
-                value={senderDetails.email}
-                placeholder={language === 'en' ? 'Email' : 'යවන්නාගේ විද්‍යුත් තැපෑල'}
-                onChange={handleSenderChange}
-              />
-              {hasSubmitted && formErrors.email && <p className="error">{formErrors.email}</p>}
-            </div>
-
-            {/*waste collection time */}
-
-                    <div className="input-group">
-        <label className="timelable"> {language === 'en' ? 'Waste Collection Time*' : 'කසළ එකතු කිරීමේ වේලාව*'}</label>
-        <select name="wasteCollectionTime" value={wasteCollectionTime} onChange={handleTimeChange} className="time-dropdown">
-          <option value=""> {language === 'en' ? 'Select a time' : 'වේලාවක් තෝරන්න'}</option>
-          <option value="Morning">{language === 'en' ? 'Morning' : 'උදේ' }  (9AM-12PM)</option>
-          <option value="Afternoon"> {language === 'en' ? 'Afternoon ' : 'දවල්'}  (12PM-3PM)</option>
-          <option value="Evening">{language === 'en' ? 'Evening ' : 'සවස '}  (3PM-6PM)</option>
-        </select>
-        {hasSubmitted && timeError && <p className="error">{timeError}</p>}
+    <div className="checkout-container">
+      <div className="language-toggle-container">
+        <button onClick={toggleLanguage} className="language-toggle">
+          {language === 'en' ? 'සිංහල' : 'English'}
+        </button>
       </div>
 
+      <h2 className="checkout-header">{t.title}</h2>
+      
+      <div className="checkout-forms">
+        {/* Sender Details Section */}
+        <div className="form-section">
+          <h3>{t.senderTitle}</h3>
+          <form className="sender-form" onSubmit={handleSubmit}>
+            {['firstName', 'lastName', 'zipCode', 'phone', 'email'].map((field) => (
+              <div className="input-group" key={field}>
+                <label>{t.senderLabels[field]}</label>
+                <input
+                  type={field === 'email' ? 'email' : field === 'phone' ? 'tel' : 'text'}
+                  name={field}
+                  value={senderDetails[field]}
+                  placeholder={t.senderPlaceholders[field]}
+                  onChange={handleSenderChange}
+                />
+                {hasSubmitted && formErrors[field] && (
+                  <p className="error">{formErrors[field]}</p>
+                )}
+              </div>
+            ))}
 
-            {/* Recipient Same As Sender Checkbox */}
+            <div className="input-group">
+              <label className="timelable">{t.collectionTimeLabel}</label>
+              <select
+                name="wasteCollectionTime"
+                value={wasteCollectionTime}
+                onChange={handleTimeChange}
+                className="time-dropdown"
+              >
+                <option value="">{t.timePlaceholder}</option>
+                {t.timeOptions.map((option) => (
+                  <option key={option.value} value={option.value}>
+                    {option.label}
+                  </option>
+                ))}
+              </select>
+              {hasSubmitted && timeError && <p className="error">{timeError}</p>}
+            </div>
+
             <div className="checkbox-group">
               <label>
                 <input
                   type="checkbox"
                   checked={isRecipientSame}
                   onChange={handleCheckboxChange}
-                />{language === 'en' 
-                  ? 'Recipient is the same as sender' 
-                  : 'යවන්නා සහ ලබන්නා එකම පුත්ගලයෙකු වේ (යවන්නාගෙ තොරතුරු සහ ලබන්නාගෙ තොරතුරු සමානයි'}
+                />
+                {t.sameAsSender}
               </label>
             </div>
           </form>
         </div>
 
+        {/* Recipient Details Section */}
         <div className="form-section">
-          <h3>{language === 'en' ? 'Recipient Details' : 'ලබන්නාගේ විස්තර'}</h3>
-          <div className="input-group">
-            <label> {language === 'en' ? 'First Name*' : 'මුල් නම*'}</label>
-            <input
-              type="text"
-              name="firstName"
-              value={recipientDetails.firstName}
-               placeholder={language === 'en' ? 'Recipient First Name' : 'ලබන්නාගේ මුල් නම'}
-              onChange={handleRecipientChange}
-              disabled={isRecipientSame}
-            />
-            {hasSubmitted && formErrors.recipient.firstName && <p className="error">{formErrors.recipient.firstName}</p>}
-          </div>
-          <div className="input-group">
-            <label>{language === 'en' ? 'Last Name*' : 'අවසන් නම*'}</label>
-            <input
-              type="text"
-              name="lastName"
-              value={recipientDetails.lastName}
-              placeholder={language === 'en' ? 'Recipient Last Name*' : 'ලබන්නාගේ අවසන් නම*'}
-              onChange={handleRecipientChange}
-              disabled={isRecipientSame}
-            />
-            {hasSubmitted && formErrors.recipient.lastName && <p className="error">{formErrors.recipient.lastName}</p>}
-          </div>
-          <div className="input-group">
-            <label>{language === 'en' ? 'Zip Code*' : 'තැපැල් කේතය*'}</label>
-            <input
-              type="text"
-              name="zipCode"
-              value={recipientDetails.zipCode}
-              placeholder={language === 'en' ? 'Zip Code*' : 'තැපැල් කේතය*'}
-              onChange={handleRecipientChange}
-              disabled={isRecipientSame}
-            />
-            {hasSubmitted && formErrors.recipient.zipCode && <p className="error">{formErrors.recipient.zipCode}</p>}
-          </div>
-          <div className="input-group">
-            <label> {language === 'en' ? 'Phone Number*' : 'දුරකථන අංකය*'}</label>
-            <input
-              type="tel"
-              name="phone"
-              value={recipientDetails.phone}
-              placeholder={language === 'en' ? 'Recipient Phone Number*' : 'ලබන්නාගේ දුරකථන අංකය*'}
-              onChange={handleRecipientChange}
-              disabled={isRecipientSame}
-            />
-            {hasSubmitted && formErrors.recipient.phone && <p className="error">{formErrors.recipient.phone}</p>}
-          </div>
+          <h3>{t.recipientTitle}</h3>
+          {['firstName', 'lastName', 'zipCode', 'phone'].map((field) => (
+            <div className="input-group" key={field}>
+              <label>{t.recipientLabels[field]}</label>
+              <input
+                type={field === 'phone' ? 'tel' : 'text'}
+                name={field}
+                value={recipientDetails[field]}
+                placeholder={t.recipientPlaceholders[field]}
+                onChange={handleRecipientChange}
+                disabled={isRecipientSame}
+              />
+              {hasSubmitted && formErrors.recipient[field] && (
+                <p className="error">{formErrors.recipient[field]}</p>
+              )}
+            </div>
+          ))}
         </div>
 
+        {/* Payment Details Section */}
         <div className="form-section">
-        <h3>{language === 'en' ? 'Payment Details' : 'ගෙවීම් විස්තර'}</h3>
+          <h3>{t.paymentTitle}</h3>
+          
           <div className="radio-group">
-            <label>
-              <input
-                type="radio"
-                name="paymentMethod"
-                value="Online"
-                onChange={handlePaymentChange}
-                checked={paymentDetails.paymentMethod === 'Online'}
-              />  {language === 'en' ? 'Online Payment' : 'අන්තර්ජාල ගෙවීම'}
-            </label>
-            <label>
-              <input
-                type="radio"
-                name="paymentMethod"
-                value="Cash"
-                onChange={handlePaymentChange}
-                checked={paymentDetails.paymentMethod === 'Cash'}
-              />{ language === 'en' ? 'Cash on Delivery' : 'බෙදාහැරීමේදී මුදල්'}
-            </label>
-            {hasSubmitted && formErrors.paymentMethod && <p className="error">{formErrors.paymentMethod}</p>}
+            {t.paymentMethods.map((method) => (
+              <label key={method.value}>
+                <input
+                  type="radio"
+                  name="paymentMethod"
+                  value={method.value}
+                  onChange={handlePaymentChange}
+                  checked={paymentDetails.paymentMethod === method.value}
+                />
+                {method.label}
+              </label>
+            ))}
+            {hasSubmitted && formErrors.paymentMethod && (
+              <p className="error">{formErrors.paymentMethod}</p>
+            )}
           </div>
 
           <div className="checkbox-group">
-         <label>
-        <input
-          type="checkbox"
-          checked={paymentDetails.agreedToTerms}
-          onChange={handleTermsChange}
-        />  
-        {language === 'en' ? 'I agree to the ' : 'මම එකඟ වෙමි '}
-        <a href="/teamsandconditions" target="_blank" rel="noopener noreferrer">   {language === 'en' ? 'terms and conditions' : 'නියමයන් සහ කොන්දේසි'}</a>
-      </label>
-      {hasSubmitted && formErrors.terms && <p className="error">{formErrors.terms}</p>}
-    </div>
+            <label>
+              <input
+                type="checkbox"
+                checked={paymentDetails.agreedToTerms}
+                onChange={handleTermsChange}
+              />
+              {t.termsText[0]}
+              <a href="/teamsandconditions" target="_blank" rel="noopener noreferrer">
+                {t.termsText[1]}
+              </a>
+            </label>
+            {hasSubmitted && formErrors.terms && (
+              <p className="error">{formErrors.terms}</p>
+            )}
+          </div>
 
-
-          {/*waste guidance note */}
           <div className="important-note">
-        <strong>{language === 'en' ? 'Important:' : 'වැදගත්:'}</strong> 
-        {language === 'en' 
-              ? ' Waste disposal guidelines are essential for proper waste management.' 
-              : ' නිසි අපද්‍රව්‍ය කළමනාකරණය සඳහා අපද්‍රව්‍ය බැහැර කිරීමේ මාර්ගෝපදේශ අත්‍යවශ්‍ය වේ.'}
-        <br />
-        <a href="/customguidance" className="check-waste-guidance" target="_blank" rel="noopener noreferrer">
-          {language === 'en' 
-                ? 'Click here for more information on waste disposal' 
-                : 'අපද්‍රව්‍ය බැහැර කිරීම පිළිබඳ වැඩි විස්තර සඳහා මෙතැන ක්ලික් කරන්න'}
-        </a>
-      </div>
+            <strong>{t.importantNote[0]}</strong>
+            {t.importantNote[1]}
+            <br />
+            <a href="/customguidance" className="check-waste-guidance" target="_blank" rel="noopener noreferrer">
+              {t.guidanceLink}
+            </a>
+          </div>
 
-      <button type="submit" className="place-order-button" onClick={handleSubmit}>
-      {language === 'en' ? 'Place Order' : 'ඇණවුම් කරන්න'} - LKR {price}
-</button>
-
+          <button type="submit" className="place-order-button" onClick={handleSubmit}>
+            {t.submitButton} - LKR {price}
+          </button>
         </div>
       </div>
     </div>
