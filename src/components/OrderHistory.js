@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './OrderHistory.css';
+import { useLanguage } from '../contexts/LanguageContext';
+import translations from '../translations/orderHistoryTranslations';
 
 const isOrderExpired = (expiryDate) => {
   if (!expiryDate) return false;
@@ -10,6 +12,8 @@ const isOrderExpired = (expiryDate) => {
 };
 
 const OrderHistory = () => {
+  const { language } = useLanguage();
+  const t = translations[language];
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
   const [showConfirmation, setShowConfirmation] = useState(false);
@@ -56,7 +60,7 @@ const OrderHistory = () => {
 
   const cancelOrder = async () => {
     if (orderToCancel) {
-      const confirmCancel = window.confirm("You will not receive your money back if the order has been collected at least once.");
+      const confirmCancel = window.confirm(t.alerts.confirmation);
       if (!confirmCancel) return;
 
       try {
@@ -65,13 +69,13 @@ const OrderHistory = () => {
         });
         if (response.ok) {
           setOrders(orders.filter(order => order.checkout_id !== orderToCancel.checkout_id));
-          alert('Order canceled successfully');
+          alert(t.alerts.success);
         } else {
-          alert('Error canceling order');
+          alert(t.alerts.error);
         }
       } catch (error) {
         console.error('Error canceling order:', error);
-        alert('Error canceling order');
+        alert(t.alerts.error);
       }
     }
     setShowConfirmation(false);
@@ -95,12 +99,12 @@ const OrderHistory = () => {
   };
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <div>{t.loading}</div>;
   }
 
   return (
     <div className="order-history">
-      <h1>Order History</h1>
+      <h1>{t.title}</h1>
       {orders.length > 0 ? (
         <div className="order-list">
           {orders.map(order => (
@@ -108,72 +112,72 @@ const OrderHistory = () => {
               <table className="order-table">
                 <tbody>
                   <tr>
-                    <td><strong>Checkout ID:</strong></td>
+                    <td><strong>{t.labels.checkoutId}</strong></td>
                     <td>{order.checkout_id}</td>
                   </tr>
                   <tr>
-                    <td><strong>Created At:</strong></td>
-                    <td>{order.created_at ? formatDate(order.created_at) : 'N/A'}</td>
+                    <td><strong>{t.labels.createdAt}</strong></td>
+                    <td>{order.created_at ? formatDate(order.created_at) : t.na}</td>
                   </tr>
                   <tr>
-                    <td><strong>Sender Name:</strong></td>
+                    <td><strong>{t.labels.senderName}</strong></td>
                     <td>{order.sender_firstname} {order.sender_lastname}</td>
                   </tr>
                   <tr>
-                    <td><strong>Recipient Name:</strong></td>
+                    <td><strong>{t.labels.recipientName}</strong></td>
                     <td>{order.recipient_firstname} {order.recipient_lastname}</td>
                   </tr>
                   <tr>
-                    <td><strong>Collection Time:</strong></td>
+                    <td><strong>{t.labels.collectionTime}</strong></td>
                     <td>{order.collection_time}</td>
                   </tr>
                   <tr>
-                    <td><strong>Subscription Type:</strong></td>
+                    <td><strong>{t.labels.subscriptionType}</strong></td>
                     <td>{order.subscription_type}</td>
                   </tr>
                   <tr>
-                    <td><strong>Price:</strong></td>
+                    <td><strong>{t.labels.price}</strong></td>
                     <td>{order.price}</td>
                   </tr>
                   <tr>
-                    <td><strong>Payment Type:</strong></td>
+                    <td><strong>{t.labels.paymentType}</strong></td>
                     <td>{order.payment_type}</td>
                   </tr>
                   {order.subscription_type === 'monthly' && (
                     <>
                       <tr>
-                        <td><strong>Selected Date:</strong></td>
-                        <td>{order.selected_dates?.length > 0 ? formatDate(order.selected_dates[0]) : 'N/A'}</td>
+                        <td><strong>{t.labels.selectedDate}</strong></td>
+                        <td>{order.selected_dates?.length > 0 ? formatDate(order.selected_dates[0]) : t.na}</td>
                       </tr>
                       <tr>
-                        <td><strong>Expiry Date:</strong></td>
-                        <td>{order.expire_date ? formatDate(order.expire_date) : 'N/A'}</td>
+                        <td><strong>{t.labels.expiryDate}</strong></td>
+                        <td>{order.expire_date ? formatDate(order.expire_date) : t.na}</td>
                       </tr>
                     </>
                   )}
                   {order.subscription_type === 'weekly' && (
                     <>
                       <tr>
-                        <td><strong>Selected Days:</strong></td>
-                        <td>{order.selected_days ? order.selected_days.join(', ') : 'N/A'}</td>
+                        <td><strong>{t.labels.selectedDays}</strong></td>
+                        <td>{order.selected_days ? order.selected_days.join(', ') : t.na}</td>
                       </tr>
                       <tr>
-                        <td><strong>Expiry Date:</strong></td>
-                        <td>{order.expire_date ? formatDate(order.expire_date) : 'N/A'}</td>
+                        <td><strong>{t.labels.expiryDate}</strong></td>
+                        <td>{order.expire_date ? formatDate(order.expire_date) : t.na}</td>
                       </tr>
                     </>
                   )}
                   <tr>
-                    <td><strong>House Number:</strong></td>
+                    <td><strong>{t.labels.houseNumber}</strong></td>
                     <td>{order.house_number}</td>
                   </tr>
                   <tr>
-                    <td><strong>Street Name:</strong></td>
+                    <td><strong>{t.labels.streetName}</strong></td>
                     <td>{order.street_name}</td>
                   </tr>
                   <tr>
-                    <td><strong>Collected:</strong></td>
-                    <td>{order.collected ? 'Yes' : 'No'}</td>
+                    <td><strong>{t.labels.collected}</strong></td>
+                    <td>{order.collected ? t.status.yes : t.status.no}</td>
                   </tr>
                 </tbody>
               </table>
@@ -182,7 +186,7 @@ const OrderHistory = () => {
                 onClick={() => handleCancelClick(order)}
                 disabled={order.collected}
               >
-                {order.collected ? 'Collected' : 'Cancel Order'}
+                {order.collected ? t.buttons.collected : t.buttons.cancelOrder}
               </button>
 
               {!order.collected && order.subscription_type !== 'one-time' && (
@@ -190,22 +194,22 @@ const OrderHistory = () => {
                   className="update-btoon"
                   onClick={() => handleUpdateClick(order.checkout_id)}
                 >
-                  {isOrderExpired(order.expiry_date) ? 'Expired' : 'Update Collection Time'}
+                  {isOrderExpired(order.expiry_date) ? t.buttons.expired : t.buttons.updateCollectionTime}
                 </button>
               )}
             </div>
           ))}
         </div>
       ) : (
-        <p>No orders found</p>
+        <p>{t.noOrders}</p>
       )}
 
       {showConfirmation && (
         <div className="confirmation-overlay">
           <div className="confirmation-box">
-            <p>Are you sure you want to cancel this order?</p>
-            <button className="confirm-btn" onClick={cancelOrder}>Yes</button>
-            <button className="no-btn" onClick={cancelCancellation}>No</button>
+            <p>{t.confirmation.prompt}</p>
+            <button className="confirm-btn" onClick={cancelOrder}>{t.confirmation.yes}</button>
+            <button className="no-btn" onClick={cancelCancellation}>{t.confirmation.no}</button>
           </div>
         </div>
       )}
