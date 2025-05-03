@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
 import './Checkoutform.css';
 import { useNavigate } from 'react-router-dom';
+import { useLanguage } from '../contexts/LanguageContext';
+
 
 
 function Checkoutform() {
   const navigate = useNavigate();
+  const { language } = useLanguage();
   const [formErrors, setFormErrors] = useState({
     email: '',
     phone: '',
@@ -300,64 +303,64 @@ function Checkoutform() {
   
   
   return (
-    <div className="checkout-container">
-      <h2 className="checkout-header">CHECKOUT</h2>
+      <div className="checkout-container">
+      <h2 className="checkout-header">{language === 'en' ? 'CHECKOUT' : 'ගෙවීම'}</h2>
       <div className="checkout-forms">
         <div className="form-section">
-          <h3>Sender Details</h3>
+          <h3>{language === 'en' ? 'Sender Details' : 'යවන්නාගේ විස්තර'}</h3>
           <form className="sender-form" onSubmit={handleSubmit}>
             {/* Sender details form */}
             <div className="input-group">
-              <label>First Name*</label>
+              <label>{language === 'en' ? 'First Name*' : 'මුල් නම*'}</label>
               <input
                 type="text"
                 name="firstName"
                 value={senderDetails.firstName}
-                placeholder="First Name"
+                placeholder={language === 'en' ? 'First Name*' : 'යවන්නාගේ මුල් නම*'}
                 onChange={handleSenderChange}
               />
               {hasSubmitted && formErrors.firstName && <p className="error">{formErrors.firstName}</p>}
             </div>
             <div className="input-group">
-              <label>Last Name*</label>
+              <label>{language === 'en' ? 'Last Name*' : 'අවසන් නම*'}</label>
               <input
                 type="text"
                 name="lastName"
                 value={senderDetails.lastName}
-                placeholder="Last Name"
+                placeholder={language === 'en' ? 'Last Name*' : 'යවන්නාගේ අවසන් නම*'}
                 onChange={handleSenderChange}
               />
               {hasSubmitted && formErrors.lastName && <p className="error">{formErrors.lastName}</p>}
             </div>
             <div className="input-group">
-              <label>Zip Code*</label>
+              <label>{language === 'en' ? 'Zip Code*' : 'තැපැල් කේතය*'}</label>
               <input
                 type="text"
                 name="zipCode"
                 value={senderDetails.zipCode}
-                placeholder="Zip Code"
+               placeholder={language === 'en' ? 'Zip Code' : 'තැපැල් කේතය'}
                 onChange={handleSenderChange}
               />
               {hasSubmitted && formErrors.zipCode && <p className="error">{formErrors.zipCode}</p>}
             </div>
             <div className="input-group">
-              <label>Phone Number*</label>
+              <label>    {language === 'en' ? 'Phone Number*' : 'දුරකථන අංකය*'}</label>
               <input
                 type="tel"
                 name="phone"
                 value={senderDetails.phone}
-                placeholder="Phone Number"
+                placeholder={language === 'en' ? 'Phone Number' : ' යවන්නාගේ දුරකථන අංකය'}
                 onChange={handleSenderChange}
               />
               {hasSubmitted && formErrors.phone && <p className="error">{formErrors.phone}</p>}
             </div>
             <div className="input-group">
-              <label>Email*</label>
+              <label> {language === 'en' ? 'Email*' : 'විද්‍යුත් තැපෑල*'} </label>
               <input
                 type="email"
                 name="email"
                 value={senderDetails.email}
-                placeholder="Email"
+                placeholder={language === 'en' ? 'Email' : 'යවන්නාගේ විද්‍යුත් තැපෑල'}
                 onChange={handleSenderChange}
               />
               {hasSubmitted && formErrors.email && <p className="error">{formErrors.email}</p>}
@@ -366,12 +369,12 @@ function Checkoutform() {
             {/*waste collection time */}
 
                     <div className="input-group">
-        <label className="timelable">Waste Collection Time*</label>
+        <label className="timelable"> {language === 'en' ? 'Waste Collection Time*' : 'කසළ එකතු කිරීමේ වේලාව*'}</label>
         <select name="wasteCollectionTime" value={wasteCollectionTime} onChange={handleTimeChange} className="time-dropdown">
-          <option value="">Select a time</option>
-          <option value="Morning">Morning (9AM-12PM)</option>
-          <option value="Afternoon">Afternoon (12PM-3PM)</option>
-          <option value="Evening">Evening (3PM-6PM)</option>
+          <option value=""> {language === 'en' ? 'Select a time' : 'වේලාවක් තෝරන්න'}</option>
+          <option value="Morning">{language === 'en' ? 'Morning' : 'උදේ' }  (9AM-12PM)</option>
+          <option value="Afternoon"> {language === 'en' ? 'Afternoon ' : 'දවල්'}  (12PM-3PM)</option>
+          <option value="Evening">{language === 'en' ? 'Evening ' : 'සවස '}  (3PM-6PM)</option>
         </select>
         {hasSubmitted && timeError && <p className="error">{timeError}</p>}
       </div>
@@ -384,57 +387,59 @@ function Checkoutform() {
                   type="checkbox"
                   checked={isRecipientSame}
                   onChange={handleCheckboxChange}
-                /> Recipient is the same as sender
+                />{language === 'en' 
+                  ? 'Recipient is the same as sender' 
+                  : 'යවන්නා සහ ලබන්නා එකම පුත්ගලයෙකු වේ (යවන්නාගෙ තොරතුරු සහ ලබන්නාගෙ තොරතුරු සමානයි'}
               </label>
             </div>
           </form>
         </div>
 
         <div className="form-section">
-          <h3>Recipient Details</h3>
+          <h3>{language === 'en' ? 'Recipient Details' : 'ලබන්නාගේ විස්තර'}</h3>
           <div className="input-group">
-            <label>First Name*</label>
+            <label> {language === 'en' ? 'First Name*' : 'මුල් නම*'}</label>
             <input
               type="text"
               name="firstName"
               value={recipientDetails.firstName}
-              placeholder="Recipient First Name"
+               placeholder={language === 'en' ? 'Recipient First Name' : 'ලබන්නාගේ මුල් නම'}
               onChange={handleRecipientChange}
               disabled={isRecipientSame}
             />
             {hasSubmitted && formErrors.recipient.firstName && <p className="error">{formErrors.recipient.firstName}</p>}
           </div>
           <div className="input-group">
-            <label>Last Name*</label>
+            <label>{language === 'en' ? 'Last Name*' : 'අවසන් නම*'}</label>
             <input
               type="text"
               name="lastName"
               value={recipientDetails.lastName}
-              placeholder="Recipient Last Name"
+              placeholder={language === 'en' ? 'Recipient Last Name*' : 'ලබන්නාගේ අවසන් නම*'}
               onChange={handleRecipientChange}
               disabled={isRecipientSame}
             />
             {hasSubmitted && formErrors.recipient.lastName && <p className="error">{formErrors.recipient.lastName}</p>}
           </div>
           <div className="input-group">
-            <label>Zip Code*</label>
+            <label>{language === 'en' ? 'Zip Code*' : 'තැපැල් කේතය*'}</label>
             <input
               type="text"
               name="zipCode"
               value={recipientDetails.zipCode}
-              placeholder="Recipient Zip Code"
+              placeholder={language === 'en' ? 'Zip Code*' : 'තැපැල් කේතය*'}
               onChange={handleRecipientChange}
               disabled={isRecipientSame}
             />
             {hasSubmitted && formErrors.recipient.zipCode && <p className="error">{formErrors.recipient.zipCode}</p>}
           </div>
           <div className="input-group">
-            <label>Phone Number*</label>
+            <label> {language === 'en' ? 'Phone Number*' : 'දුරකථන අංකය*'}</label>
             <input
               type="tel"
               name="phone"
               value={recipientDetails.phone}
-              placeholder="Recipient Phone Number"
+              placeholder={language === 'en' ? 'Recipient Phone Number*' : 'ලබන්නාගේ දුරකථන අංකය*'}
               onChange={handleRecipientChange}
               disabled={isRecipientSame}
             />
@@ -443,7 +448,7 @@ function Checkoutform() {
         </div>
 
         <div className="form-section">
-          <h3>Payment Details</h3>
+        <h3>{language === 'en' ? 'Payment Details' : 'ගෙවීම් විස්තර'}</h3>
           <div className="radio-group">
             <label>
               <input
@@ -452,7 +457,7 @@ function Checkoutform() {
                 value="Online"
                 onChange={handlePaymentChange}
                 checked={paymentDetails.paymentMethod === 'Online'}
-              /> Online Payment
+              />  {language === 'en' ? 'Online Payment' : 'අන්තර්ජාල ගෙවීම'}
             </label>
             <label>
               <input
@@ -461,7 +466,7 @@ function Checkoutform() {
                 value="Cash"
                 onChange={handlePaymentChange}
                 checked={paymentDetails.paymentMethod === 'Cash'}
-              /> Cash on Delivery
+              />{ language === 'en' ? 'Cash on Delivery' : 'බෙදාහැරීමේදී මුදල්'}
             </label>
             {hasSubmitted && formErrors.paymentMethod && <p className="error">{formErrors.paymentMethod}</p>}
           </div>
@@ -473,8 +478,8 @@ function Checkoutform() {
           checked={paymentDetails.agreedToTerms}
           onChange={handleTermsChange}
         />  
-        I agree to the  
-        <a href="/teamsandconditions" target="_blank" rel="noopener noreferrer"> terms and conditions</a>
+        {language === 'en' ? 'I agree to the ' : 'මම එකඟ වෙමි '}
+        <a href="/teamsandconditions" target="_blank" rel="noopener noreferrer">   {language === 'en' ? 'terms and conditions' : 'නියමයන් සහ කොන්දේසි'}</a>
       </label>
       {hasSubmitted && formErrors.terms && <p className="error">{formErrors.terms}</p>}
     </div>
@@ -482,15 +487,20 @@ function Checkoutform() {
 
           {/*waste guidance note */}
           <div className="important-note">
-        <strong>Important:</strong> Waste disposal guidelines are essential for proper waste management.  
+        <strong>{language === 'en' ? 'Important:' : 'වැදගත්:'}</strong> 
+        {language === 'en' 
+              ? ' Waste disposal guidelines are essential for proper waste management.' 
+              : ' නිසි අපද්‍රව්‍ය කළමනාකරණය සඳහා අපද්‍රව්‍ය බැහැර කිරීමේ මාර්ගෝපදේශ අත්‍යවශ්‍ය වේ.'}
         <br />
         <a href="/customguidance" className="check-waste-guidance" target="_blank" rel="noopener noreferrer">
-          Click here for more information on waste disposal
+          {language === 'en' 
+                ? 'Click here for more information on waste disposal' 
+                : 'අපද්‍රව්‍ය බැහැර කිරීම පිළිබඳ වැඩි විස්තර සඳහා මෙතැන ක්ලික් කරන්න'}
         </a>
       </div>
 
       <button type="submit" className="place-order-button" onClick={handleSubmit}>
-  Place Order - LKR {price}
+      {language === 'en' ? 'Place Order' : 'ඇණවුම් කරන්න'} - LKR {price}
 </button>
 
         </div>
