@@ -74,7 +74,7 @@ function CustomHome() {
           <p>{language === 'en' ? 'Eco-Friendly, Reliable, and Tailored Just for You!' : 'පරිසර හිතකාමී, විශ්වාසදායක සහ ඔබ වෙනුවෙන්ම සකස් කර ඇත!'} </p>
           <p className='highlight'> {language === 'en' ?" Together, We're Building a Cleaner Tomorrow! ":'එක්ව, අපි පිරිසිදු හෙට දවසක් ගොඩනඟමු!'} </p>
           <Link to="/orderhistory">
-            <button className='order-now-btn'>Order History</button>
+            <button className='order-now-btn'>{language === 'en' ?'Order History ' : 'ඇනවුම් ඉතිහාසය'}</button>
           </Link>
         </div>
       </section>

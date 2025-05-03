@@ -2,8 +2,12 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Form, Button, Modal } from 'react-bootstrap';
 import './Search.css';
+import { useLanguage } from '../contexts/LanguageContext';
+import translations from '../translations/searchTranslations';
 
 function Search() {
+  const { language } = useLanguage();
+  const t = translations[language];
   const [location, setLocation] = useState(''); // Store the user's input for home address
   const [showModal, setShowModal] = useState(false); // Control the modal visibility
   const [confirmedLocation, setConfirmedLocation] = useState(''); // Store confirmed location
@@ -15,14 +19,14 @@ function Search() {
   const [showDetailedForm, setShowDetailedForm] = useState(false); 
   const [errorMessage, setErrorMessage] = useState(''); 
   const navigate = useNavigate();
-  const googleApiKey = "YOUR_GOOGLE_API_KEY"; // Replace with your Google API key
+  const googleApiKey = "YOUR_GOOGLE_API_KEY"; // Google API key
 
   const handleSearchClick = () => setShowDetailedForm(true);
 
   const handleSubmitAddress = async () => {
     const { streetNumber, streetName, city } = addressParts;
     if (!streetNumber || !streetName || !city) {
-      setErrorMessage('Please complete all address fields!');
+      setErrorMessage(t.errors.incomplete);
     } else {
       const fullAddress = `${streetNumber} ${streetName}, ${city}`;
       const isValid = await validateAddress(fullAddress);
@@ -32,7 +36,7 @@ function Search() {
         setShowModal(true);
         setErrorMessage('');
       } else {
-        setErrorMessage('The address you entered is not valid or not found on the map. You can use the "Locate Me" option to automatically get your current location or you can manually set your address.');
+        setErrorMessage(t.errors.invalid);
 
       }
     }
@@ -83,31 +87,31 @@ function Search() {
         },
         (error) => {
           console.error(error);
-          setErrorMessage('Unable to retrieve your location.');
+          setErrorMessage(t.errors.locationFailed);
         }
       );
     } else {
-      setErrorMessage('Geolocation is not supported by this browser.');
+      setErrorMessage(t.errors.geolocationUnsupported);
     }
   };
 
   return (
     <div className="d-flex flex-column align-items-center mt-4">
       <div className="search-box p-4 rounded bg-white shadow-lg">
-        <h4 className="text-center">To Start Order Enter Address</h4>
+        <h4 className="text-center">{t.heading}</h4>
 
         {!showDetailedForm && (
           <div className="input-container d-flex">
             <Form.Control
               type="text"
-              placeholder="Enter Your Home Address"
+              placeholder={t.placeholders.address}
               className="search-input"
               value={location}
               onChange={(e) => setLocation(e.target.value)}
               onFocus={handleSearchClick}
             />
             <Button className="search-btn" onClick={handleSearchClick}>
-              <i className="bi bi-search"></i> Search
+              <i className="bi bi-search"></i> {t.buttons.search}
             </Button>
           </div>
         )}
@@ -116,7 +120,7 @@ function Search() {
           <div className="address-details-form mt-4">
             <Form.Control
               type="text"
-              placeholder="Street Number (e.g., No 4)"
+              placeholder={t.placeholders.streetNumber}
               className="mb-2"
               name="streetNumber"
               value={addressParts.streetNumber}
@@ -124,7 +128,7 @@ function Search() {
             />
             <Form.Control
               type="text"
-              placeholder="Street Name (e.g., SGA Desilva Road)"
+              placeholder={t.placeholders.streetName}
               className="mb-2"
               name="streetName"
               value={addressParts.streetName}
@@ -132,20 +136,19 @@ function Search() {
             />
             <Form.Control
               type="text"
-              placeholder="City (e.g., Ambalangoda)"
+              placeholder={t.placeholders.city}
               className="mb-2"
               name="city"
               value={addressParts.city}
               onChange={handleAddressChange}
             />
             <Button className="submit-btn mt-3" onClick={handleSubmitAddress}>
-               Submit Address
+              {t.buttons.submit}
             </Button>
 
             <Button className="mt-3 locate-btn ms-3" onClick={handleLocateMe}>
-              Locate Me
+              {t.buttons.locateMe}
             </Button>
-
           </div>
         )}
 
@@ -154,18 +157,18 @@ function Search() {
 
       <Modal show={showModal} onHide={handleClose} dialogClassName="responsive-modal">
         <Modal.Header>
-          <Modal.Title>Confirm Your Address</Modal.Title>
+          <Modal.Title>{t.modal.title}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <p>Please confirm that the following is your correct home address:</p>
+          <p>{t.modal.body}</p>
           <h5>{confirmedLocation}</h5>
         </Modal.Body>
         <Modal.Footer>
           <Button className="btn-secondary" variant="secondary" onClick={handleClose}>
-            Cancel
+            {t.buttons.cancel}
           </Button>
           <Button className="confirm-btn" onClick={handleConfirm}>
-            Confirm
+            {t.buttons.confirm}
           </Button>
         </Modal.Footer>
       </Modal>
