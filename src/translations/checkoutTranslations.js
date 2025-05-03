@@ -1,4 +1,3 @@
-// src/translations/checkoutTranslations.js
 export const translations = {
     en: {
       title: "CHECKOUT",
