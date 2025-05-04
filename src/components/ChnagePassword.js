@@ -24,8 +24,7 @@ const ChangePassword = () => {
     const passwordRegex = /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$/;
     return passwordRegex.test(password);
   };
-  
-  // Calculate password strength based on the entered password
+
   const calculatePasswordStrength = (password) => {
     if (password.length < 8) return 0;
     let strength = 0;
@@ -76,10 +75,10 @@ const ChangePassword = () => {
 
       if (response.ok) {
         setMessage("Password changed successfully!");
-        setShowModal(true); // Show the success modal
+        setShowModal(true);
         setTimeout(() => {
-          navigate("/"); // Redirect to the home page after 2 seconds
-        }, 2000); // Delay for 2 seconds
+          navigate("/");
+        }, 2000);
       } else {
         setMessage(data.message || "An error occurred while changing the password.");
       }
@@ -91,7 +90,7 @@ const ChangePassword = () => {
   const handlePasswordChange = (e) => {
     const password = e.target.value;
     setNewPassword(password);
-    setPasswordStrength(calculatePasswordStrength(password)); // Update password strength
+    setPasswordStrength(calculatePasswordStrength(password));
   };
 
   const getPasswordStrengthColor = () => {
@@ -99,7 +98,7 @@ const ChangePassword = () => {
     return 'green';
   };
 
-  const closeModal = () => setShowModal(false); // Close modal handler
+  const closeModal = () => setShowModal(false);
 
   return (
     <div className={`change-password-page ${theme}`}>
@@ -146,7 +145,7 @@ const ChangePassword = () => {
             />
             <div className="password-strength">
               <div
-                className="password-streight-bar"
+                className="password-strength-bar"
                 style={{
                   width: `${(passwordStrength / 3) * 100}%`,
                   backgroundColor: getPasswordStrengthColor(),
