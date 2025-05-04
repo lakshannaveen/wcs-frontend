@@ -1,10 +1,15 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useTheme } from "../context/ThemeContext";
+import { useLanguage } from "../context/LanguageContext";
+import { changePasswordTranslations } from "../config/changePasswordLanguages";
 import "./ChnagePassword.css";
 
 const ChangePassword = () => {
   const { theme } = useTheme();
+  const { language } = useLanguage();
+  const t = changePasswordTranslations[language].changePassword;
+  
   const [email, setEmail] = useState("");
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
@@ -38,22 +43,22 @@ const ChangePassword = () => {
     e.preventDefault();
 
     if (!validateEmail(email)) {
-      setMessage("Please enter a valid email address.");
+      setMessage(t.errors.invalidEmail);
       return;
     }
 
     if (!validatePassword(newPassword)) {
-      setMessage("Password must be at least 8 characters, contain 1 uppercase letter, 1 number, and 1 special character.");
+      setMessage(t.errors.invalidPassword);
       return;
     }
 
     if (newPassword === currentPassword) {
-      setMessage("New password cannot be the same as the current password.");
+      setMessage(t.errors.samePassword);
       return;
     }
 
     if (newPassword !== confirmPassword) {
-      setMessage("New passwords do not match!");
+      setMessage(t.errors.passwordMismatch);
       return;
     }
 
@@ -74,16 +79,16 @@ const ChangePassword = () => {
       const data = await response.json();
 
       if (response.ok) {
-        setMessage("Password changed successfully!");
+        setMessage(t.successMessage);
         setShowModal(true);
         setTimeout(() => {
           navigate("/");
         }, 2000);
       } else {
-        setMessage(data.message || "An error occurred while changing the password.");
+        setMessage(data.message || t.errors.serverError);
       }
     } catch (error) {
-      setMessage("Failed to change the password. Please try again.");
+      setMessage(t.errors.networkError);
     }
   };
 
@@ -104,43 +109,43 @@ const ChangePassword = () => {
     <div className={`change-password-page ${theme}`}>
       <div className={`change-password-form ${theme}`}>
         <form className={`form-container ${theme}`} onSubmit={handleSubmit}>
-          <h1>Change Password</h1>
+          <h1>{t.title}</h1>
 
           {message && (
-            <div className={message === "Password changed successfully!" ? "success" : "error"}>
+            <div className={message === t.successMessage ? "success" : "error"}>
               {message}
             </div>
           )}
 
           <div className="input-box">
-            <label>Email</label>
+            <label>{t.emailLabel}</label>
             <input
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              placeholder="Enter your email"
+              placeholder={t.emailPlaceholder}
               required
             />
           </div>
 
           <div className="input-box">
-            <label>Current Password</label>
+            <label>{t.currentPasswordLabel}</label>
             <input
               type="password"
               value={currentPassword}
               onChange={(e) => setCurrentPassword(e.target.value)}
-              placeholder="Enter current password"
+              placeholder={t.currentPasswordPlaceholder}
               required
             />
           </div>
 
           <div className="input-box">
-            <label>New Password</label>
+            <label>{t.newPasswordLabel}</label>
             <input
               type="password"
               value={newPassword}
               onChange={handlePasswordChange}
-              placeholder="Enter new password"
+              placeholder={t.newPasswordPlaceholder}
               required
             />
             <div className="password-strength">
@@ -152,32 +157,32 @@ const ChangePassword = () => {
                 }}
               />
               <span className={`strength-text ${getPasswordStrengthColor()}`}>
-                {passwordStrength === 0 ? 'Weak' : 'Strong'}
+                {passwordStrength === 0 ? t.passwordStrength.weak : t.passwordStrength.strong}
               </span>
             </div>
           </div>
 
           <div className="input-box">
-            <label>Confirm New Password</label>
+            <label>{t.confirmPasswordLabel}</label>
             <input
               type="password"
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
-              placeholder="Confirm new password"
+              placeholder={t.confirmPasswordPlaceholder}
               required
             />
           </div>
 
           <button className="button" type="submit">
-            Change Password
+            {t.changeButton}
           </button>
         </form>
 
         {showModal && (
           <div className={`modal-overlay ${theme}`} onClick={closeModal}>
             <div className={`modal-content ${theme}`} onClick={(e) => e.stopPropagation()}>
-              <h2>Password changed successfully!</h2>
-              <button onClick={closeModal}>Close</button>
+              <h2>{t.successMessage}</h2>
+              <button onClick={closeModal}>{t.closeButton}</button>
             </div>
           </div>
         )}
