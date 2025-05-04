@@ -1,3 +1,4 @@
+// config/navbarlanguage.js
 import React, { useState, useEffect } from "react";
 import "./Navbar.css";
 import Container from "react-bootstrap/Container";
@@ -8,26 +9,27 @@ import Offcanvas from "react-bootstrap/Offcanvas";
 import logo from "../images/logo.JPEG";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
-import { Link, useNavigate } from "react-router-dom"; 
-import Cookies from "js-cookie"; 
-import { useTheme } from '../context/ThemeContext';
-import { useLanguage } from '../context/LanguageContext';
-import { translations } from '../config/navbarLanguages';
+import { Link, useNavigate } from "react-router-dom";
+import Cookies from "js-cookie";
+import { useTheme } from "../context/ThemeContext";
+import { useLanguage } from "../context/LanguageContext";
+import { translations } from "../config/navbarLanguages";
 
 function CustomNavbar() {
   const [showSidebar, setShowSidebar] = useState(false);
   const [user, setUser] = useState(null);
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
   const { theme, toggleTheme } = useTheme();
   const { language, changeLanguage } = useLanguage();
-  
+
   const t = translations[language].navbar;
+  const s = translations[language].sidebar;
 
   const fetchUserData = () => {
     const token = Cookies.get("token");
     if (token) {
       try {
-        const decodedToken = JSON.parse(atob(token.split(".")[1])); 
+        const decodedToken = JSON.parse(atob(token.split(".")[1]));
         setUser(decodedToken);
       } catch (error) {
         console.error("Failed to decode token:", error);
@@ -36,23 +38,25 @@ function CustomNavbar() {
       setUser(null);
     }
   };
-  
+
   useEffect(() => {
-    fetchUserData(); 
+    fetchUserData();
   }, []);
 
   const handleToggleSidebar = () => setShowSidebar(!showSidebar);
 
   const generateBackgroundColor = (username) => {
-    if (!username) return 'gray';
-    const hashCode = username.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
-    const hue = hashCode % 360; 
+    if (!username) return "gray";
+    const hashCode = username
+      .split("")
+      .reduce((acc, char) => acc + char.charCodeAt(0), 0);
+    const hue = hashCode % 360;
     return `hsl(${hue}, 70%, 50%)`;
   };
 
   const getProfileInitials = () => {
-    if (!user || !user.username) return ""; 
-    return user.username.charAt(0).toUpperCase(); 
+    if (!user || !user.username) return "";
+    return user.username.charAt(0).toUpperCase();
   };
 
   const handleLogout = () => {
@@ -65,9 +69,9 @@ function CustomNavbar() {
   };
 
   const toggleLanguage = () => {
-    changeLanguage(language === 'en' ? 'si' : 'en');
+    changeLanguage(language === "en" ? "si" : "en");
   };
-  
+
   return (
     <div className={`navbar-container ${theme}`}>
       <Navbar expand="lg" className={`navbar ${theme}`}>
@@ -88,26 +92,38 @@ function CustomNavbar() {
                 {t.home}
               </Nav.Link>
               <NavDropdown title={t.guidance} id="basic-nav-dropdown">
-                <NavDropdown.Item as={Link} to="/customsubscription" className="nav-dropdown-menu">
+                <NavDropdown.Item
+                  as={Link}
+                  to="/customsubscription"
+                  className="nav-dropdown-menu"
+                >
                   {t.subscriptionPlans}
                 </NavDropdown.Item>
                 <div className="dropdown-divider" />
-                <NavDropdown.Item as={Link} to="/customguidance" className="nav-dropdown-menu">
+                <NavDropdown.Item
+                  as={Link}
+                  to="/customguidance"
+                  className="nav-dropdown-menu"
+                >
                   {t.wasteGuidance}
                 </NavDropdown.Item>
               </NavDropdown>
               <div className="language-switcher" onClick={toggleLanguage}>
-                {language === 'en' ? 'සිංහල' : 'English'}
+                {language === "en" ? "සිංහල" : "English"}
               </div>
               <Nav.Link onClick={handleToggleSidebar} className="ms-2">
                 <div
                   className="profile-icon"
-                  style={{ backgroundColor: user ? generateBackgroundColor(user.username) : 'gray' }}
+                  style={{
+                    backgroundColor: user
+                      ? generateBackgroundColor(user.username)
+                      : "gray",
+                  }}
                 >
                   {user ? (
                     getProfileInitials()
                   ) : (
-                    <FontAwesomeIcon icon={faUser} size="lg" /> 
+                    <FontAwesomeIcon icon={faUser} size="lg" />
                   )}
                 </div>
               </Nav.Link>
@@ -124,39 +140,39 @@ function CustomNavbar() {
         className={`offcanvas-custom ${theme}`}
       >
         <Offcanvas.Header closeButton>
-          <Offcanvas.Title>Options</Offcanvas.Title>
+          <Offcanvas.Title>{s.options}</Offcanvas.Title>
         </Offcanvas.Header>
         <Offcanvas.Body>
           <Nav className="flex-column">
             {user ? (
               <>
                 <Nav.Link as={Link} to="/changepassword">
-                  Change Password
+                  {s.changePassword}
                 </Nav.Link>
                 <Nav.Link onClick={handleLogout} className="logout-link">
-                  Log Out
+                  {s.logout}
                 </Nav.Link>
               </>
             ) : (
               <>
                 <Nav.Link as={Link} to="/login">
-                  Log In
+                  {s.login}
                 </Nav.Link>
                 <Nav.Link as={Link} to="/register">
-                  Register
+                  {s.register}
                 </Nav.Link>
               </>
             )}
             <div className="theme-toggle-section">
               <label className="theme-switch">
-                <input 
-                  type="checkbox" 
-                  checked={theme === 'dark'} 
-                  onChange={toggleTheme} 
+                <input
+                  type="checkbox"
+                  checked={theme === "dark"}
+                  onChange={toggleTheme}
                 />
                 <span className="slider round"></span>
               </label>
-              <span>Dark Mode</span>
+              <span>{s.darkMode}</span>
             </div>
           </Nav>
         </Offcanvas.Body>
