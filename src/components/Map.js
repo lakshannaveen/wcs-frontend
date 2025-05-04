@@ -10,7 +10,7 @@ import { useTheme } from '../context/ThemeContext';
 import { useLanguage } from '../context/LanguageContext';
 import { mapTranslations } from '../config/mapLanguages';
 
-// Custom waste bin icon for map
+// Custom waste bin icon for map marker
 const wasteBinIcon = new L.Icon({
   iconUrl: 'https://cdn-icons-png.flaticon.com/512/929/929430.png',
   iconSize: [30, 30],
@@ -20,7 +20,7 @@ const Map = () => {
   const { theme } = useTheme();
   const { language } = useLanguage();
   const t = mapTranslations[language].map;
-  
+
   const [coordinates, setCoordinates] = useState([7.8731, 80.7718]);
   const [selectedPosition, setSelectedPosition] = useState([7.8731, 80.7718]);
   const [address, setAddress] = useState('');
@@ -37,6 +37,7 @@ const Map = () => {
   const navigate = useNavigate();
   const location = useLocation().state?.location;
 
+  // Decode JWT token to extract user ID
   useEffect(() => {
     const token = Cookies.get('token');
     if (token) {
@@ -49,6 +50,7 @@ const Map = () => {
     }
   }, []);
 
+  // If location is passed from another page, set map coordinates and fetch address
   useEffect(() => {
     if (location) {
       const [lat, lng] = location.split(',').map(Number);
@@ -58,6 +60,7 @@ const Map = () => {
     }
   }, [location]);
 
+  // Fetch human-readable address from latitude and longitude
   const fetchAddress = async (lat, lng, isFromClick = false) => {
     try {
       const response = await fetch(
@@ -67,7 +70,7 @@ const Map = () => {
 
       const { address: addr } = data;
 
-      // Check if this is a valid land address
+      // Prevent selecting invalid areas (e.g., sea or forest)
       const hasLandInfo = addr?.road || addr?.city || addr?.suburb || addr?.state;
 
       if (isFromClick && !hasLandInfo) {
@@ -84,6 +87,7 @@ const Map = () => {
     }
   };
 
+  // Handle map click to get location
   const LocationSelector = () => {
     useMapEvents({
       click: (event) => {
@@ -94,6 +98,7 @@ const Map = () => {
     return null;
   };
 
+  // Handle form confirmation and validation
   const handleConfirm = () => {
     if (!houseNo.trim() || !streetName.trim()) {
       setShowWarning(true);
@@ -106,18 +111,15 @@ const Map = () => {
     } else {
       setShowWarning(false);
       setIsLocationConfirmed(true);
-      
-      let price = 0;
-      if (subscriptionPlan === 'one-time') {
-        price = 200;
-      } else if (subscriptionPlan === 'weekly') {
-        price = 2000;
-      } else if (subscriptionPlan === 'daily') {
-        price = 5000;
-      } else if (subscriptionPlan === 'monthly') {
-        price = 1000;
-      }
 
+      // Assign subscription price based on selected plan
+      let price = 0;
+      if (subscriptionPlan === 'one-time') price = 200;
+      else if (subscriptionPlan === 'weekly') price = 2000;
+      else if (subscriptionPlan === 'daily') price = 5000;
+      else if (subscriptionPlan === 'monthly') price = 1000;
+
+      // Store all user selections temporarily for checkout
       sessionStorage.setItem('mappagedata', JSON.stringify({
         userId,
         latitude: selectedPosition[0],
@@ -136,6 +138,7 @@ const Map = () => {
     }
   };
 
+  // Apply theme to the page
   useEffect(() => {
     if (theme === 'dark') {
       document.body.classList.add('dark');
@@ -153,6 +156,7 @@ const Map = () => {
             : t.selectLocation}
         </h3>
 
+        {/* Interactive map for selecting waste collection location */}
         <MapContainer center={coordinates} zoom={7} style={{ height: '500px', width: '100%' }}>
           <TileLayer
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -168,6 +172,7 @@ const Map = () => {
           <div className="alert alert-warning mt-2">{clickError}</div>
         )}
 
+        {/* Info section */}
         <div className="important-note">
           <strong>{t.importantNote.split(':')[0]}:</strong> {t.importantNote.split(':')[1].trim()}
           <br />
@@ -179,6 +184,7 @@ const Map = () => {
           </a>
         </div>
 
+        {/* Form for entering address and selecting subscription */}
         {!isLocationConfirmed ? (
           <div className="address-details-form mt-3">
             <input 
@@ -209,6 +215,7 @@ const Map = () => {
               </select>
             </div>
 
+            {/* Show weekday selector if weekly plan is chosen */}
             {subscriptionPlan === 'weekly' && (
               <div className="weekly-plan">
                 <select 
@@ -226,6 +233,7 @@ const Map = () => {
               </div>
             )}
 
+            {/* Show date picker if monthly plan is chosen */}
             {subscriptionPlan === 'monthly' && (
               <div className="monthly-plan">
                 <input 

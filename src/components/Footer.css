@@ -8,7 +8,7 @@
 }
 
 .footer-section {
-  margin-bottom: 30px; /* Adjusted for better alignment */
+  margin-bottom: 30px; 
 }
 
 .footer-logo {
@@ -32,12 +32,12 @@
 
 .footer-end {
   text-align: center;
-  margin-top: 20px; /* Added spacing for better separation */
+  margin-top: 20px; 
 }
 
 .social-media-icons {
   display: flex;
-  gap: 20px; /* Reduced gap for better spacing */
+  gap: 20px; 
   margin-top: 20px;
   justify-content: left;
 }
@@ -49,7 +49,7 @@
 
   .social-media-icons {
       justify-content: center; 
-      gap: 15px; /* Adjusted for smaller screens */
+      gap: 15px; 
   }
 
   .footer-end {
@@ -64,6 +64,6 @@
 /* For extra small devices */
 @media (max-width: 576px) {
   .footer-section {
-      margin-bottom: 20px; /* Adjusted spacing for smaller screens */
+      margin-bottom: 20px; 
   }
 }
