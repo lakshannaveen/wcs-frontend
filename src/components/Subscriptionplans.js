@@ -2,7 +2,7 @@ import React from 'react';
 import { useTheme } from '../context/ThemeContext';
 import './Subscriptionplans.css';
 import { useLanguage } from '../context/LanguageContext';
-import { translations } from '../config/languages';
+import { translations } from '../config/subscriptionLanguages';
 
 import dailyImage from '../images/IMG_6151.JPG';  
 import weeklyImage from '../images/IMG_6152.JPG';  

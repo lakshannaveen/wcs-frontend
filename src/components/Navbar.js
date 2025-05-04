@@ -12,7 +12,7 @@ import { Link, useNavigate } from "react-router-dom";
 import Cookies from "js-cookie"; 
 import { useTheme } from '../context/ThemeContext';
 import { useLanguage } from '../context/LanguageContext';
-import { translations } from '../config/languages';
+import { translations } from '../config/navbarLanguages';
 
 function CustomNavbar() {
   const [showSidebar, setShowSidebar] = useState(false);

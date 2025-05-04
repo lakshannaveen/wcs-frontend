@@ -3,7 +3,7 @@ import './About.css';
 import { Container, Row, Col, Card } from 'react-bootstrap';
 import { useTheme } from '../context/ThemeContext';
 import { useLanguage } from '../context/LanguageContext';
-import { translations } from '../config/languages';
+import { translations } from '../config/aboutLanguages';
 
 
 const CustomAbout = () => {

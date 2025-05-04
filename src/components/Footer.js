@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import { FaFacebookF, FaYoutube, FaInstagram, FaTiktok } from 'react-icons/fa';
 import logo from '../images/logo.JPEG';
 import { useLanguage } from '../context/LanguageContext';
-import { translations } from '../config/languages';
+import { translations } from '../config/footerLanguages';
 
 function CustomFooter() {
   const { language } = useLanguage();

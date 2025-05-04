@@ -1,7 +1,7 @@
 import React from "react";
 import { useTheme } from "../context/ThemeContext";
 import { useLanguage } from "../context/LanguageContext";
-import { translations } from '../config/languages';
+import { translations } from '../config/guidenceLanguages';
 import "./Wasteguidance.css";
 
 // Importing images
