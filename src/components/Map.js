@@ -32,6 +32,7 @@ const Map = () => {
   const [selectedWeekday, setSelectedWeekday] = useState('');
   const [selectedDate, setSelectedDate] = useState('');
   const [userId, setUserId] = useState(null);
+  const [clickError, setClickError] = useState('');
 
   const navigate = useNavigate();
   const location = useLocation().state?.location;
@@ -57,12 +58,25 @@ const Map = () => {
     }
   }, [location]);
 
-  const fetchAddress = async (lat, lng) => {
+  const fetchAddress = async (lat, lng, isFromClick = false) => {
     try {
       const response = await fetch(
         `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}&addressdetails=1`
       );
       const data = await response.json();
+
+      const { address: addr } = data;
+
+      // Check if this is a valid land address
+      const hasLandInfo = addr?.road || addr?.city || addr?.suburb || addr?.state;
+
+      if (isFromClick && !hasLandInfo) {
+        setClickError(t.invalidLocation);
+        return;
+      }
+
+      setClickError('');
+      setSelectedPosition([lat, lng]);
       setAddress(data.display_name || t.fetchingAddress);
     } catch (error) {
       console.error('Error fetching address:', error);
@@ -74,8 +88,7 @@ const Map = () => {
     useMapEvents({
       click: (event) => {
         const { lat, lng } = event.latlng;
-        setSelectedPosition([lat, lng]);
-        fetchAddress(lat, lng);
+        fetchAddress(lat, lng, true);
       },
     });
     return null;
@@ -150,7 +163,11 @@ const Map = () => {
             <Popup>{address || t.loadingAddress}</Popup>
           </Marker>
         </MapContainer>
-        
+
+        {clickError && (
+          <div className="alert alert-warning mt-2">{clickError}</div>
+        )}
+
         <div className="important-note">
           <strong>{t.importantNote.split(':')[0]}:</strong> {t.importantNote.split(':')[1].trim()}
           <br />
