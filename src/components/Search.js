@@ -2,10 +2,15 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Form, Button, Modal } from 'react-bootstrap';
 import { useTheme } from '../context/ThemeContext';
+import { useLanguage } from '../context/LanguageContext';
+import { searchTranslations } from '../config/searchLanguages';
 import './Search.css';
 
 function Search() {
   const { theme } = useTheme();
+  const { language } = useLanguage();
+  const t = searchTranslations[language].search;
+  
   const [location, setLocation] = useState('');
   const [showModal, setShowModal] = useState(false);
   const [confirmedLocation, setConfirmedLocation] = useState('');
@@ -13,9 +18,9 @@ function Search() {
     streetNumber: '',
     streetName: '',
     city: '',
-  }); 
-  const [showDetailedForm, setShowDetailedForm] = useState(false); 
-  const [errorMessage, setErrorMessage] = useState(''); 
+  });
+  const [showDetailedForm, setShowDetailedForm] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
   const navigate = useNavigate();
   const googleApiKey = "YOUR_GOOGLE_API_KEY";
 
@@ -24,24 +29,24 @@ function Search() {
   const handleSubmitAddress = async () => {
     const { streetNumber, streetName, city } = addressParts;
     if (!streetNumber || !streetName || !city) {
-      setErrorMessage('Please complete all address fields!');
+      setErrorMessage(t.errorIncomplete);
     } else {
       const fullAddress = `${streetNumber} ${streetName}, ${city}`;
       const isValid = await validateAddress(fullAddress);
-      
+
       if (isValid) {
         setConfirmedLocation(fullAddress);
         setShowModal(true);
         setErrorMessage('');
       } else {
-        setErrorMessage('The address you entered is not valid or not found on the map. You can use the "Locate Me" option to automatically get your current location or you can manually set your address.');
+        setErrorMessage(t.errorInvalid);
       }
     }
   };
 
   const validateAddress = async (address) => {
     const geocodeUrl = `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(address)}&key=${googleApiKey}`;
-    
+
     try {
       const response = await fetch(geocodeUrl);
       const data = await response.json();
@@ -83,24 +88,24 @@ function Search() {
         },
         (error) => {
           console.error(error);
-          setErrorMessage('Unable to retrieve your location.');
+          setErrorMessage(t.errorLocation);
         }
       );
     } else {
-      setErrorMessage('Geolocation is not supported by this browser.');
+      setErrorMessage(t.errorGeolocation);
     }
   };
 
   return (
     <div className={`search-component ${theme}`}>
       <div className={`search-box ${theme}`}>
-        <h4 className={`search-title ${theme}`}>To Start Order Enter Address</h4>
+        <h4 className={`search-title ${theme}`}>{t.title}</h4>
 
         {!showDetailedForm ? (
           <div className="input-container">
             <Form.Control
               type="text"
-              placeholder="Enter Your Home Address"
+              placeholder={t.placeholder}
               className={`search-input ${theme}`}
               value={location}
               onChange={(e) => setLocation(e.target.value)}
@@ -110,7 +115,7 @@ function Search() {
               className={`search-btn ${theme}`} 
               onClick={handleSearchClick}
             >
-              <i className="bi bi-search"></i> Search
+              <i className="bi bi-search"></i> {t.searchButton}
             </Button>
           </div>
         ) : (
@@ -118,7 +123,7 @@ function Search() {
             <Form.Group controlId="streetNumber">
               <Form.Control
                 type="text"
-                placeholder="Street Number (e.g., No 4)"
+                placeholder={t.streetNumber}
                 className={`form-input ${theme}`}
                 name="streetNumber"
                 value={addressParts.streetNumber}
@@ -129,7 +134,7 @@ function Search() {
             <Form.Group controlId="streetName" className="mt-2">
               <Form.Control
                 type="text"
-                placeholder="Street Name (e.g., SGA Desilva Road)"
+                placeholder={t.streetName}
                 className={`form-input ${theme}`}
                 name="streetName"
                 value={addressParts.streetName}
@@ -140,7 +145,7 @@ function Search() {
             <Form.Group controlId="city" className="mt-2">
               <Form.Control
                 type="text"
-                placeholder="City (e.g., Ambalangoda)"
+                placeholder={t.city}
                 className={`form-input ${theme}`}
                 name="city"
                 value={addressParts.city}
@@ -153,13 +158,13 @@ function Search() {
                 className={`submit-btn ${theme}`}
                 onClick={handleSubmitAddress}
               >
-                Submit Address
+                {t.submitAddress}
               </Button>
               <Button 
                 className={`locate-btn ${theme}`}
                 onClick={handleLocateMe}
               >
-                Locate Me
+                {t.locateMe}
               </Button>
             </div>
           </div>
@@ -178,10 +183,10 @@ function Search() {
         className={`address-modal ${theme}`}
       >
         <Modal.Header className={`modal-header ${theme}`}>
-          <Modal.Title>Confirm Your Address</Modal.Title>
+          <Modal.Title>{t.confirmTitle}</Modal.Title>
         </Modal.Header>
         <Modal.Body className={`modal-body ${theme}`}>
-          <p>Please confirm that the following is your correct home address:</p>
+          <p>{t.confirmMessage}</p>
           <h5>{confirmedLocation}</h5>
         </Modal.Body>
         <Modal.Footer className={`modal-footer ${theme}`}>
@@ -189,13 +194,13 @@ function Search() {
             className={`cancel-btn ${theme}`}
             onClick={handleClose}
           >
-            Cancel
+            {t.cancel}
           </Button>
           <Button 
             className={`confirm-btn ${theme}`}
             onClick={handleConfirm}
           >
-            Confirm
+            {t.confirm}
           </Button>
         </Modal.Footer>
       </Modal>
