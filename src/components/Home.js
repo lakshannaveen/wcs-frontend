@@ -1,5 +1,8 @@
+// Home.js
+
 import React from 'react';
 import { useTheme } from '../context/ThemeContext';
+import { useLanguage } from '../context/LanguageContext';
 import Carousel from 'react-bootstrap/Carousel';
 import carosle1 from '../images/carosle1.jpg';
 import carosle2 from '../images/carosle2.jpg';
@@ -12,9 +15,12 @@ import card2 from '../images/card2.jpeg';
 import card3 from '../images/card3.jpeg';
 import Search from './Search';
 import { Link } from 'react-router-dom';
+import { translations } from '../config/homeLanguage'; 
 
 function CustomHome() {
   const { theme } = useTheme();
+  const { language } = useLanguage();
+  const t = translations[language].home; 
 
   return (
     <div className={`home-container ${theme}`}>
@@ -32,7 +38,7 @@ function CustomHome() {
       </Carousel>
 
       <div id="search-section">
-        <Search /> {/* Search.js page */}
+        <Search />
       </div>
 
       {/* card section */}
@@ -63,13 +69,11 @@ function CustomHome() {
       {/* commitment section */}
       <section className={`commitment-section ${theme}`}>
         <div className='container'>
-          <h2>
-            Our Waste Collection Services are 100% Committed to Your Community!
-          </h2>
-          <p>Eco-Friendly, Reliable, and Tailored Just for You!</p>
-          <p className='highlight'>Together, We're Building a Cleaner Tomorrow!</p>
+          <h2>{t.commitmentTitle}</h2>
+          <p>{t.commitmentLine1}</p>
+          <p className='highlight'>{t.commitmentLine2}</p>
           <Link to="/orderhistory">
-            <button className='order-now-btn'>Order History</button>
+            <button className='order-now-btn'>{t.orderButton}</button>
           </Link>
         </div>
       </section>
