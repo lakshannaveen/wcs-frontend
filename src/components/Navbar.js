@@ -63,6 +63,10 @@ function CustomNavbar() {
       navigate("/");
     }
   };
+
+  const toggleLanguage = () => {
+    changeLanguage(language === 'en' ? 'si' : 'en');
+  };
   
   return (
     <div className={`navbar-container ${theme}`}>
@@ -92,18 +96,9 @@ function CustomNavbar() {
                   {t.wasteGuidance}
                 </NavDropdown.Item>
               </NavDropdown>
-              <NavDropdown 
-                title={language === 'en' ? t.english : t.sinhala} 
-                id="language-dropdown"
-                className="language-dropdown"
-              >
-                <NavDropdown.Item onClick={() => changeLanguage('en')}>
-                  {t.english}
-                </NavDropdown.Item>
-                <NavDropdown.Item onClick={() => changeLanguage('si')}>
-                  {t.sinhala}
-                </NavDropdown.Item>
-              </NavDropdown>
+              <div className="language-switcher" onClick={toggleLanguage}>
+                {language === 'en' ? 'සිංහල' : 'English'}
+              </div>
               <Nav.Link onClick={handleToggleSidebar} className="ms-2">
                 <div
                   className="profile-icon"

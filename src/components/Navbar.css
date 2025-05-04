@@ -10,7 +10,7 @@
 
 .navbar .dropdown-menu {
   background-color: rgb(76, 175, 80) !important;
-  border: none; 
+  border: none;
 }
 
 .navbar .dropdown-item:hover {
@@ -20,7 +20,7 @@
 
 .navbar .nav-link,
 .navbar .dropdown-toggle {
-  color: white !important; 
+  color: white !important;
 }
 
 .nav-link:hover,
@@ -29,19 +29,19 @@
 }
 
 .navbar-toggler {
-  border: none; 
+  border: none;
   background-color: transparent;
-  outline: none; 
+  outline: none;
 }
 
 .navbar-toggler:focus {
-  outline: none; 
-  box-shadow: 0 0 0 0.2rem white; 
+  outline: none;
+  box-shadow: 0 0 0 0.2rem white;
 }
 
 .navbar-toggler-icon {
   background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3E%3Cpath stroke='rgba(255, 255, 255, 1)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
-  background-color: transparent; 
+  background-color: transparent;
   background-repeat: no-repeat;
   background-position: center;
   background-size: contain;
@@ -49,7 +49,7 @@
 
 .offcanvas-custom {
   background-color: rgb(76, 175, 80);
-  color: white; 
+  color: white;
 }
 
 .offcanvas-custom .logout-link {
@@ -57,11 +57,11 @@
 }
 
 .offcanvas-custom .nav-link {
-  color: white; 
+  color: white;
 }
 
 .offcanvas-custom .btn-close {
-  border: 2px solid black; 
+  border: 2px solid black;
   padding: 4px;
 }
 
@@ -140,44 +140,6 @@
   transition: .4s;
   border-radius: 50%;
 }
-/* Language Dropdown Styles */
-.language-dropdown .dropdown-toggle {
-  display: flex;
-  align-items: center;
-  padding: 8px 12px;
-}
-
-.language-dropdown .dropdown-menu {
-  min-width: 120px;
-}
-
-.language-dropdown .dropdown-item {
-  display: flex;
-  align-items: center;
-  padding: 8px 12px;
-}
-
-/* For RTL languages like Sinhala */
-[dir="rtl"] .language-dropdown .dropdown-item {
-  text-align: right;
-}
-
-/* Adjust navbar items alignment */
-.navbar .navbar-nav {
-  align-items: center;
-  gap: 10px;
-}
-
-/* Responsive adjustments */
-@media (max-width: 992px) {
-  .language-dropdown {
-    margin-top: 10px;
-  }
-  
-  .navbar .navbar-nav {
-    gap: 5px;
-  }
-}
 
 input:checked + .slider {
   background-color: #2196F3;
@@ -187,10 +149,34 @@ input:checked + .slider:before {
   transform: translateX(26px);
 }
 
+/* Language Switcher Styles */
+.language-switcher {
+  color: white;
+  padding: 8px 12px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  margin: 0 5px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  background: none;
+}
+
+.language-switcher:hover {
+  background: none;
+  color: rgb(8, 8, 130);
+}
+
 @media (max-width: 768px) {
   .profile-icon {
     width: 25px;
     height: 25px;
     font-size: 12px;
+  }
+
+  .language-switcher {
+    padding: 6px 10px;
+    font-size: 14px;
   }
 }
