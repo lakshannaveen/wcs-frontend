@@ -42,7 +42,7 @@ export const translations = {
             "Ideal for occasional clean-ups or minimal waste disposal."
           ]
         },
-        note: "Important: Daily Weekly Monthly subscription plans are valid for 3 months only. The pick-up date can be chosen on a day of your choice. The pick-up time can be scheduled in the morning, afternoon, or evening. You can select your subscription plan at map selection. Additionally, you can choose your preferred time (morning, afternoon, or evening) for waste collection during checkout."
+        note: " Daily Weekly Monthly subscription plans are valid for 3 months only. The pick-up date can be chosen on a day of your choice. The pick-up time can be scheduled in the morning, afternoon, or evening. You can select your subscription plan at map selection. Additionally, you can choose your preferred time (morning, afternoon, or evening) for waste collection during checkout."
       }
     },
     si: {
