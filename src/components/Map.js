@@ -10,6 +10,14 @@ import { useTheme } from '../context/ThemeContext';
 import { useLanguage } from '../context/LanguageContext';
 import { mapTranslations } from '../config/mapLanguages';
 
+// Sri Lanka boundaries
+const SRI_LANKA_BOUNDS = {
+  north: 9.831,   // Northernmost point
+  south: 5.919,    // Southernmost point
+  west: 79.521,    // Westernmost point
+  east: 81.879      // Easternmost point
+};
+
 // Custom waste bin icon for map marker
 const wasteBinIcon = new L.Icon({
   iconUrl: 'https://cdn-icons-png.flaticon.com/512/929/929430.png',
@@ -21,6 +29,7 @@ const Map = () => {
   const { language } = useLanguage();
   const t = mapTranslations[language].map;
 
+  // Default center coordinates (Sri Lanka)
   const [coordinates, setCoordinates] = useState([7.8731, 80.7718]);
   const [selectedPosition, setSelectedPosition] = useState([7.8731, 80.7718]);
   const [address, setAddress] = useState('');
@@ -54,15 +63,33 @@ const Map = () => {
   useEffect(() => {
     if (location) {
       const [lat, lng] = location.split(',').map(Number);
-      setCoordinates([lat, lng]);
-      setSelectedPosition([lat, lng]);
-      fetchAddress(lat, lng);
+      if (isWithinSriLanka(lat, lng)) {
+        setCoordinates([lat, lng]);
+        setSelectedPosition([lat, lng]);
+        fetchAddress(lat, lng);
+      }
     }
   }, [location]);
+
+  // Check if coordinates are within Sri Lanka
+  const isWithinSriLanka = (lat, lng) => {
+    return (
+      lat >= SRI_LANKA_BOUNDS.south &&
+      lat <= SRI_LANKA_BOUNDS.north &&
+      lng >= SRI_LANKA_BOUNDS.west &&
+      lng <= SRI_LANKA_BOUNDS.east
+    );
+  };
 
   // Fetch human-readable address from latitude and longitude
   const fetchAddress = async (lat, lng, isFromClick = false) => {
     try {
+      // First check if location is within Sri Lanka
+      if (!isWithinSriLanka(lat, lng)) {
+        setClickError(t.locationOutsideSriLanka);
+        return;
+      }
+
       const response = await fetch(
         `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}&addressdetails=1`
       );
@@ -75,6 +102,12 @@ const Map = () => {
 
       if (isFromClick && !hasLandInfo) {
         setClickError(t.invalidLocation);
+        return;
+      }
+
+      // Additional check to ensure the location is in Sri Lanka
+      if (addr?.country !== 'Sri Lanka') {
+        setClickError(t.locationOutsideSriLanka);
         return;
       }
 
@@ -108,6 +141,8 @@ const Map = () => {
       setShowWarning(true);
     } else if (subscriptionPlan === 'monthly' && !selectedDate) {
       setShowWarning(true);
+    } else if (!isWithinSriLanka(selectedPosition[0], selectedPosition[1])) {
+      setClickError(t.locationOutsideSriLanka);
     } else {
       setShowWarning(false);
       setIsLocationConfirmed(true);
@@ -157,7 +192,17 @@ const Map = () => {
         </h3>
 
         {/* Interactive map for selecting waste collection location */}
-        <MapContainer center={coordinates} zoom={7} style={{ height: '500px', width: '100%' }}>
+        <MapContainer 
+          center={coordinates} 
+          zoom={7} 
+          style={{ height: '500px', width: '100%' }}
+          maxBounds={[
+            [SRI_LANKA_BOUNDS.south, SRI_LANKA_BOUNDS.west], // SW
+            [SRI_LANKA_BOUNDS.north, SRI_LANKA_BOUNDS.east]  // NE
+          ]}
+          maxBoundsViscosity={1.0}
+          minZoom={7}
+        >
           <TileLayer
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
