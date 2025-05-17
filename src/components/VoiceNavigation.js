@@ -1,11 +1,12 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const VoiceNavigation = () => {
   const navigate = useNavigate();
   const [feedback, setFeedback] = useState("");
-  const [isProcessing, setIsProcessing] = useState(false);
   const [error, setError] = useState(false);
+  const isProcessingRef = useRef(false); // Use ref to persist across renders
+  const hasHandledCommandRef = useRef(false); // Flag to avoid false error after success
 
   useEffect(() => {
     const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
@@ -22,26 +23,29 @@ const VoiceNavigation = () => {
     recognition.lang = 'en-US';
 
     const smoothNavigate = (path, isExternal = false) => {
-      setFeedback(`Navigating to ${path.replace('/', '').replace(/-/g, ' ') || 'home'}...`);
+      const readablePath = path === '/' ? 'home' : path.replace('/', '').replace(/-/g, ' ');
+      setFeedback(`Navigating to ${readablePath}...`);
       setError(false);
+      hasHandledCommandRef.current = true;
+
       setTimeout(() => {
         if (isExternal) {
           window.open(path, '_blank');
         } else {
           navigate(path);
         }
-        setIsProcessing(false);
+        isProcessingRef.current = false;
       }, 500);
     };
 
     recognition.onresult = (event) => {
-      if (isProcessing) return;
+      if (isProcessingRef.current) return;
 
       const transcript = event.results[event.results.length - 1][0].transcript.trim().toLowerCase();
       console.log("Heard:", transcript);
 
-      setIsProcessing(true);
-      setError(false);
+      isProcessingRef.current = true;
+      hasHandledCommandRef.current = false;
 
       const commands = {
         'go to home': () => smoothNavigate('/'),
@@ -66,10 +70,9 @@ const VoiceNavigation = () => {
       } else {
         setFeedback("Command not recognized. Please try again.");
         setError(true);
-        setIsProcessing(false);
+        isProcessingRef.current = false;
       }
 
-      // Auto-clear feedback
       setTimeout(() => {
         setFeedback("");
         setError(false);
@@ -78,11 +81,11 @@ const VoiceNavigation = () => {
 
     recognition.onerror = (err) => {
       console.error("Speech recognition error:", err);
-      if (!isProcessing) {
+      if (!hasHandledCommandRef.current) {
         setFeedback("An error occurred. Please try again.");
         setError(true);
+        isProcessingRef.current = false;
       }
-      setIsProcessing(false);
     };
 
     try {
@@ -96,7 +99,7 @@ const VoiceNavigation = () => {
     return () => {
       recognition.stop();
     };
-  }, [navigate, isProcessing]);
+  }, [navigate]);
 
   return (
     <div>
@@ -106,7 +109,7 @@ const VoiceNavigation = () => {
             position: "fixed",
             bottom: "20px",
             left: "20px",
-            background: error ? "#c0392b" : "#2ecc71",
+            background: error ? "#e74c3c" : "#2ecc71",
             color: "#fff",
             padding: "15px",
             borderRadius: "8px",
